@@ -1,11 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from django.views.generic import (
-    DetailView,
-    RedirectView,
-    UpdateView,
-)
+from django.views.generic import DetailView, RedirectView, UpdateView
 
 User = get_user_model()
 
@@ -22,6 +18,8 @@ user_detail_view = UserDetailView.as_view()
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     fields = [
         "name",
+        "surname",
+        "bio",
     ]
 
     # We already imported user in the View code above,

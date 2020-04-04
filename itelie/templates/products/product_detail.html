@@ -1,0 +1,36 @@
+{% extends "base.html" %} 
+{% block title %} {{ product.name }}{% endblock title%} 
+
+{% block content %}
+
+<a class="btn btn-outline-secondary btn-sm" href="{% url 'products:list' %}" role="button">
+    <
+</a>
+
+<h2>{{ product.name }}</h2>
+
+{% if product.color %}
+    <p><strong>Cor: </strong>{{ product.color }}</p>
+{% endif %} 
+
+{% if product.inventory %}
+    <p><strong>Em estoque: </strong>{{ product.inventory }}</p>
+{% endif %} 
+
+{% if product.price %}
+    <p><strong>R$ </strong>{{ product.price }}</p>
+{% endif %} 
+
+{% if product.description %}
+    <p><strong>Descrição: </strong>{{ product.description }}</p>
+{% endif %} 
+
+{% if product.weight %}
+    <p><strong>Peso: </strong>{{ product.weight }}</p>
+{% endif %} 
+
+<a class="btn btn-primary" href="#TODO" role="button">
+    Adicionar ao Carrinho
+</a>
+<hr/>
+{% endblock content %}

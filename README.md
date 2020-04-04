@@ -1,6 +1,4 @@
 iTelie
 ==============================
 
-eCommerce for iTelie
-
-For more information, see TODO.
+eCommerce for iTelie - Uses cookiecutter-django as base.

@@ -1,0 +1,60 @@
+{% extends "base.html" %} 
+{% block title %} Produtos {% endblock title %}
+{% block content %}
+
+<div class="page-header text-center mb-4">
+  <h1>Nossos Produtos</h1>
+</div>
+<div class="container">
+  <div class="card-deck">
+    {% for product in product_list %}
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+      <div class="card text-center h-100">
+        <div
+          onclick="window.location='{% url 'products:detail' product.slug %}';"
+          style="cursor:pointer;"
+        >
+        <img
+          src="{{product.image.url}}"
+          class="card-img-top"
+          height="150px"
+          width="150px"
+          title="{{product.name}}"
+        />
+        </div>
+        <div class="card-body">
+          <!--TODO - Make rating loop\/-->
+          <span class="card-title">
+            <p>
+              <strong>
+                {{product.name}}
+                <a href="#TODO" title="Curtir">❤️</a>
+              </strong>
+            </p>
+          </span>
+
+          <!--TODO - Make discount check condition loop\/-->
+          <span class="card-text text-right">
+            {% if product.discount %}
+              {{ product.discount }}
+            {% endif %}
+            <br />
+            {% if product.price %}
+              <h4><strong>R$ </strong>{{product.price}}</h4>
+            {% endif %}
+          </span>
+
+          <!--TODO - ON HOVER \/-->
+          <button class="btn btn-secondary btn-sm" title="Adicionar ao Carrinho">
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<hr />
+
+{% endblock content %}

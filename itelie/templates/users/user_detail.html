@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}User: {{ object.username }}{% endblock %}
+{% block title %}Usuário: {{ object.username }}{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -10,9 +10,25 @@
     <div class="col-sm-12">
 
       <h2>{{ object.username }}</h2>
-      {% if object.name %}
-        <p>{{ object.name }}</p>
+
+      {% if object.name and object.surname %}
+        <p><strong>Name: </strong>{{ object.name }} {{ object.surname }}</p>
+      {% else %}
+        <p><strong>Name: </strong>{{ object.name }}</p>
       {% endif %}
+
+      {% if object.bio %}
+        <p><strong>Bio:</strong> {{ object.bio }}</p>
+      {% endif %}
+
+      {% if object.cpf %}
+        <p>{{ object.cpf }}</p>
+      {% endif %}
+
+      {% if object.rg %}
+        <p><strong>RG:</strong> {{ object.rg }}</p>
+      {% endif %}
+
     </div>
   </div>
 
@@ -21,7 +37,7 @@
 <div class="row">
 
   <div class="col-sm-12">
-    <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">My Info</a>
+    <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">Minha Info</a>
     <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
     <!-- Your Stuff: Custom user template urls -->
   </div>
