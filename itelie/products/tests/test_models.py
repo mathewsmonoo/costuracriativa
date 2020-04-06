@@ -1,6 +1,7 @@
 import pytest
+
 from ..models import Product
-from .factories import ProductFactory, product
+from .factories import CategoryFactory, ProductFactory, category, product
 
 #Connects our tests to database
 pytestmark = pytest.mark.django_db
@@ -16,3 +17,11 @@ def test_get_absolute_url(product):
 def test_get_profit(product):
     profit = product.get_profit()
     assert profit == (product.price - product.cost)
+
+def test___str__(category):
+    assert category.__str__() == category.name
+    assert str(category) == category.name
+
+'''def test_get_absolute_url(category):
+    url = category.get_absolute_url()
+    assert url == f'/categories/{category.slug}/''''

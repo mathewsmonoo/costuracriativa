@@ -42,6 +42,9 @@
             {% if product.price %}
               <h4><strong>R$ </strong>{{product.price}}</h4>
             {% endif %}
+            {% if product.category %}
+             <p>Categoria: <a href="{% url 'products:product_by_category' product.category.slug %}">{{ product.category }}</a></p>
+            {% endif %}
           </span>
 
           <!--TODO - ON HOVER \/-->

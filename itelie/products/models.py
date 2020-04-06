@@ -3,9 +3,29 @@ from django.db import models
 from django.urls import reverse
 from django_extensions.db.fields import AutoSlugField
 from model_utils.models import TimeStampedModel
-'''
-TimeStampedModel automatically gives the model created and modified fields
-We like to define all our models as subclasses of TimeStampedModel '''
+
+
+class Category(TimeStampedModel):
+    name    = models.CharField("Name of Category", max_length=255)
+    slug    = AutoSlugField("Category Address", unique=True, populate_from="name")
+
+    # TODO:
+    # Add Image;
+
+    class Meta:
+        ordering = ('-name',)
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
+        index_together = (('id', 'slug'),)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        #return reverse('shop:product_list_by_category,kwargs={'slug':self.slug})
+        #return reverse('products:product_list_by_category,kwargs={'slug':self.slug})
+        pass
+
 
 class Product(TimeStampedModel):
     name    = models.CharField("Name of Product", max_length=255)
@@ -18,7 +38,10 @@ class Product(TimeStampedModel):
     status  = models.BooleanField("Product Available?", default=True)
     slug    = AutoSlugField("Product Address", unique=True, populate_from="name")
 
-    #TODO: 
+    # Relations:
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='products', null=True)
+
+    # TODO: 
     # Transform COLOR field into list ; 
     # Add Category relationship;
     # Add Discount;
@@ -26,7 +49,13 @@ class Product(TimeStampedModel):
     # Add Images;
     # Add creator field to check which user added product to database
     # creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
-    
+
+    class Meta:
+        verbose_name = 'product'
+        verbose_name_plural = 'products'
+        #ordering = ('-created',)
+        index_together = (('id', 'slug'),)
+
     def __str__(self):
         return self.name
 
@@ -36,6 +65,6 @@ class Product(TimeStampedModel):
     def get_profit(self):
         profit = self.price - self.cost
         return profit
-    
+
     def get_final_price(self):
         pass
