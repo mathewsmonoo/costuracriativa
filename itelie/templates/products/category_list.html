@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %} Categorias {% endblock title %} 
+{% block content %} 
+
+{% block pageheader %}
+<div class="page-header text-center mb-4">
+  <h1>Categorias</h1>
+</div>
+{% endblock pageheader %}
+
+<div class="container">
+  <div class="card-deck">
+    {% for category in category_list %}
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+      <div class="card text-center h-100">
+        <div
+          onclick="window.location='{% url 'products:product_by_category' category.slug %}';"
+          style="cursor: pointer;"
+        >
+          <img
+            src="{{category.image.url}}"
+            class="card-img-top"
+            height="150px"
+            width="150px"
+            title="{{category.name}}"
+          />
+        </div>
+        <div class="card-body">
+          <span class="card-title">
+            <p>
+              <strong>
+                {{category.name}}
+              </strong>
+            </p>
+          </span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<hr />
+{% endblock content %}

@@ -15,11 +15,13 @@ class Category(TimeStampedModel):
     class Meta:
         ordering = ('-name',)
         verbose_name = 'category'
-        verbose_name_plural = 'categories'
         index_together = (('id', 'slug'),)
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('products:categories',kwargs={'slug':self.slug})
 
     def get_absolute_url(self):
         #return reverse('shop:product_list_by_category,kwargs={'slug':self.slug})

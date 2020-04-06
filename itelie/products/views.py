@@ -12,7 +12,6 @@ class CategoryDetailView(DetailView):
 class CategoryListView(ListView):
     model = Category
 
-
 #---------------------Product Views-------------------------------
 class ProductDetailView(DetailView):
     model = Product
@@ -39,7 +38,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 class ProductCategory(ListView):
     model = Product
-    #template_name = 'products/product_category.html'
+    template_name = 'products/product_by_category.html'
 
     def get_queryset(self):
         self.category = get_object_or_404(Category, slug=self.kwargs['slug'])
