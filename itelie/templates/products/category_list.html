@@ -13,6 +13,13 @@
     {% for category in category_list %}
     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
       <div class="card text-center h-100">
+        <div class="card-body">
+          <span class="card-title">
+            <h3>
+                {{category.name}}
+            </h3>
+          </span>
+        </div>
         <div
           onclick="window.location='{% url 'products:product_by_category' category.slug %}';"
           style="cursor: pointer;"
@@ -24,15 +31,6 @@
             width="150px"
             title="{{category.name}}"
           />
-        </div>
-        <div class="card-body">
-          <span class="card-title">
-            <p>
-              <strong>
-                {{category.name}}
-              </strong>
-            </p>
-          </span>
         </div>
       </div>
     </div>

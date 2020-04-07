@@ -11,6 +11,7 @@ class CategoryDetailView(DetailView):
 
 class CategoryListView(ListView):
     model = Category
+    paginate_by = 8
 
 #---------------------Product Views-------------------------------
 class ProductDetailView(DetailView):
@@ -26,7 +27,7 @@ class ProductDetailView(DetailView):
 
 class ProductListView(ListView):
     model = Product
-    #paginate_by = 15
+    paginate_by = 8
 
 '''
 class ProductUpdateView(LoginRequiredMixin, UpdateView):

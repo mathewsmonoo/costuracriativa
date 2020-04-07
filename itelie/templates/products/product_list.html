@@ -1,12 +1,12 @@
 {% extends "base.html" %} 
-{% block title %} Produtos {% endblock title %}
-{% block content %}
+{% block title %} Produtos {% endblock title %} 
+
+{% block content %} 
 {% block pageheader %}
 <div class="page-header text-center mb-4">
   <h1>Nossos Produtos</h1>
 </div>
 {% endblock pageheader %}
-
 <div class="container">
   <div class="card-deck">
     {% for product in product_list %}
@@ -14,15 +14,15 @@
       <div class="card text-center h-100">
         <div
           onclick="window.location='{% url 'products:detail' product.slug %}';"
-          style="cursor:pointer;"
+          style="cursor: pointer;"
         >
-        <img
-          src="{{product.image.url}}"
-          class="card-img-top"
-          height="150px"
-          width="150px"
-          title="{{product.name}}"
-        />
+          <img
+            src="{{product.image.url}}"
+            class="card-img-top"
+            height="150px"
+            width="150px"
+            title="{{product.name}}"
+          />
         </div>
         <div class="card-body">
           <!--TODO - Make rating loop\/-->
@@ -42,15 +42,24 @@
             {% endif %}
             <br />
             {% if product.price %}
-              <h4><strong>R$ </strong>{{product.price}}</h4>
-            {% endif %}
+            <h4><strong>R$ </strong>{{product.price}}</h4>
+            {% endif %} 
             {% if product.category %}
-             <p>Categoria: <a href="{% url 'products:product_by_category' product.category.slug %}">{{ product.category }}</a></p>
+            <p>
+              Categoria:
+              <a
+                href="{% url 'products:product_by_category' product.category.slug %}"
+                >{{ product.category }}</a
+              >
+            </p>
             {% endif %}
           </span>
 
           <!--TODO - ON HOVER \/-->
-          <button class="btn btn-secondary btn-sm" title="Adicionar ao Carrinho">
+          <button
+            class="btn btn-secondary btn-sm"
+            title="Adicionar ao Carrinho"
+          >
             Adicionar ao Carrinho
           </button>
         </div>
@@ -60,4 +69,21 @@
   </div>
 </div>
 <hr />
+<div class="pagination">
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+      <a href="?page=1">&laquo; Primeira</a>
+      <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+    {% endif %}
+
+    <span class="current">
+      Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}"> Última &raquo;</a>
+    {% endif %}
+  </span>
+</div>
 {% endblock content %}

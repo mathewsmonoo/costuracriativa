@@ -5,9 +5,9 @@
 <div class="page-header text-center mb-4">
   <h1>{{ category.name }}</h1>
 </div>
-<a href="{% url 'products:list' %}">
-  <button class="btn btn-secondary btn-sm" title="Voltar">
-    Voltar
-  </button>
+
+<a class="btn btn-outline-secondary btn-sm" href="{% url 'products:list' %}" role="button">
+  Voltar
 </a>
+
 {% endblock pageheader %}

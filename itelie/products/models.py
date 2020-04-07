@@ -23,11 +23,6 @@ class Category(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('products:categories',kwargs={'slug':self.slug})
 
-    def get_absolute_url(self):
-        #return reverse('shop:product_list_by_category,kwargs={'slug':self.slug})
-        #return reverse('products:product_list_by_category,kwargs={'slug':self.slug})
-        pass
-
 
 class Product(TimeStampedModel):
     name    = models.CharField("Name of Product", max_length=255)
