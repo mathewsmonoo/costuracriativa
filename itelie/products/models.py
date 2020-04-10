@@ -46,7 +46,7 @@ class Product(TimeStampedModel):
     # Add Discount;
     # Add final price (price - discount);
     # Add Images;
-    # Add creator field to check which user added product to database
+    # Add creator field to check which user added product to database;
     # creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
 
     class Meta:

@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block title %} Categorias {% endblock title %} 
-{% block content %} 
 
 {% block pageheader %}
 <div class="page-header text-center mb-4">
@@ -8,6 +7,7 @@
 </div>
 {% endblock pageheader %}
 
+{% block content %} 
 <div class="container">
   <div class="card-deck">
     {% for category in category_list %}
@@ -37,5 +37,5 @@
     {% endfor %}
   </div>
 </div>
-<hr />
+{% include "products/pagination.html" with page=page_obj %}
 {% endblock content %}

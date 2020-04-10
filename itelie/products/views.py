@@ -28,6 +28,7 @@ class ProductDetailView(DetailView):
 class ProductListView(ListView):
     model = Product
     paginate_by = 8
+    #context_object_name='products'
 
 '''
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
@@ -39,6 +40,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 class ProductCategory(ListView):
     model = Product
     template_name = 'products/product_by_category.html'
+    paginate_by = 8
 
     def get_context_data(self, **kwargs):
         context = super(ProductCategory, self).get_context_data(**kwargs)
@@ -54,6 +56,7 @@ class ProductCategory(ListView):
 class ProductSearchView(ListView):
     model = Product
     template_name = 'products/search_results.html'
+    paginate_by = 8
 
     def get_queryset(self):
         query = self.request.GET.get('q')
