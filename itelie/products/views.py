@@ -1,11 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, render, reverse
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from .models import Category, Product
 
 #---------------------Category Views-------------------------------
-
 class CategoryDetailView(DetailView):
     model = Category
 
@@ -36,16 +36,31 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     action = "Update"'''
 
 #---------------------Linking Views-------------------------------
-
 class ProductCategory(ListView):
     model = Product
     template_name = 'products/product_by_category.html'
-
-    def get_queryset(self):
-        self.category = get_object_or_404(Category, slug=self.kwargs['slug'])
-        return Product.objects.filter(category=self.category)
 
     def get_context_data(self, **kwargs):
         context = super(ProductCategory, self).get_context_data(**kwargs)
         context['category'] = self.category
         return context
+
+    def get_queryset(self):
+        self.category = get_object_or_404(Category, slug=self.kwargs['slug'])
+        return Product.objects.filter(category=self.category)
+
+
+#----------------------Search View--------------------------------
+class ProductSearchView(ListView):
+    model = Product
+    template_name = 'products/search_results.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            object_list = Product.objects.filter(
+                Q(name__icontains=query) | Q(category__name__icontains=query)
+            )
+        else:
+            object_list = self.model.objects.none()
+        return object_list

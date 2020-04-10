@@ -1,12 +1,13 @@
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
+
 from django_extensions.db.fields import AutoSlugField
 from model_utils.models import TimeStampedModel
 
 
 class Category(TimeStampedModel):
-    name    = models.CharField("Name of Category", max_length=255)
+    name    = models.CharField("Name of Category", max_length=255, unique=True)
     slug    = AutoSlugField("Category Address", unique=True, populate_from="name")
 
     # TODO:
@@ -15,6 +16,7 @@ class Category(TimeStampedModel):
     class Meta:
         ordering = ('-name',)
         verbose_name = 'category'
+        verbose_name_plural= 'categories'
         index_together = (('id', 'slug'),)
 
     def __str__(self):
@@ -34,13 +36,13 @@ class Product(TimeStampedModel):
     weight  = models.DecimalField("Weight of Product (kg)", max_digits=5, decimal_places=2, default=0.1)
     status  = models.BooleanField("Product Available?", default=True)
     slug    = AutoSlugField("Product Address", unique=True, populate_from="name")
+    #image = models.ImageField(upload_to='products/%Y/%m/%d',blank=True)
 
     # Relations:
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='products', null=True)
-
     # TODO: 
-    # Transform COLOR field into list ; 
-    # Add Category relationship;
+    # Transform COLOR field into list ;
+    # OK - Add Category relationship;
     # Add Discount;
     # Add final price (price - discount);
     # Add Images;

@@ -85,6 +85,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "itelie.users.apps.UsersConfig",
     "itelie.products.apps.ProductsConfig",
+    "itelie.carts.apps.CartsConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

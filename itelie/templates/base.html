@@ -53,6 +53,9 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'products:category_list' %}">Categorias</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#TODO">Carrinho</a>
+            </li>
             {% if request.user.is_authenticated %}
               <li class="nav-item">
                 {# URL provided by django-allauth/account/urls.py #}
@@ -86,13 +89,32 @@
           {% endfor %}
       {% endif %}
 
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <form action="{% url 'products:search_results' %}" method="get" class="card card-sm">
+              <div class="card-body row no-gutters align-items-center">
+                <div class="col">
+                  <input type="search" name="q" placeholder="Buscar..." class="form-control form-control-borderless">
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-success" type="submit">Buscar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
       {% block content %}
         <h2>eCommerce for iTelie</h2>
       {% endblock content %}
 
     </div> <!-- /container -->
 
-    {% block modal %}{% endblock modal %}
+    {% block modal %}
+    {% endblock modal %}
 
     <!-- Le javascript
     ================================================== -->
