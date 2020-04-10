@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %} Busca {% endblock title %} 
+{% block title %} iTeliê - Busca {% endblock title %} 
 
 {% block pageheader %}
 <div class="page-header text-center mb-4">
-  <h1>Resultados da Busca </h1>
+  <h1>Você buscou por: <small>{{ query }}</small></h1>
 </div>
 <a class="btn btn-outline-secondary btn-sm" href="{% url 'products:list' %}" role="button">
   Voltar

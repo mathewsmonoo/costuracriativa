@@ -52,7 +52,7 @@ class Product(TimeStampedModel):
     class Meta:
         verbose_name = 'product'
         verbose_name_plural = 'products'
-        #ordering = ('-created',)
+        ordering = ('-created',)
         index_together = (('id', 'slug'),)
 
     def __str__(self):

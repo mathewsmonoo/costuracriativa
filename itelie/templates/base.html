@@ -45,6 +45,18 @@
               <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
+              <form action="{% url 'products:search_results' %}" method="get" class="mr-2 my-auto w-100 d-inline-block order-1">
+                <div class="input-group">
+                    <input type="search" name="q" placeholder="Buscar..." class="form-control border border-right-0" >
+                    <span class="input-group-append">
+                        <button class="btn btn-outline-light border border-left-0" type="submit">
+                          🔎
+                        </button>
+                    </span>
+                </div>
+              </form>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="{% url 'about' %}">Sobre</a>
             </li>
             <li class="nav-item">
@@ -56,6 +68,7 @@
             <li class="nav-item">
               <a class="nav-link" href="#TODO">Carrinho</a>
             </li>
+
             {% if request.user.is_authenticated %}
               <li class="nav-item">
                 {# URL provided by django-allauth/account/urls.py #}
@@ -88,23 +101,6 @@
               <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
           {% endfor %}
       {% endif %}
-
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <form action="{% url 'products:search_results' %}" method="get" class="card card-sm">
-              <div class="card-body row no-gutters align-items-center">
-                <div class="col">
-                  <input type="search" name="q" placeholder="Buscar..." class="form-control form-control-borderless">
-                </div>
-                <div class="col-auto">
-                  <button class="btn btn-success" type="submit">Buscar</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
 
       {% block pageheader %}
       {% endblock pageheader %}
