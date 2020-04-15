@@ -1,0 +1,56 @@
+{% extends "base.html" %} 
+{% block title %}Endereço: {{ address.nickname }}{% endblock title %} 
+
+{% block content %}
+
+<p>
+    <a class="btn btn-primary"
+        href="{% url 'addresses:update' address.pk %}"
+        role="button">
+            Atualizar
+    </a>
+</p>
+
+<h2>{{ address.nickname }}</h2>
+
+{% if  address.receiver_name %}
+    {{ address.receiver_name }}
+{% endif %}
+
+{% if  address.receiver_phone %}
+    {{ address.receiver_phone }}
+{% endif %}
+
+{% if  address.address_type %}
+    {{ address.address_type }}
+{% endif %}
+
+{% if  address.postal_code %}
+    {{ address.postal_code }}
+{% endif %}
+
+{% if  address.state %}
+    {{ address.state }}
+{% endif %}
+
+{% if  address.city %}
+    {{ address.city }}
+{% endif %}
+
+{% if  address.neighborhood %}
+    {{ address.neighborhood }}
+{% endif %}
+
+{% if  address.street %}
+    {{ address.street }}
+{% endif %}
+
+{% if  address.number %}
+    {{ address.number }}
+{% endif %}
+
+{% if  address.extra_data %}
+    {{ address.extra_data }}
+{% endif %}
+
+{% endblock content %}

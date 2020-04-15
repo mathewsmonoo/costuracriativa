@@ -10,7 +10,7 @@ class CategoryDetailView(DetailView):
     model = Category
 
 class CategoryListView(ListView):
-    model = Category
+    model       = Category
     paginate_by = 8
 
 #---------------------Product Views-------------------------------
@@ -26,7 +26,7 @@ class ProductDetailView(DetailView):
         return super().form_valid(form)'''
 
 class ProductListView(ListView):
-    model = Product
+    model       = Product
     paginate_by = 8
     #context_object_name='products'
 
@@ -38,9 +38,9 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 #---------------------Linking Views-------------------------------
 class ProductCategory(ListView):
-    model = Product
-    template_name = 'products/product_by_category.html'
-    paginate_by = 8
+    model           = Product
+    template_name   = 'products/product_by_category.html'
+    paginate_by     = 8
 
     def get_context_data(self, **kwargs):
         context = super(ProductCategory, self).get_context_data(**kwargs)
@@ -54,9 +54,9 @@ class ProductCategory(ListView):
 
 #----------------------Search View--------------------------------
 class ProductSearchView(ListView):
-    model = Product
-    template_name = 'products/search_results.html'
-    paginate_by = 8
+    model           = Product
+    template_name   = 'products/search_results.html'
+    paginate_by     = 8
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProductSearchView, self).get_context_data(*args, **kwargs)

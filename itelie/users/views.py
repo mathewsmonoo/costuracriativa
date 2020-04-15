@@ -5,15 +5,12 @@ from django.views.generic import DetailView, RedirectView, UpdateView
 
 User = get_user_model()
 
-
 class UserDetailView(LoginRequiredMixin, DetailView):
-    model = User
-    slug_field = "username"
-    slug_url_kwarg = "username"
-
+    model           = User
+    slug_field      = "username"
+    slug_url_kwarg  = "username"
 
 user_detail_view = UserDetailView.as_view()
-
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     fields = [
@@ -23,6 +20,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         "rg",
         "phone",
         "prefix",
+        "addresses",
     ]
 
     # We already imported user in the View code above,

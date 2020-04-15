@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Address List{% endblock title %}
+
+{%block content %}
+
+<h2>Lista de Endereços</h2>
+<ul>
+  {% for address in address_list %}
+  <li>
+    <a href="{% url 'addresses:detail' address.pk %}"
+      >{{ address.nickname }}</a>
+  </li>
+  {% endfor %}
+</ul>
+<hr />
+<p>Está faltando algum endereço?</p>
+<p>
+  <a class="btn btn-primary" href="{% url 'addresses:add' %}" role="button">
+    Adicionar Endereço
+  </a>
+</p>
+
+{% endblock content %}

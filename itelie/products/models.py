@@ -27,15 +27,15 @@ class Category(TimeStampedModel):
 
 
 class Product(TimeStampedModel):
-    name    = models.CharField("Name of Product", max_length=255)
-    color   = models.CharField("Color", max_length=255)
-    cost    = models.DecimalField("Cost(R$)",max_digits=8, decimal_places=2) #accepts anything up to R$999,999.99
-    price   = models.DecimalField("Price(R$)",max_digits=8, decimal_places=2) #accepts anything up to R$999,999.99
-    inventory = models.PositiveIntegerField("Quantity in Stock")
+    name        = models.CharField("Name of Product", max_length=255)
+    color       = models.CharField("Color", max_length=255)
+    cost        = models.DecimalField("Cost(R$)",max_digits=8, decimal_places=2) #accepts anything up to R$999,999.99
+    price       = models.DecimalField("Price(R$)",max_digits=8, decimal_places=2) #accepts anything up to R$999,999.99
+    inventory   = models.PositiveIntegerField("Quantity in Stock")
     description = models.TextField("Product Description", default="", blank=True)
-    weight  = models.DecimalField("Weight of Product (kg)", max_digits=5, decimal_places=2, default=0.1)
-    status  = models.BooleanField("Product Available?", default=True)
-    slug    = AutoSlugField("Product Address", unique=True, populate_from="name")
+    weight      = models.DecimalField("Weight of Product (kg)", max_digits=5, decimal_places=2, default=0.1)
+    status      = models.BooleanField("Product Available?", default=True)
+    slug        = AutoSlugField("Product Address", unique=True, populate_from="name")
     #image = models.ImageField(upload_to='products/%Y/%m/%d',blank=True)
 
     # Relations:
