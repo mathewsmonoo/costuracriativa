@@ -1,0 +1,111 @@
+{% load static %} 
+{% load static i18n compress %}
+
+<!-- #### Navigation Bar Area Start #### -->
+
+<div class="mb-1">
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <button
+      class="navbar-toggler navbar-toggler-right"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="jam jam-menu"></span>
+    </button>
+    <div class="navbar-header">
+      <a class="navbar-brand" href="{% url 'home' %}">iTeliê</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <form
+            action="{% url 'products:search_results' %}"
+            method="get"
+            class="mr-2 my-auto w-100 d-inline-block order-1"
+          >
+            <div class="input-group">
+              <input
+                type="search"
+                name="q"
+                placeholder="Buscar..."
+                class="form-control border border-right-0"
+              />
+              <span class="input-group-append">
+                <button
+                  class="btn  border border-left-0"
+                  type="submit"
+                >
+                  <span class="jam jam-search"></span>
+                </button>
+              </span>
+            </div>
+          </form>
+        </li>
+        <li class="nav-item">
+            <div class="dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'products:list' %}"
+                ><span class="jam jam-shopping-bag"></span> {% trans "Our Products" %}
+              </a>
+              <ul class="dropdown-menu">
+                <a
+                  class="nav-link"
+                  href="{% url 'products:list'  %}"
+                  > {% trans "All Products" %}</a
+                >
+                <a class="nav-link" href="{% url 'products:category_list' %}"
+                  > {% trans "Categories" %}</a
+                >
+              </ul>
+            </div>
+          </li>
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <div class="dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+              ><span class="jam jam-id-card"></span> {% trans "Account" %} 
+            </a>
+            <ul class="dropdown-menu">
+              <a
+                class="nav-link"
+                href="{% url 'users:detail' request.user.username  %}"
+                ><span class="jam jam-user"></span> {% trans "My Profile" %}</a
+              >
+              <a class="nav-link" href="{% url 'account_logout' %}"
+                ><span class="jam jam-log-out"></span> {% trans "Sign Out" %}</a
+              >
+            </ul>
+          </div>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          {# URL provided by django-allauth/account/urls.py #}
+          <a
+            id="sign-up-link"
+            class="nav-link"
+            href="{% url 'account_signup' %}"
+            ><span class="jam jam-user-plus"></span> {% trans "Sign Up" %}</a
+          >
+        </li>
+        <li class="nav-item">
+          {# URL provided by django-allauth/account/urls.py #}
+          <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}"
+            ><span class="jam jam-log-in"></span> {% trans "Sign In" %}</a
+          >
+        </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link" href="#TODO" title='{% trans "Cart" %}'><span class="jam jam-shopping-cart">{% trans "Cart" %}</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<!-- #### Navigation Bar Area End #### -->

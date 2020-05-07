@@ -20,7 +20,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         "rg",
         "phone",
         "prefix",
-        "addresses",
     ]
 
     # We already imported user in the View code above,

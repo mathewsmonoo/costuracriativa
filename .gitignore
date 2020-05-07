@@ -319,3 +319,8 @@ tags
 itelie/media/
 
 .pytest_cache/
+
+itelie/itelie/static/*
+itelie/itelie/static
+itelie/static/*
+itelie/static

@@ -21,7 +21,7 @@
             <p>
               <strong>
                 {{product.name}}
-                <a href="#TODO" title="Curtir">❤️</a>
+                <a href="#TODO" title="Curtir"><span class="jam jam-heart"></span></a>
               </strong>
             </p>
           </span>
@@ -39,7 +39,7 @@
               <p>
                 Categoria:
                 <a
-                  href="{% url 'products:product_by_category' product.category.slug %}"
+                  href="{% url 'products:product_by_category' product.category.slug %}" title="{{ product.category }}"
                   >{{ product.category }}</a
                 >
               </p>

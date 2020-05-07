@@ -1,23 +1,64 @@
-{% extends "base.html" %}
-{% block title %}Address List{% endblock title %}
+{% extends "base.html" %} 
+{% block title %} Lista de Endereços{% endblock title %} 
 
-{%block content %}
+{% block pageheader %}
+<div class="page-header mb-4">
+  <h1>Seus Endereços</h1>
+</div>
+{% endblock pageheader %}
 
-<h2>Lista de Endereços</h2>
-<ul>
-  {% for address in address_list %}
-  <li>
-    <a href="{% url 'addresses:detail' address.pk %}"
-      >{{ address.nickname }}</a>
-  </li>
-  {% endfor %}
-</ul>
-<hr />
-<p>Está faltando algum endereço?</p>
-<p>
+{% block content %}
+<div class="container">
+  <div class="card-deck">
+    {% for address in address_list %}
+    <div class="col-md-4 col-sm-4">
+      <div class="card h-100">
+        <div
+          onclick="window.location='{% url 'addresses:detail' address.pk %}';"
+          style="cursor: pointer;"
+        ></div>
+        <h5 class="card-header text-center">{{ address.nickname }}</h5>
+        <div class="card-body">
+          <span class="card-title">
+            <p>
+              <strong>
+                {{ address.receiver_name }}
+              </strong>
+            </p>
+          </span>
+          <span class="card-text">
+            <ul class="list-unstyled">
+              <li>
+                {{ address.street }} , {{ address.number }} , {{ address.neighborhood }}
+              </li>
+              <li>{{ address.city }} - {{ address.get_state_display }}</li>
+              <li>{{ address.postal_code }}</li>
+              <li>{{ address.get_receiver_phone }}</li>
+              {% if address.extra_data %}
+                <li>({{ address.extra_data }})</li>
+              {% endif %}
+            </ul>
+          </span>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-warning float-left" href="{% url 'addresses:update' address.pk %}" title="Editar" role="button">
+              EDITAR
+            </a>
+            <a class="btn btn-outline-danger float-right"  href="#TODO" title="Excluir" role="button">
+              EXCLUIR
+            </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<br />
+<br />
+<h4>
+  Deseja adicionar outro endereço?
   <a class="btn btn-primary" href="{% url 'addresses:add' %}" role="button">
     Adicionar Endereço
   </a>
-</p>
-
+</h4>
 {% endblock content %}

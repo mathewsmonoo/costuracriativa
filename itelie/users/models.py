@@ -3,9 +3,6 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from itelie.addresses.models import Address, AddressInfo
-
-
 class User(AbstractUser):
     name = models.CharField(
         _("Name of User"), blank=True, max_length=255
@@ -15,8 +12,6 @@ class User(AbstractUser):
     rg      = models.CharField(_("RG"),max_length=9, default="")
     phone   = models.CharField(_("Phone Number"), max_length=20, blank=True)
     prefix  = models.CharField(_("Prefix"), max_length=8, blank=True)
-
-    addresses = models.ManyToManyField(Address, through=AddressInfo, through_fields=('user','address'), related_name="user_adresses")
 
     def get_absolute_url(self):
         return reverse(
