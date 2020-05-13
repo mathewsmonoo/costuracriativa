@@ -22,7 +22,7 @@ class ProductFactory(factory.django.DjangoModelFactory):
     color   = factory.fuzzy.FuzzyText()
     cost    = factory.fuzzy.FuzzyDecimal(0.1,99.9)
     price   = factory.fuzzy.FuzzyDecimal(0,99.9)
-    inventory   =  factory.fuzzy.FuzzyInteger(0,100)
+    stock   =  factory.fuzzy.FuzzyInteger(0,100)
     description = factory.Faker('paragraph', nb_sentences=3, variable_nb_sentences=True)
     weight  = factory.fuzzy.FuzzyDecimal(0,99.9)
     status  = factory.fuzzy.FuzzyInteger(0,1)

@@ -24,10 +24,12 @@ urlpatterns = [
         include("itelie.users.urls", namespace="users"),
     ),
     path("accounts/", include("allauth.urls")),
+
     # Your stuff: custom urls includes go here
-    #
-    path('address/', include('itelie.addresses.urls', namespace='addresses')),
-    path('products/', include('itelie.products.urls', namespace='products')),
+    path('address/', include('itelie.addresses.urls',namespace='addresses')),
+    path('products/',include('itelie.products.urls', namespace='products')),
+    path('cart/',    include('itelie.cart.urls',     namespace='cart')),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

@@ -21,17 +21,16 @@
             <p>
               <strong>
                 {{product.name}}
-                <a href="#TODO" title="Curtir"><span class="jam jam-heart"></span></a>
+                <a href="#TODO" title="Curtir"
+                  ><span class="jam jam-heart"></span
+                ></a>
               </strong>
             </p>
           </span>
 
           <!--TODO - Make discount check condition loop\/-->
           <span class="card-text text-right">
-            {% if product.discount %}
-              {{ product.discount }} 
-            {% endif %}
-            <br />
+            {# product.description #}
             {% if product.price %}
               <h4><strong>R$ </strong>{{product.price}}</h4>
             {% endif %}
@@ -39,7 +38,8 @@
               <p>
                 Categoria:
                 <a
-                  href="{% url 'products:product_by_category' product.category.slug %}" title="{{ product.category }}"
+                  href="{% url 'products:product_by_category' product.category.slug %}"
+                  title="{{ product.category }}"
                   >{{ product.category }}</a
                 >
               </p>
@@ -47,12 +47,58 @@
           </span>
 
           <!--TODO - ON HOVER \/-->
-          <button
-            class="btn btn-secondary btn-sm"
-            title="Adicionar ao Carrinho"
-          >
-            Adicionar ao Carrinho
-          </button>
+
+<!--    <form action="{% url 'cart:add' %}" id="form-add-to-cart">
+            <div class="form-group">
+                    <input type="hidden" name="vid" value="{{ product.id }}">
+            </div>
+            <div class="text-left">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                    Adicionar ao carrinho
+                </button>
+            </div>
+        </form> -->
+        <form action="{% url 'cart:add' %}" id="form-add-to-cart">
+          <div class="form-group">
+            <select id="select-variations" name="vid" class="form-control form-control-lg">
+              {% for variation in product.variation_set.all %}
+                {% if variation.sale_price %}
+                  <option 
+                    data-price="{{ variation.price }}"
+                    data-sale-price="{{ variation.sale_price }}"
+                    value="{{ variation.id }}"
+                    >{{ variation.name }}
+                  </option>
+                {% else %}
+                  <option 
+                    data-price="{{ variation.price }}"
+                    value="{{ variation.id }}"
+                    >{{ variation.name }}
+                  </option>
+                {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+          <div class="text-left">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                Adicionar ao carrinho
+            </button>
+        </div>
+        </form>
+
+
+<!--    <form action="{% url 'cart:add'%}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{ product.id }}" name="variation_id">
+            <button
+              class="btn btn-secondary btn-sm"
+              title="Adicionar ao Carrinho"
+              type="submit"
+            >
+              Adicionar ao Carrinho
+            </button>
+          </form> -->
+        
         </div>
       </div>
     </div>

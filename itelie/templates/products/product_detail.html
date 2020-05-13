@@ -1,5 +1,5 @@
 {% extends "base.html" %} 
-{% block title %} iTeliê - {{ product.name }}{% endblock title%} 
+{% block title %} iTeliê - {{ product.name }}{% endblock title %} 
 
 {% block content %}
 
@@ -13,8 +13,8 @@
     <p><strong>Cor: </strong>{{ product.color }}</p>
 {% endif %} 
 
-{% if product.inventory %}
-    <p><strong>Em estoque: </strong>{{ product.inventory }}</p>
+{% if product.stock %}
+    <p><strong>Em estoque: </strong>{{ product.stock }}</p>
 {% endif %} 
 
 {% if product.price %}
