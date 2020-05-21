@@ -1,5 +1,7 @@
 {% extends "base.html" %} 
-{% block title %} iTeliê - Produtos {% endblock title %} 
+{% load pagination %}
+
+{% block title %}Produtos | {{ block.super }} {% endblock title %} 
 
 {% block pageheader %}
 <div class="page-header text-center mb-4">
@@ -9,5 +11,5 @@
 
 {% block content %}
   {% include "products/base_product_listing.html" %}
-  {% include "products/pagination.html" with page=page_obj %}
+  {% pagination request paginator page_obj %}
 {% endblock content %}

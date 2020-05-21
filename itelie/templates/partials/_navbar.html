@@ -17,7 +17,8 @@
       <span class="jam jam-menu"></span>
     </button>
     <div class="navbar-header">
-      <a class="navbar-brand" href="{% url 'home' %}">iTeliê</a>
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <img src='{% static "images/logo_peq.png" %}' alt="My image"></a>
     </div>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
@@ -101,7 +102,7 @@
         </li>
         {% endif %}
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'cart:cart' %}" title='{% trans "Cart" %}'><span class="jam jam-shopping-cart">{% trans "Cart" %}</span></a>
+            <a class="nav-link" href="#TODO" title='{% trans "Cart" %}'><span class="jam jam-shopping-cart">{% trans "Cart" %}</span></a>
         </li>
       </ul>
     </div>

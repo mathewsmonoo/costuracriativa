@@ -4,10 +4,15 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 class User(AbstractUser):
+
+    is_customer = models.BooleanField(default=True, blank=True, null=True)
+    is_staff    = models.BooleanField(default=False, blank=True, null=True)
+    #is_admin = models.BooleanField(fdefault = False)
+
     name = models.CharField(
         _("Name of User"), blank=True, max_length=255
     )
-    dob     = models.DateField(_("Birthday"), null=True, blank=True)
+    dob     = models.DateField(_("Birthday"), null=True, blank=True)    
     cpf     = models.CharField(_("CPF"),max_length=11, default="")   
     rg      = models.CharField(_("RG"),max_length=9, default="")
     phone   = models.CharField(_("Phone Number"), max_length=20, blank=True)
@@ -25,3 +30,11 @@ class User(AbstractUser):
    
     def __str__(self):
         return self.username
+
+# class Staff(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+#     staff_number = models.PositiveIntegerField(blank=True,n)
+
+# class Costumer(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+#     user_nickname = models.CharField("Nick", max_length=25, default="", blank=True)

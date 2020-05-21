@@ -1,5 +1,5 @@
 {% extends "base.html" %} 
-{% block title %}Endereço: {{ address.nickname }}{% endblock title %} 
+{% block title %}{{ address.nickname }} | {{ block.super }}{% endblock title %} 
 
 {% block content %}
 

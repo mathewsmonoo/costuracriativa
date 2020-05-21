@@ -5,9 +5,12 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from .models import Category, Product
 
+
 #---------------------Category Views-------------------------------
 class CategoryDetailView(DetailView):
     model = Category
+    paginate_by = 8
+
 
 class CategoryListView(ListView):
     model       = Category
@@ -17,6 +20,10 @@ class CategoryListView(ListView):
 class ProductDetailView(DetailView):
     model = Product
 
+class ProductListView(ListView):
+    model       = Product
+    paginate_by = 8
+
 '''class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     fields = ['name', 'description',]
@@ -24,12 +31,6 @@ class ProductDetailView(DetailView):
     def form_valid(self, form):
         form.instance.creator = self.request.user
         return super().form_valid(form)'''
-
-class ProductListView(ListView):
-    model       = Product
-    paginate_by = 8
-    #context_object_name='products'
-
 '''
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
@@ -37,20 +38,18 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     action = "Update"'''
 
 #---------------------Linking Views-------------------------------
-class ProductCategory(ListView):
-    model           = Product
-    template_name   = 'products/product_by_category.html'
-    paginate_by     = 8
+class ProductCategoryView(ListView):
 
-    def get_context_data(self, **kwargs):
-        context = super(ProductCategory, self).get_context_data(**kwargs)
-        context['category'] = self.category
-        return context
+    template_name   = 'products/product_by_category.html'
+    paginate_by = 6
 
     def get_queryset(self):
-        self.category = get_object_or_404(Category, slug=self.kwargs['slug'])
-        return Product.objects.filter(category=self.category)
+        return Product.objects.filter(category__slug=self.kwargs['slug'])
 
+    def get_context_data(self, **kwargs):
+        context = super(ProductCategoryView, self).get_context_data(**kwargs)
+        context['current_category'] = get_object_or_404(Category, slug=self.kwargs['slug'])
+        return context
 
 #----------------------Search View--------------------------------
 class ProductSearchView(ListView):
@@ -74,3 +73,11 @@ class ProductSearchView(ListView):
         else:
             object_list = self.model.objects.none()
         return object_list
+
+#--------------------------------------------------------------------------------------
+category_detail = CategoryDetailView.as_view()
+category_list   = CategoryListView.as_view()
+product_detail  = ProductDetailView.as_view()
+product_list    = ProductListView.as_view()
+product_category = ProductCategoryView.as_view()
+product_search = ProductSearchView.as_view()

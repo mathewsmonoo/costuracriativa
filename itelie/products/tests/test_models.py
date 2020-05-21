@@ -14,9 +14,9 @@ def test_get_absolute_url(product):
     url = product.get_absolute_url()
     assert url == f'/products/{product.slug}/'
 
-def test_get_profit(product):
-    profit = product.get_profit()
-    assert profit == (product.price - product.cost)
+# def test_get_profit(product):
+#     profit = product.get_profit()
+#     assert profit == (product.price - product.cost)
 
 def test___str__(category):
     assert category.__str__() == category.name

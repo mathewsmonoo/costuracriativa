@@ -86,7 +86,8 @@ LOCAL_APPS = [
     "itelie.users.apps.UsersConfig",
     "itelie.products.apps.ProductsConfig",
     "itelie.addresses.apps.AddressesConfig",
-    "itelie.cart.apps.CartConfig",
+    "itelie.carts.apps.CartsConfig",
+    "itelie.core.apps.CoreConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -298,10 +299,3 @@ STATICFILES_FINDERS += ["compressor.finders.CompressorFinder"]
 
 # Your stuff...
 # ------------------------------------------------------------------------------
-
-
-SESSION_SAVE_EVERY_REQUEST = True
-
-#CART_SESSION_ID = 'cart'
-#SESSION_COOKIE_AGE = 60 * 60 * 24 * 7
-#SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

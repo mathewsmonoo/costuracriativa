@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% block title %} iTeliê - Categorias {% endblock title %} 
-
+{% load pagination %}
+{% block title %} Categorias | {{ block.super }} {% endblock title %} 
 {% block pageheader %}
 <div class="page-header text-center mb-4">
   <h1>Categorias</h1>
@@ -37,5 +37,5 @@
     {% endfor %}
   </div>
 </div>
-{% include "products/pagination.html" with page=page_obj %}
+{% pagination request paginator page_obj %}
 {% endblock content %}

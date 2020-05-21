@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %} iTeliê - {{ category.name }}{% endblock title %} 
-
+{% load pagination %}
+{% block title %} {{ current_category }} | {{ block.super }}{% endblock title %} 
 {% block pageheader %}
 <div class="page-header text-center mb-4">
-  <h1>{{ category.name }}</h1>
+  <h1>{{ current_category }}</h1>
 </div>
 <a class="btn btn-outline-secondary btn-sm" href="{% url 'products:list' %}" role="button">
   Voltar
@@ -12,5 +12,5 @@
 
 {% block content %}
   {% include "products/base_product_listing.html" %}
-  {% include "products/pagination.html" with page=page_obj %}
+  {% pagination request paginator page_obj %}
 {% endblock content %}
