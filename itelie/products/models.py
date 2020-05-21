@@ -13,12 +13,6 @@ class Category(TimeStampedModel):
     # TODO:
     # Add Image;
 
-    class Meta:
-        ordering = ('-name',)
-        verbose_name = 'category'
-        verbose_name_plural= 'categories'
-        index_together = (('id', 'slug'),)
-
     def __str__(self):
         return self.name
 
@@ -27,13 +21,13 @@ class Category(TimeStampedModel):
 
 
 class Product(TimeStampedModel):
-    name        = models.CharField("Product name", max_length=255)
-    price       = models.DecimalField("Price(R$)",max_digits=8, decimal_places=2) #accepts anything up to R$999,999.99
-    sale_price  = models.DecimalField("Promotional Price(R$)",max_digits=8, decimal_places=2, null=True, blank=True)
-    description = models.TextField("Product Description", default="", blank=True)
-    weight      = models.DecimalField("Weight of Product (kg)", max_digits=5, decimal_places=2, default=0.1)
-    status      = models.BooleanField("Product Available?", default=True)
-    slug        = AutoSlugField("Product Address", unique=True, populate_from="name")
+    name        = models.CharField("Nome do Produto", max_length=255)
+    price       = models.DecimalField("Preço(R$)",max_digits=8, decimal_places=2) #accepts anything up to R$999,999.99
+    sale_price  = models.DecimalField("Preço Promocional(R$)",max_digits=8, decimal_places=2, null=True, blank=True)
+    description = models.TextField("Descrição", default="", blank=True)
+    weight      = models.DecimalField("Peso(kg)", max_digits=5, decimal_places=2, default=0.1)
+    status      = models.BooleanField("Disponível?", default=True)
+    slug        = AutoSlugField("Endereço digital", unique=True, populate_from="name")
     #image = models.ImageField(upload_to='products/%Y/%m/%d',blank=True)
 
     # Relations:
@@ -51,11 +45,6 @@ class Product(TimeStampedModel):
             return self.sale_price
         else:
             return self.price
-
-    class Meta:
-        verbose_name = "Produto"
-        verbose_name_plural = "Produtos"
-        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -77,10 +66,9 @@ class Variation(models.Model):
             return self.sale_price
         else:
             return self.price
-
     class Meta:
-        verbose_name = 'Variation'
-        verbose_name_plural = 'Variations'
+        verbose_name="Variação"
+        verbose_name_plural = "Variações"
 
     def __str__(self):
         return self.name
