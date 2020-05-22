@@ -4,7 +4,18 @@
   <div class="card-deck">
     {% for product in product_list %}
     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+      
       <div class="card text-center h-100">
+        <div class="card-header">
+          <p>
+            <strong>
+              {{product.name}}
+              <a href="#TODO" title="Curtir"
+                ><span class="jam jam-heart"></span
+              ></a>
+            </strong>
+          </p>
+        </div>
         <div
           onclick="window.location='{% url 'products:detail' product.slug %}';"
           style="cursor: pointer;"
@@ -17,40 +28,40 @@
             title="{{product.name}}"
           />
         </div>
+        {% if product.category %}
+          <a
+            href="{% url 'products:product_by_category' product.category.slug %}"
+            title="{{ product.category }}"
+            >Categoria: {{ product.category }}</a
+          >
+        {% endif %}
+       
         <div class="card-body">
-          <!--TODO - Make rating loop\/-->
-          <span class="card-title">
-            <p>
-              <strong>
-                {{product.name}}
-                <a href="#TODO" title="Curtir"><span class="jam jam-heart"></span></a>
-              </strong>
-            </p>
-          </span>
-
           <span class="card-text text-right">
-            {% if product.discount %}
-              {{ product.discount }} 
-            {% endif %}
-            <br />
-            {% if product.price %}
-              <h4><strong>R$ </strong>{{product.price}}</h4>
-            {% endif %}
-            {% if product.category %}
+            <!-- Discount Verification -->
+            {% if product.sale_price > 0 %}
               <p>
-                Categoria:
-                <a
-                  href="{% url 'products:product_by_category' product.category.slug %}" title="{{ product.category }}"
-                  >{{ product.category }}</a
-                >
+                <del class="font-italic text-danger"
+                  >R${{ product.price }}</del>
+                <br />
+                {{ product.get_discount }}% OFF!
+                <br />
+                <h3 class="text-center font-weight-bold">R$ {{product.sale_price}}</h3>
+              </p>
+            {% else %}
+              <p>
+                <h3 class="text-center font-weight-bold">R$ {{product.price}}</h3>
               </p>
             {% endif %}
           </span>
-
-          <!--TODO - ON HOVER \/-->
-          <a class="btn btn-primary btn-sm" href="#TODO" title="Detalhes">Detalhes</a>
-          <a class="btn btn-success btn-sm" href="{% url 'checkout:create_cartitem' product.slug %}" title="Adicionar ao Carrinho">Adicionar ao Carrinho</a>
+          <!-- End of Discount Verification -->
         </div>
+        <row class="card-footer">
+          <div class="row text-center">
+              <a class="btn btn-success btn-sm col-sm-5 mr-1" href="{% url 'products:detail' product.slug %}" title="Detalhes">Detalhes</a>
+              <a class="btn btn-success btn-sm col-sm-5 mr-1" href="{% url 'checkout:create_cartitem' product.slug %}" title="Adicionar ao Carrinho"><span class="jam jam-shopping-cart"></span></a>
+          </div>
+        </row>
       </div>
     </div>
     {% endfor %}
