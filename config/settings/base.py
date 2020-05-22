@@ -80,14 +80,15 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "widget_tweaks",
 ]
 
 LOCAL_APPS = [
     "itelie.users.apps.UsersConfig",
     "itelie.products.apps.ProductsConfig",
     "itelie.addresses.apps.AddressesConfig",
-    "itelie.carts.apps.CartsConfig",
     "itelie.core.apps.CoreConfig",
+    "itelie.checkout.apps.CheckoutConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

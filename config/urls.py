@@ -25,9 +25,9 @@ urlpatterns = [
     ),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-    #
-    path('address/', include('itelie.addresses.urls', namespace='addresses')),
-    path('products/', include('itelie.products.urls', namespace='products')),
+    path('address/',    include('itelie.addresses.urls', namespace='addresses')),
+    path('products/',   include('itelie.products.urls',  namespace='products')),
+    path('purchase/',   include('itelie.checkout.urls',  namespace='checkout')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

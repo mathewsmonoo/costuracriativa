@@ -1,0 +1,24 @@
+{% extends "base.html" %} 
+{% block title %} Carrinho {% endblock title%} 
+
+{% block content %}
+{% load static %}
+
+<h1>Seu carrinho:</h1>
+
+{% if not request.session.is_empty %}
+    <div class="row mt-3">
+        <div class="col">
+            {% include 'partials/_cart.html' %}
+        </div>
+    </div>
+{% else %}
+    <div class="row mt-3">
+        <div class="col">
+            <h3>Carrinho vazio</h3>
+            <p class="lead">Não há produtos no seu carrinho.</p>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock content %}

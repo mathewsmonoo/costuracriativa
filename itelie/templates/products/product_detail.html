@@ -29,8 +29,7 @@
     <p><strong>Peso: </strong>{{ product.weight }}</p>
 {% endif %} 
 
-<a class="btn btn-primary" href="#TODO" role="button">
-    Adicionar ao Carrinho
-</a>
+<a class="btn btn-secondary btn-sm" href="{% url 'checkout:create_cartitem' product.slug %}" title="Adicionar ao Carrinho">Adicionar ao Carrinho</a>
+
 <hr/>
 {% endblock content %}
