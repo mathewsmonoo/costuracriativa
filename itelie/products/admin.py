@@ -1,8 +1,8 @@
 from django.contrib import admin
-
 from django.db.models import Count
 
-from .models import Category, Product, Variation
+from .models import Category, Product, ProductImage, Variation, VariationImage
+
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display =['name','products_count']
@@ -15,23 +15,30 @@ class CategoryAdmin(admin.ModelAdmin):
     def products_count(self,variation_instance):
         return variation_instance.products_count
 
-
 class VariationInLine(admin.TabularInline):
     model = Variation
     extra = 1
 
-class VariationAdmin(admin.ModelAdmin):
-    list_display = ['name','price','sale_price','product']
+class ProductImageInLine(admin.TabularInline):
+    model = ProductImage
 
 class ProductAdmin(admin.ModelAdmin):
     list_display  = ['name', 'price', 'sale_price']
     search_fields = ['name','slug','category__name']
-     
-
     inlines = [
+        ProductImageInLine,
         VariationInLine
     ]
 
-admin.site.register(Category, CategoryAdmin)
-admin.site.register(Product, ProductAdmin)
-admin.site.register(Variation, VariationAdmin)
+class VariationImageInLine(admin.TabularInline):
+    model = VariationImage
+
+class VariationAdmin(admin.ModelAdmin):
+    list_display = ['product','name','price','sale_price']
+    inlines = [
+        VariationImageInLine,
+    ]
+
+admin.site.register(Category,   CategoryAdmin)
+admin.site.register(Product,    ProductAdmin)
+admin.site.register(Variation,  VariationAdmin)

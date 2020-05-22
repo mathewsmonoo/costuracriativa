@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 {% load pagination %}
-{% block title %} Categorias | {{ block.super }} {% endblock title %} 
+{% block title %} Categorias | {{ block.super }} {% endblock title %}
+
 {% block pageheader %}
+{% load static %}
 <div class="page-header text-center mb-4">
   <h1>Categorias</h1>
 </div>
 {% endblock pageheader %}
 
-{% block content %} 
+{% block content %}
 <div class="container">
   <div class="card-deck">
     {% for category in category_list %}
@@ -24,13 +26,23 @@
           onclick="window.location='{% url 'products:product_by_category' category.slug %}';"
           style="cursor: pointer;"
         >
-          <img
-            src="{{category.image.url}}"
-            class="card-img-top"
-            height="150px"
-            width="150px"
-            title="{{category.name}}"
+        {% if category.image_url %}
+          <img 
+              class="card-img-top"
+              src="{{category.image.url}}"
+              height="150px"
+              width="150px"
+              title="{{category.name}}"
           />
+        {% else %}
+          <img 
+              class="card-img-top"
+              src=""
+              height="150px"
+              width="150px"
+              title="{{category.name}}"
+            />
+        {% endif %}
         </div>
       </div>
     </div>
