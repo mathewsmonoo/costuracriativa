@@ -1,59 +1,83 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Usuário: {{ object.username }}{% endblock %}
+{% block title %}{{ object.username }} | {{ block.super }}{% endblock %}
 
 {% block content %}
 <div class="container">
-
   <div class="row">
     <div class="col-sm-12">
 
       <h2>
         {% if object.name %}
           {% if object.prefix %}
-            Olá, {{object.prefix}} {{object.name}}
+            Olá, {{object.prefix}} {{object.get_short_name}}
           {% else %}
-            Olá, {{object.name}}
+            Olá, {{object.get_short_name}}
           {% endif %}
         {% endif %}
       </h2>
 
-      {% if object.dob %}
-        <p><strong>Aniversário:</strong> {{ object.dob }}</p>
-      {% endif %}
-
-      {% if object.cpf %}
-        <p><strong>CPF:</strong> {{ object.cpf }}</p>
-      {% endif %}
-
-      {% if object.rg %}
-        <p><strong>RG:</strong> {{ object.rg }}</p>
-      {% endif %}
-
-      {% if object.phone %}
-        <p><strong>Telefone para contato:</strong> {{ object.phone }}</p>
-      {% endif %}
-
+      <div class="table-responsive">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th scope="row">Nome Completo:</th>
+              <td>
+                {% if object.name %}
+                  {{ object.get_full_name }}
+                {% endif %}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Data de Nascimento:</th>
+              <td>
+                {% if object.dob %}
+                  {{ object.dob }}
+                {% endif %}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Telefone:</th>
+              <td>
+                {% if object.phone %}
+                  {{ object.phone }}
+                {% endif %}
+              </td>
+            </tr>       
+            <tr>
+              <th scope="row">CPF:</th>
+              <td>
+                {% if object.cpf %}
+                  {{ object.cpf }}
+                {% endif %}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">RG:</th>
+              <td>
+                {% if object.rg %}
+                  {{ object.rg }}
+                {% endif %}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>  
     </div>
   </div>
 
 {% if object == request.user %}
-<!-- Action buttons -->
-<div class="row">
-
-  <div class="col-sm-12">
-    <a class="btn btn-outline-primary" href="{% url 'users:update' %}" role="button">Atualizar Info</a>
-    <a class="btn btn-outline-info" href="{% url 'account_email' %}" role="button">Contas de E-Mail</a>
-    <a class="btn btn-outline-secondary" href="{% url 'addresses:list' %}" role="button">Endereços</a>
-    <!-- Your Stuff: Custom user template urls -->
+  <!-- Action buttons -->
+  <div class="row">
+    <div class="col-sm-12">
+      <a class="btn btn-outline-primary"    href="{% url 'users:update' %}" role="button">Atualizar</a>
+      <a class="btn btn-outline-info"       href="{% url 'account_email' %}" role="button">Contas de E-Mail</a>
+      <a class="btn btn-outline-secondary"  href="{% url 'addresses:list' %}" role="button">Endereços</a>
+      <a class="btn btn-outline-success"    href="#TODO" role="button">Meus Pedidos</a>
+    </div>
   </div>
-
-</div>
-<!-- End Action buttons -->
+  <!-- End Action buttons -->
 {% endif %}
-
-
 </div>
 {% endblock content %}
-

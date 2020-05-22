@@ -4,8 +4,6 @@ from django.contrib.auth import forms, get_user_model
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-#from .models import User
-
 User = get_user_model()
 
 class UserAdminCreationForm(forms.UserCreationForm):
@@ -18,7 +16,6 @@ class UserAdminForm(ModelForm):
         model = User
         fields = ['username', 'email', 'name', 'is_active', 'is_staff']
 
-#
 
 # class UserChangeForm(forms.UserChangeForm):
 #     class Meta(forms.UserChangeForm.Meta):
