@@ -1,4 +1,4 @@
-costura
 ==============================
-
-eCommerce for costura - Uses cookiecutter-django as base.
+        CosturaCriativa
+==============================
+eCommerce Project made using Django - Uses cookiecutter-django as base.

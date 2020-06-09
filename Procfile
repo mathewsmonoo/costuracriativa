@@ -1,0 +1,1 @@
+web: gunicorn costuracriativa.wsgi --log-file -
