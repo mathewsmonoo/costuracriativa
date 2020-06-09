@@ -1,1 +1,1 @@
-web: gunicorn costuracriativa.wsgi --log-file -
+web: gunicorn costura.wsgi --log-file -
