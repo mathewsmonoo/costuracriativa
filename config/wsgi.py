@@ -17,6 +17,7 @@ import os
 import sys
 
 from django.core.wsgi import get_wsgi_application
+from whitenoise.django import DjangoWhiteNoise
 
 # This allows easy placement of apps within the interior
 # costura directory.
@@ -42,3 +43,4 @@ application = get_wsgi_application()
 # Apply WSGI middleware here.
     # from helloworld.wsgi import HelloWorldApplication
     # application = HelloWorldApplication(application)
+application = DjangoWhiteNoise(application)
