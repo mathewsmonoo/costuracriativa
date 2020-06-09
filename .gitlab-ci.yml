@@ -3,9 +3,9 @@ stages:
   - test
 
 variables:
-  POSTGRES_USER: 'itelie'
+  POSTGRES_USER: 'costura'
   POSTGRES_PASSWORD: ''
-  POSTGRES_DB: 'test_itelie'
+  POSTGRES_DB: 'test_costura'
 
 flake8:
   stage: lint

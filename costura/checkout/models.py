@@ -1,7 +1,7 @@
 from django.db import models
-from itelie.products.models import Product
+from costura.products.models import Product
 from model_utils.models import TimeStampedModel
-#from itelie.products.models import Variation
+#from costura.products.models import Variation
 
 
 class CartItemManager(models.Manager):

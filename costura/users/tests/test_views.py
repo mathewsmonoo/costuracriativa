@@ -4,8 +4,8 @@ from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse
 
-from itelie.users.models import User
-from itelie.users.views import (
+from costura.users.models import User
+from costura.users.views import (
     UserRedirectView,
     UserUpdateView,
 )

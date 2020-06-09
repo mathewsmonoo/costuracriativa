@@ -1,6 +1,6 @@
 import pytest
 
-from itelie.users.models import User
+from costura.users.models import User
 
 pytestmark = pytest.mark.django_db
 

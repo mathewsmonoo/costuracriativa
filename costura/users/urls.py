@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf.urls import url
 from . import views
-from itelie.users.views import (
+from costura.users.views import (
     user_redirect_view,
     user_update_view,
     user_detail_view,

@@ -1,4 +1,4 @@
-iTelie
+costura
 ==============================
 
-eCommerce for iTelie - Uses cookiecutter-django as base.
+eCommerce for costura - Uses cookiecutter-django as base.

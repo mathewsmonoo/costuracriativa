@@ -4,8 +4,8 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views.generic import RedirectView, TemplateView
 
-from itelie.checkout.models import CartItem
-from itelie.products.models import Product
+from costura.checkout.models import CartItem
+from costura.products.models import Product
 
 
 #Adicionar via get; Adicionar produto no carrinho de compras e redireciona para pag do carrinho

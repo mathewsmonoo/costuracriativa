@@ -8,8 +8,8 @@ import environ
 
 BASE_DIR = (
     environ.Path(__file__) - 3
-)  # (itelie/config/settings/base.py - 3 = itelie/)
-APPS_DIR = BASE_DIR.path("itelie")
+)  # (costura/config/settings/base.py - 3 = costura/)
+APPS_DIR = BASE_DIR.path("costura")
 
 env = environ.Env()
 
@@ -49,7 +49,7 @@ DATABASES = {
     # Raises ImproperlyConfigured Exception
     # if DATABASE_URL Not in os.environ
     "default": env.db(
-        "DATABASE_URL", default="postgres://postgres:5555@127.0.0.1:5432/iteliedb"
+        "DATABASE_URL", default="postgres://postgres:5555@127.0.0.1:5432/costuradb"
     )
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
@@ -84,11 +84,11 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "itelie.users.apps.UsersConfig",
-    "itelie.products.apps.ProductsConfig",
-    "itelie.addresses.apps.AddressesConfig",
-    "itelie.core.apps.CoreConfig",
-    "itelie.checkout.apps.CheckoutConfig",
+    "costura.users.apps.UsersConfig",
+    "costura.products.apps.ProductsConfig",
+    "costura.addresses.apps.AddressesConfig",
+    "costura.core.apps.CoreConfig",
+    "costura.checkout.apps.CheckoutConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -98,7 +98,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
 MIGRATION_MODULES = {
-    "sites": "itelie.contrib.sites.migrations"
+    "sites": "costura.contrib.sites.migrations"
 }
 
 # AUTHENTICATION
@@ -204,7 +204,7 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "itelie.utils.context_processors.settings_context",
+                "costura.utils.context_processors.settings_context",
             ],
         },
     }
@@ -287,10 +287,10 @@ ACCOUNT_EMAIL_REQUIRED = True
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = "itelie.users.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "costura.users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 SOCIALACCOUNT_ADAPTER = (
-    "itelie.users.adapters.SocialAccountAdapter"
+    "costura.users.adapters.SocialAccountAdapter"
 )
 # django-compressor
 # ------------------------------------------------------------------------------

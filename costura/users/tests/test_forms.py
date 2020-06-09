@@ -1,7 +1,7 @@
 import pytest
 
-from itelie.users.forms import UserCreationForm
-from itelie.users.tests.factories import UserFactory
+from costura.users.forms import UserCreationForm
+from costura.users.tests.factories import UserFactory
 
 pytestmark = pytest.mark.django_db
 

@@ -1,8 +1,8 @@
 import pytest
 from django.test import RequestFactory
 
-from itelie.users.models import User
-from itelie.users.tests.factories import UserFactory
+from costura.users.models import User
+from costura.users.tests.factories import UserFactory
 
 
 @pytest.fixture(autouse=True)

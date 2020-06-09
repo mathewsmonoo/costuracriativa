@@ -7,7 +7,7 @@ from .base import env
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = env.list(
-    "DJANGO_ALLOWED_HOSTS", default=["itelie.com.br"]
+    "DJANGO_ALLOWED_HOSTS", default=["costura.com.br"]
 )
 
 # DATABASES
@@ -90,7 +90,7 @@ TEMPLATES[-1]["OPTIONS"]["loaders"] = [  # type: ignore[index] # noqa: F405
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email
 DEFAULT_FROM_EMAIL = env(
     "DJANGO_DEFAULT_FROM_EMAIL",
-    default="iTelie <noreply@itelie.com.br>",
+    default="costura <noreply@costura.com.br>",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#server-email
 SERVER_EMAIL = env(
@@ -98,7 +98,7 @@ SERVER_EMAIL = env(
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
 EMAIL_SUBJECT_PREFIX = env(
-    "DJANGO_EMAIL_SUBJECT_PREFIX", default="[iTelie]"
+    "DJANGO_EMAIL_SUBJECT_PREFIX", default="[costura]"
 )
 
 # ADMIN

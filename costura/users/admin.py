@@ -44,7 +44,7 @@ admin.site.register(User, UserAdmin)
 
 # from django.contrib.auth import get_user_model
 
-# from itelie.users.forms import (
+# from costura.users.forms import (
 #     UserChangeForm,
 #     UserCreationForm,
 # )
