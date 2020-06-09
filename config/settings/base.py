@@ -81,6 +81,7 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "widget_tweaks",
+    "whitenoise.runserver_nostatic",
 ]
 
 LOCAL_APPS = [
@@ -300,4 +301,7 @@ STATICFILES_FINDERS += ["compressor.finders.CompressorFinder"]
 
 # Your stuff...
 # ------------------------------------------------------------------------------
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# If you want to apply compression but don’t want the caching behaviour then you can use:
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
