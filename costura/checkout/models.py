@@ -34,6 +34,16 @@ class CartItem(models.Model):
     def __str__(self):
         return f'{self.product},{self.quantity}'
 
+class OrderManager(models.Manager):
+
+    def create_order(self,user,cart_items):
+        order = self.create(user=user) #como  cart_items possui default, nao é necessária sua explicitação
+        for cart_item in cart_items:
+            order_item = OrderItem.objects.create(
+                order = order, quantity = cart_item.quantity, product = cart_item.product,price = cart_item.price, sale_price = cart_item.sale_price
+            )
+        return order
+
 class Order(models.Model):
     STATUS_CHOICES = (
         (0, "Aguardando Pagamento"),
@@ -42,8 +52,9 @@ class Order(models.Model):
 
     )
     PAYMENT_OPTION_CHOICES=(
+        ("deposit",  "Depósito"),
         ("pagseguro","PagSeguro"),
-        ("paypal","Paypal"),
+        ("paypal",   "Paypal"),
     )
 
     user    = models.ForeignKey(settings.AUTH_USER_MODEL,verbose_name="Usuário", on_delete=models.CASCADE)
@@ -51,12 +62,12 @@ class Order(models.Model):
         "Situação", choices=STATUS_CHOICES,default=0, blank=True
     )
     payment_option = models.CharField(
-        "Opção de Pagamento", choices=PAYMENT_OPTION_CHOICES, max_length=20
+        "Opção de Pagamento", choices=PAYMENT_OPTION_CHOICES, max_length=20, default="deposit" 
     )
      
     created  = models.DateTimeField("Criado em", auto_now_add=True)
     modified = models.DateTimeField("Modificado em", auto_now=True)
-
+    objects  = OrderManager()
 
     class Meta:
         verbose_name = "Pedido"
