@@ -1,7 +1,7 @@
 from django.db import models
 from costura.products.models import Product
 from model_utils.models import TimeStampedModel
-
+from django.conf import settings
 
 class CartItemManager(models.Manager):
     # facilita uso do modelo nas views
@@ -33,6 +33,52 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f'{self.product},{self.quantity}'
+
+class Order(models.Model):
+    STATUS_CHOICES = (
+        (0, "Aguardando Pagamento"),
+        (1, "Compra Concluída"),
+        (2, "Compra CANCELADA"),
+
+    )
+    PAYMENT_OPTION_CHOICES=(
+        ("pagseguro","PagSeguro"),
+        ("paypal","Paypal"),
+    )
+
+    user    = models.ForeignKey(settings.AUTH_USER_MODEL,verbose_name="Usuário", on_delete=models.CASCADE)
+    status  = models.IntegerField(
+        "Situação", choices=STATUS_CHOICES,default=0, blank=True
+    )
+    payment_option = models.CharField(
+        "Opção de Pagamento", choices=PAYMENT_OPTION_CHOICES, max_length=20
+    )
+     
+    created  = models.DateTimeField("Criado em", auto_now_add=True)
+    modified = models.DateTimeField("Modificado em", auto_now=True)
+
+
+    class Meta:
+        verbose_name = "Pedido"
+        verbose_name_plural = "Pedidos"
+    def __str__(self):
+        return f"Pedido # {self.pk}"
+
+class OrderItem(models.Model):
+    order   = models.ForeignKey(Order, verbose_name="Pedido", related_name="items",on_delete=models.CASCADE) 
+    """toda vez que uma instancia de pedido for criada, ela terá um atributo chamado items, retornando uma qs filtrada so com items associados."""
+    product     = models.ForeignKey(Product, verbose_name='Produto', on_delete=models.CASCADE)
+    quantity    = models.PositiveIntegerField("Quantidade", default=1)
+    # mantem o preço do momento da compra
+    price       = models.DecimalField("Preço(R$)",max_digits=8, decimal_places=2,blank=True)
+    sale_price  = models.DecimalField("Preço Promocional(R$)",max_digits=8, decimal_places=2,blank=True)
+
+    class Meta:
+        verbose_name = "Item do pedido"
+        verbose_name_plural = "Itens dos pedidos"
+
+    def __str__(self):
+        return f"Pedido #{self.order}: Produto {self.product}"
 
 def post_save_cart_item(instance, **kwargs):
     if instance.quantity < 1:
