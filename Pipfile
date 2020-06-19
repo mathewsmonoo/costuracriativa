@@ -45,6 +45,7 @@ pylint = "==2.2.0"
 mypy = "==0.770"
 rcssmin = "==1.0.6"
 django-heroku = "*"
+redis = "*"
 
 [requires]
 python_version = "3.8"
