@@ -22,7 +22,7 @@ DATABASES["default"]["CONN_MAX_AGE"] = env.int(  # noqa: F405
 # ------------------------------------------------------------------------------
 CACHES = {
     "default": {
-        "BACKEND": "redis_cache.RedisCache",
+        "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": env("REDIS_URL"),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
@@ -186,4 +186,4 @@ LOGGING = {
 
 # Your stuff...
 # ------------------------------------------------------------------------------
-INSTALLED_APPS += ["redis_cache"]
+INSTALLED_APPS += ["django_redis"]
