@@ -110,7 +110,7 @@ ADMIN_URL = env("DJANGO_ADMIN_URL")
 # https://anymail.readthedocs.io/en/stable/installation/#installing-anymail
 INSTALLED_APPS += ["anymail"]  # noqa: F405
 #DJANGO-REDIS
-INSTALLED_APPS += ["redis_cache"]
+
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 # https://anymail.readthedocs.io/en/stable/installation/#anymail-settings-reference
 ANYMAIL = {
@@ -186,3 +186,4 @@ LOGGING = {
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+INSTALLED_APPS += ["redis_cache"]
