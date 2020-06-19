@@ -1,7 +1,6 @@
 from django.db import models
 from costura.products.models import Product
 from model_utils.models import TimeStampedModel
-#from costura.products.models import Variation
 
 
 class CartItemManager(models.Manager):
@@ -14,7 +13,7 @@ class CartItemManager(models.Manager):
             cart_item.save()
         else:
             created     = True
-            cart_item   = CartItem.objects.create(cart_key=cart_key, product=product, price=product.price)
+            cart_item   = CartItem.objects.create(cart_key=cart_key, product=product, price=product.price,sale_price = product.sale_price)
         return cart_item, created
 
 class CartItem(models.Model):
@@ -23,6 +22,7 @@ class CartItem(models.Model):
     product     = models.ForeignKey(Product, verbose_name='Produto', on_delete=models.CASCADE)
     quantity    = models.PositiveIntegerField("Quantidade", default=1)
     price       = models.DecimalField("Preço(R$)",max_digits=8, decimal_places=2)
+    sale_price  = models.DecimalField("Preço Promocional(R$)",max_digits=8, decimal_places=2,blank=True)
 
     objects = CartItemManager()
 

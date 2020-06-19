@@ -16,6 +16,9 @@
                         <th>
                             Preço
                         </th>
+                        <th>
+                            Preço Promocional
+                        </th>
                         <th style="width: 10%;">
                             Quantidade
                         </th>
@@ -34,6 +37,9 @@
                             </td>
                             <td>
                                 R$ {{ form.instance.price }}
+                            </td>
+                            <td>
+                                R$ {{ form.instance.sale_price }}
                             </td>
                             <td>
                                 {% render_field form.quantity class='form-control' %}

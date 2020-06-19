@@ -68,28 +68,3 @@ class ProductImage(models.Model):
     class Meta:
         verbose_name="Imagem do Produto"
         verbose_name_plural = "Imagens do Produto"
-
-class Variation(models.Model):
-    product     = models.ForeignKey(Product, on_delete=models.CASCADE)
-    name        = models.CharField("Nome",max_length=255)
-    price       = models.DecimalField("Preço",max_digits=10, decimal_places=2)
-    sale_price  = models.DecimalField("Preço Promocional",max_digits=10, decimal_places=2, null=True, blank=True)
-    active      = models.BooleanField("Ativo?",default=True)
-    stock       = models.PositiveIntegerField("Quantia em estoque", null=True, blank=True)
-
-    def get_price(self):
-        if self.sale_price is not None:
-            return self.sale_price
-        else:
-            return self.price
-
-    class Meta:
-        verbose_name="Variação"
-        verbose_name_plural = "Variações"
-
-    def __str__(self):
-        return self.name
-
-class VariationImage(models.Model):
-    product = models.ForeignKey(Variation, default=None, related_name='variationimages', on_delete=models.CASCADE)
-    image   = models.ImageField(upload_to='variations/%Y/%m/%d', blank=True)
