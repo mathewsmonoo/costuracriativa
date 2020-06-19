@@ -1,5 +1,6 @@
 from .base import *  # noqa
 from .base import env
+import django_heroku
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -108,7 +109,6 @@ ADMIN_URL = env("DJANGO_ADMIN_URL")
 # ------------------------------------------------------------------------------
 # https://anymail.readthedocs.io/en/stable/installation/#installing-anymail
 INSTALLED_APPS += ["anymail"]  # noqa: F405
-#DJANGO-REDIS
 
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 # https://anymail.readthedocs.io/en/stable/installation/#anymail-settings-reference
@@ -185,6 +185,5 @@ LOGGING = {
 
 # Your stuff...
 # ------------------------------------------------------------------------------
-import django_heroku
 # Activate Django-Heroku.
 django_heroku.settings(locals())

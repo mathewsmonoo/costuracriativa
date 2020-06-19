@@ -6,6 +6,9 @@ import os  # noqa: F401
 
 import environ
 
+import django_heroku
+
+
 BASE_DIR = (
     environ.Path(__file__) - 3
 )  # (costura/config/settings/base.py - 3 = costura/)
@@ -76,6 +79,7 @@ DJANGO_APPS = [
     "django.forms",
 ]
 THIRD_PARTY_APPS = [
+    "django_heroku",
     "crispy_forms",
     "allauth",
     "allauth.account",
@@ -309,5 +313,4 @@ STATICFILES_FINDERS += ["compressor.finders.CompressorFinder"]
 #STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # If you want to apply compression but don’t want the caching behaviour then you can use:
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-MIDDLEWARE_CLASSES  = ("whitenoise.middleware.WhiteNoiseMiddleware",)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
