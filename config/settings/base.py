@@ -79,13 +79,13 @@ DJANGO_APPS = [
     "django.forms",
 ]
 THIRD_PARTY_APPS = [
+    "whitenoise.runserver_nostatic",
     "django_heroku",
     "crispy_forms",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "widget_tweaks",
-    "whitenoise.runserver_nostatic",
 ]
 
 LOCAL_APPS = [
