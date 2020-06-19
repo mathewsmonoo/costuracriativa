@@ -1,6 +1,8 @@
 from .base import *  # noqa
 from .base import env
 import django_heroku
+import redis
+import django_redis
 
 # GENERAL
 # ------------------------------------------------------------------------------
