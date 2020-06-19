@@ -43,6 +43,7 @@ pytest-django = "==3.8.0"
 Werkzeug = "==1.0.0"
 pylint = "==2.2.0"
 mypy = "==0.770"
+rcssmin = "==1.0.6"
 
 [requires]
 python_version = "3.8"
