@@ -30,7 +30,15 @@ CACHES = {
             # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
             "IGNORE_EXCEPTIONS": True,
         },
-    }
+    },
+    'collectfast': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'collectfast_cache',
+        'TIMEOUT': 60,
+        'OPTIONS': {
+            'MAX_ENTRIES': 10000
+        },
+    },
 }
 
 # SECURITY
@@ -190,7 +198,7 @@ STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 # Collectfast
 # ------------------------------------------------------------------------------
-#COLLECTFAST_CACHE = "collectfast"
+COLLECTFAST_CACHE = "collectfast"
 COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
 COLLECTFAST_DEBUG = True
 #Changed both of them above
