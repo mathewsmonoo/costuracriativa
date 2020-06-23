@@ -73,13 +73,14 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.sites",
     "django.contrib.messages",
+    "collectfast",
     "django.contrib.staticfiles",
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
     "django.forms",
 ]
 THIRD_PARTY_APPS = [
-    "whitenoise.runserver_nostatic",
+    #"whitenoise.runserver_nostatic",
     "django_heroku",
     # "django_redis",
     # "redis"

@@ -198,7 +198,6 @@ STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 # Collectfast
 # ------------------------------------------------------------------------------
-COLLECTFAST_CACHE = "collectfast"
 COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
 COLLECTFAST_DEBUG = True
 #Changed both of them above
