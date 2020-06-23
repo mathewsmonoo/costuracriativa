@@ -1,5 +1,5 @@
 {% load static i18n compress %}
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -15,13 +15,7 @@
       <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
       <!-- Jam icons relation -->
       <link href="{% static 'jam-master/css/jam.min.css' %}" rel="stylesheet"/>
-      {% compress css %}
-        <!-- This file stores project-specific CSS -->
-        <link href="{% static 'css/project.css' %}" rel="stylesheet">
-      {% endcompress %}
     {% endblock css %}
-
-
   </head>
 
   <body>
@@ -60,10 +54,10 @@
       
 
       <!-- place project specific Javascript in this file -->
-      {% compress js %}
+      <!--{% compress js %}
       <script src="{% static 'js/project.js' %}"></script>
       {% endcompress %}
-    {% endblock javascript %}
+    {% endblock javascript %} -->
   </body>
 
   {% block footer %}
