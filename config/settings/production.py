@@ -1,4 +1,4 @@
-from .base import *  # noqa
+from .base import *
 from .base import env
 
 # GENERAL
@@ -131,6 +131,7 @@ COMPRESS_URL = STATIC_URL  # noqa: F405
 
 # Collectfast
 # ------------------------------------------------------------------------------
+COLLECTFAST_CACHE = "collectfast"
 # https://github.com/antonagestam/collectfast#installation
 INSTALLED_APPS = ["collectfast"] + INSTALLED_APPS  # noqa: F405
 # LOGGING

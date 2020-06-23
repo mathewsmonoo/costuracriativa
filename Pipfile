@@ -47,6 +47,7 @@ rcssmin = "==1.0.6"
 django-heroku = "*"
 redis = "*"
 django-redis = "*"
+boto3 = "*"
 
 [requires]
 python_version = "3.8"
