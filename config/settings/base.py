@@ -80,9 +80,9 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     "whitenoise.runserver_nostatic",
-    "django_heroku",
-    "django_redis",
-    "redis"
+    # "django_heroku",
+    # "django_redis",
+    # "redis"
     "crispy_forms",
     "allauth",
     "allauth.account",
@@ -312,7 +312,7 @@ STATICFILES_FINDERS += ["compressor.finders.CompressorFinder"]
 
 # Your stuff...
 # ------------------------------------------------------------------------------
-#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 # If you want to apply compression but don’t want the caching behaviour then you can use:
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage' 
 #STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

@@ -3,6 +3,7 @@ from .base import env
 import django_heroku
 import redis
 import django_redis
+from django_redis import cache.RedisCache
 
 # GENERAL
 # ------------------------------------------------------------------------------
