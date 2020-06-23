@@ -63,7 +63,9 @@ SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
 )
 
 #STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
 
 
 # MEDIA
@@ -188,3 +190,7 @@ LOGGING = {
 # ------------------------------------------------------------------------------
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
+#Changed both of them above
