@@ -79,7 +79,7 @@ DJANGO_APPS = [
     "django.forms",
 ]
 THIRD_PARTY_APPS = [
-    #"whitenoise.runserver_nostatic",
+    "whitenoise.runserver_nostatic",
     "django_heroku",
     # "django_redis",
     # "redis"
