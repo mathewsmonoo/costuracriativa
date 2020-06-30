@@ -25,7 +25,7 @@ class Category(TimeStampedModel):
 class Product(TimeStampedModel):
     name        = models.CharField      ("Nome do Produto", max_length=255)
     price       = models.DecimalField   ("Preço(R$)",max_digits=8, decimal_places=2,null=True, blank=True) #accepts anything up to R$999,999.99
-    sale_price  = models.DecimalField   ("Preço Promocional(R$)",max_digits=8, decimal_places=2, null=True, blank=True)
+    sale_price  = models.DecimalField   ("Preço Promocional(R$)",max_digits=8, decimal_places=2, blank=True)
     description = models.TextField      ("Descrição", default="", blank=True)
     weight      = models.DecimalField   ("Peso(kg)", max_digits=5, decimal_places=2, default=0.1,null=True, blank=True)
     status      = models.BooleanField   ("Disponível?", default=True)

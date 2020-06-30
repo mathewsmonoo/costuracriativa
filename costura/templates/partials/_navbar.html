@@ -14,11 +14,11 @@
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
-      <span class=""></span>
+      <span class="jam jam-menu"></span>
     </button>
     <div class="navbar-header">
       <a class="navbar-brand" href="{% url 'home' %}">
-        <img src='' alt="My image"></a>
+        <img src='{% static "images/logo_peq.png" %}' alt="My image"></a>
     </div>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
@@ -40,7 +40,7 @@
                   class="btn  border border-left-0"
                   type="submit"
                 >
-                  <span class=""></span>
+                  <span class="jam jam-search"></span>
                 </button>
               </span>
             </div>
@@ -49,7 +49,7 @@
         <li class="nav-item">
             <div class="dropdown">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'products:list' %}"
-                ><span class=""></span> {% trans "Our Products" %}
+                ><span class="jam jam-shopping-bag"></span> {% trans "Our Products" %}
               </a>
               <ul class="dropdown-menu">
                 <a
@@ -70,16 +70,16 @@
         <li class="nav-item">
           <div class="dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-              ><span class=""></span> {% trans "Account" %} 
+              ><span class="jam jam-id-card"></span> {% trans "Account" %} 
             </a>
             <ul class="dropdown-menu">
               <a
                 class="nav-link"
                 href="{% url 'users:detail' request.user.username  %}"
-                ><span class=""></span> {% trans "My Profile" %}</a
+                ><span class="jam jam-user"></span> {% trans "My Profile" %}</a
               >
               <a class="nav-link" href="{% url 'account_logout' %}"
-                ><span class=""></span> {% trans "Sign Out" %}</a
+                ><span class="jam jam-log-out"></span> {% trans "Sign Out" %}</a
               >
             </ul>
           </div>
@@ -91,18 +91,18 @@
             id="sign-up-link"
             class="nav-link"
             href="{% url 'account_signup' %}"
-            ><span class=""></span> {% trans "Sign Up" %}</a
+            ><span class="jam jam-user-plus"></span> {% trans "Sign Up" %}</a
           >
         </li>
         <li class="nav-item">
           {# URL provided by django-allauth/account/urls.py #}
           <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}"
-            ><span class=""></span> {% trans "Sign In" %}</a
+            ><span class="jam jam-log-in"></span> {% trans "Sign In" %}</a
           >
         </li>
         {% endif %}
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'checkout:cart_item' %}" title='{% trans "Cart" %}'><span class="">{% trans "Cart" %}</span></a>
+            <a class="nav-link" href="{% url 'checkout:cart_item' %}" title='{% trans "Cart" %}'><span class="jam jam-shopping-cart">{% trans "Cart" %}</span></a>
         </li>
       </ul>
     </div>

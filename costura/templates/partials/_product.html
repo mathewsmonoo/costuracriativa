@@ -11,7 +11,7 @@
             <strong>
               {{product.name}}
               <a href="#TODO" title="Curtir"
-                ><span class=""></span
+                ><span class="jam jam-heart"></span
               ></a>
             </strong>
           </p>
@@ -59,7 +59,7 @@
         <row class="card-footer">
           <div class="row text-center">
               <a class="btn btn-success btn-sm col-sm-5 mr-1" href="{% url 'products:detail' product.slug %}" title="Detalhes">Detalhes</a>
-              <a class="btn btn-success btn-sm col-sm-5 mr-1" href="{% url 'checkout:create_cartitem' product.slug %}" title="Adicionar ao Carrinho"><span class=""></span></a>
+              <a class="btn btn-success btn-sm col-sm-5 mr-1" href="{% url 'checkout:create_cartitem' product.slug %}" title="Adicionar ao Carrinho"><span class="jam jam-shopping-cart"></span></a>
           </div>
         </row>
       </div>
