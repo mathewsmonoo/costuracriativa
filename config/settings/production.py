@@ -192,13 +192,13 @@ LOGGING = {
 
 # Collectfast
 # ------------------------------------------------------------------------------
-COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
-COLLECTFAST_DEBUG    = True
+# COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
+# COLLECTFAST_DEBUG    = True
 #Changed both of them above
 
 # This is Django's backend for storage:
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 # These are others:
 # STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
