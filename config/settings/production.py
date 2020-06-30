@@ -1,6 +1,5 @@
 from .base import *
 from .base import env
-
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
@@ -69,9 +68,6 @@ SECURE_HSTS_PRELOAD = env.bool(
 SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
     "DJANGO_SECURE_CONTENT_TYPE_NOSNIFF", default=True
 )
-
-#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # MEDIA
 # ------------------------------------------------------------------------------
@@ -192,12 +188,17 @@ LOGGING = {
 # Your stuff...
 # ------------------------------------------------------------------------------
 # Activate Django-Heroku.
-django_heroku.settings(locals())
-
-STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# django_heroku.settings(locals())
 
 # Collectfast
 # ------------------------------------------------------------------------------
 COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
-COLLECTFAST_DEBUG = True
+COLLECTFAST_DEBUG    = True
 #Changed both of them above
+
+# This is Django's backend for storage:
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+# These are others:
+# STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
