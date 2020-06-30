@@ -192,9 +192,9 @@ LOGGING = {
 
 # Collectfast
 # ------------------------------------------------------------------------------
-# COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
 # COLLECTFAST_DEBUG    = True
-#Changed both of them above
+# COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
+COLLECTFAST_STRATEGY = "collectfast.strategies.filesystem.FileSystemStrategy"
 
 # This is Django's backend for storage:
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
