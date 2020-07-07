@@ -1,35 +1,51 @@
 {% extends "base.html" %} 
-{% block title %} {{ product.name }} | {{ block.super }} {% endblock title%} 
+{% block title %} 
+    {{ product.name }} | {{ block.super}} 
+{% endblock title%}
 
 {% block content %}
-
-<a class="btn btn-outline-secondary btn-sm" href="{% url 'products:list' %}" role="button">
+<div class="btn btn-outline-secondary btn-sm" href="{% url 'products:list' %}" role="button">
     Voltar
-</a>
+</div>
+<hr>
+<div class="row">
+  <div class="col-sm-6">
+    <a href="#" class="thumbnail">
+      <img src="http://placehold.it/500x500" alt="" />
+    </a>
+  </div>
+  <div class="col-sm-6">
+    <div class="product_detail__info">
+      <h1>{{ product.name }}</h1>
+      <p>{% if product.category %}
+      <a
+        href="{% url 'products:product_by_category' product.category.slug %}"
+        title="{{ product.category }}"
+        >{{ product.category }}</a
+      >
+      {% endif %}
+      </p>
+      <h3 class="product_detail__sale_price">
+        R${{product.sale_price}}
+        <del>R${{ product.price }}</del>
+      </h3>
+      <h4 class="product_detail__discount">{{ product.get_discount }}% Off</h4>
+      <p>{{ product.description }}</p>
+    </div>
+    <a
+      class="btn btn-success btn-sm col-sm-5 mr-1"
+      href="{% url 'checkout:create_cartitem' product.slug %}"
+      title="Adicionar ao Carrinho"
+      >Adicionar ao Carrinho <span class="jam jam-shopping-cart"></span
+    ></a>
+  </div>
+</div>
 
-<h2>{{ product.name }}</h2>
-
-{% if product.color %}
-    <p><strong>Cor: </strong>{{ product.color }}</p>
-{% endif %} 
-
-{% if product.inventory %}
-    <p><strong>Em estoque: </strong>{{ product.inventory }}</p>
-{% endif %} 
-
-{% if product.price %}
-    <p><strong>R$ </strong>{{ product.price }}</p>
-{% endif %} 
-
-{% if product.description %}
-    <p><strong>Descrição: </strong>{{ product.description }}</p>
-{% endif %} 
-
-{% if product.weight %}
-    <p><strong>Peso: </strong>{{ product.weight }}</p>
-{% endif %} 
-
-<a class="btn btn-secondary btn-sm" href="{% url 'checkout:create_cartitem' product.slug %}" title="Adicionar ao Carrinho">Adicionar ao Carrinho</a>
-
-<hr/>
 {% endblock content %}
+<!--
+
+    description
+    weight
+    TODO:
+     custom css
+-->

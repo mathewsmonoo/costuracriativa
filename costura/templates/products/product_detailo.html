@@ -1,0 +1,43 @@
+{% extends "base.html" %} 
+{% block title %} {{ product.name }} | {{ block.super }} {% endblock title%} 
+
+{% block content %}
+
+
+<h2>{{ product.name }}</h2>
+
+{% if product.sale_price > 0 %}
+    <p>
+    <del class="font-italic text-danger"
+        >R${{ product.price }}</del>
+    <br />
+    {{ product.get_discount }}% OFF!
+    <br />
+    <h3 class="text-center font-weight-bold">R$ {{product.sale_price}}</h3>
+    </p>
+{% else %}
+    <p>
+    <h3 class="text-center font-weight-bold">R$ {{product.price}}</h3>
+    </p>
+{% endif %}
+
+{% if product.description %}
+    <p><strong>Descrição: </strong>{{ product.description }}</p>
+{% endif %} 
+
+{% if product.category %}
+<a
+  href="{% url 'products:product_by_category' product.category.slug %}"
+  title="{{ product.category }}"
+  >{{ product.category }}</a
+>
+{% endif %}
+
+{% if product.weight %}
+    <p><strong>Peso: </strong>{{ product.weight }}</p>
+{% endif %} 
+
+<a class="btn btn-secondary btn-sm" href="{% url 'checkout:create_cartitem' product.slug %}" title="Adicionar ao Carrinho">Adicionar ao Carrinho</a>
+
+<hr/>
+{% endblock content %}

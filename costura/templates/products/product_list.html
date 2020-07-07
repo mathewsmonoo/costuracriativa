@@ -10,6 +10,10 @@
 {% endblock pageheader %}
 
 {% block content %}
+<div>
+  {% for product in product_list %}
   {% include "partials/_product.html" %}
-  {% pagination request paginator page_obj %}
+  {% endfor %}
+</div>
+{% pagination request paginator page_obj %}
 {% endblock content %}
