@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import modelformset_factory
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views.generic import RedirectView, TemplateView
 
@@ -77,7 +77,9 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
         else:
             messages.info(request, 'Não há itens no carrinho de compras')
             return redirect('checkout:cart_item')
-        return super(CheckoutView, self).get(request, *args, **kwargs)
+        response = super(CheckoutView, self).get(request, *args, **kwargs)
+        response.context_data['order'] = order
+        return response
 
 create_cartitem = CreateCartItemView.as_view()
 cart_item       = CartItemView.as_view()

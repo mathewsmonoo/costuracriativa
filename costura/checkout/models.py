@@ -1,6 +1,5 @@
 from django.db import models
 from costura.products.models import Product
-from model_utils.models import TimeStampedModel
 from django.conf import settings
 
 class CartItemManager(models.Manager):
