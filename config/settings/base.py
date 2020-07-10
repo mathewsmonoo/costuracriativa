@@ -8,6 +8,7 @@ import environ
 
 import django_heroku
 
+gettext_noop = lambda s: s
 
 BASE_DIR = (
     environ.Path(__file__) - 3
@@ -32,7 +33,13 @@ DEBUG = env.bool("DJANGO_DEBUG", False)
 # though not all of them may be available with every OS.
 # In Windows, this must be set to your system time zone.
 TIME_ZONE = "America/Sao_Paulo"
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
+LANGUAGES = [
+    ('en', gettext_noop('English')),
+    ('pt-br', gettext_noop('Brazilian Portuguese')),
+]
+
 LANGUAGE_CODE = "pt-br"
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
@@ -79,10 +86,7 @@ DJANGO_APPS = [
     "django.forms",
 ]
 THIRD_PARTY_APPS = [
-    # "whitenoise.runserver_nostatic",
     "django_heroku",
-    # "django_redis",
-    # "redis"
     "crispy_forms",
     "allauth",
     "allauth.account",

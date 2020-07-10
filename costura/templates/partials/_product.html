@@ -19,13 +19,17 @@
           onclick="window.location='{% url 'products:detail' product.slug %}';"
           style="cursor: pointer;"
         >
+        {% if product.image.url %}
           <img
             src="{{product.image.url}}"
             class="card-img-top"
-            height="150px"
-            width="150px"
+            height="220px"
+            width="220px"
             title="{{product.name}}"
           />
+          {% else %}
+          <img src="http://placehold.it/210x210" alt="" />
+          {% endif %}
         </div>
         {% if product.category %}
           <a

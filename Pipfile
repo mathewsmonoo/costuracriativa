@@ -48,6 +48,7 @@ django-heroku = "*"
 redis = "*"
 django-redis = "*"
 boto3 = "*"
+python-gettext = "*"
 
 [requires]
 python_version = "3.8"

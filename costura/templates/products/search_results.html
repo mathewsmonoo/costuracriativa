@@ -4,14 +4,15 @@
 
 {% block pageheader %}
 <div class="page-header text-center mb-4">
-  <h1>Você buscou por: <small>{{ query }}</small></h1>
+  <h2>Você buscou por: <small>{{ query }}</small></h2>
 </div>
 <a class="btn btn-outline-secondary btn-sm" href="{% url 'products:list' %}" role="button">
   Voltar
 </a>
+<hr>
 {% endblock pageheader %}
 
 {% block content %}
-  {% include "products/_product.html" %}
+  {% include "partials/_product.html" %}
   {% pagination request paginator page_obj %}
 {% endblock content %}

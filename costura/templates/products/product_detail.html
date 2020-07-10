@@ -4,9 +4,9 @@
 {% endblock title%}
 
 {% block content %}
-<div class="btn btn-outline-secondary btn-sm" href="{% url 'products:list' %}" role="button">
+<a class="btn btn-outline-secondary btn-sm" href="{% url 'products:list' %}" role="button">
     Voltar
-</div>
+</a>
 <hr>
 <div class="row">
   <div class="col-sm-6">
@@ -25,11 +25,12 @@
       >
       {% endif %}
       </p>
-      <h3 class="product_detail__sale_price">
-        R${{product.sale_price}}
+      <h5>
         <del>R${{ product.price }}</del>
+      </h5>
+      <h3 class="product_detail__sale_price">
+        <big> R${{product.sale_price}}</big> - <small>{{ product.get_discount }}% Off!!</small>
       </h3>
-      <h4 class="product_detail__discount">{{ product.get_discount }}% Off</h4>
       <p>{{ product.description }}</p>
     </div>
     <a
