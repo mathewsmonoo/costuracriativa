@@ -63,10 +63,9 @@
               </ul>
             </div>
           </li>
-
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated and request.user.is_customer%}
         <li class="nav-item">
           <div class="dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
@@ -84,7 +83,40 @@
             </ul>
           </div>
         </li>
-        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'checkout:cart_item' %}" title='{% trans "Cart" %}'><span class="jam jam-shopping-cart">{% trans "Cart" %}</span></a>
+        </li>
+        {% endif %}
+        {% if request.user.is_authenticated and request.user.is_staff %}
+        <li class="nav-item">
+          <div class="dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+              ><span class="jam jam-menu"></span> {% trans "Menu Colaborador" %} 
+            </a>
+            <ul class="dropdown-menu">
+              <a
+                class="nav-link"
+                href="{% url 'users:detail' request.user.username  %}"
+                ><span class="jam jam-user"></span> {% trans "Meu Perfil" %}</a
+              >
+              <a
+                class="nav-link"
+                href="{% url 'products:add'%}"
+                ><span class="jam jam-plus"></span> {% trans "Adicionar Produto" %}</a
+              >
+              <a
+                class="nav-link"
+                href="#TODO"
+                ><span class="jam jam-document"></span> {% trans "Pedidos" %}</a
+              >
+              <a class="nav-link" href="{% url 'account_logout' %}"
+                ><span class="jam jam-log-out"></span> {% trans "Sign Out" %}</a
+              >
+            </ul>
+          </div>
+        </li>
+        {% endif %}
+        {% if not request.user.is_authenticated %}
         <li class="nav-item">
           {# URL provided by django-allauth/account/urls.py #}
           <a
@@ -101,12 +133,8 @@
           >
         </li>
         {% endif %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'checkout:cart_item' %}" title='{% trans "Cart" %}'><span class="jam jam-shopping-cart">{% trans "Cart" %}</span></a>
-        </li>
       </ul>
     </div>
   </nav>
 </div>
-
 <!-- #### Navigation Bar Area End #### -->

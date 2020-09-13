@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render, reverse
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.urls import reverse_lazy
 
 from .models import Category, Product
 
@@ -19,18 +20,17 @@ class CategoryListView(ListView):
 #---------------------Product Views-------------------------------
 class ProductDetailView(DetailView):
     model = Product
-
+    
+class ProductCreateView(LoginRequiredMixin, CreateView):
+    model = Product
+    fields = '__all__'
+    success_url = reverse_lazy('products:list')
+    
 class ProductListView(ListView):
     model       = Product
     paginate_by = 8
 
-'''class ProductCreateView(LoginRequiredMixin, CreateView):
-    model = Product
-    fields = ['name', 'description',]
-    
-    def form_valid(self, form):
-        form.instance.creator = self.request.user
-        return super().form_valid(form)'''
+
 '''
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
@@ -78,6 +78,7 @@ class ProductSearchView(ListView):
 category_detail  = CategoryDetailView.as_view()
 category_list    = CategoryListView.as_view()
 product_detail   = ProductDetailView.as_view()
+product_add      = ProductCreateView.as_view()
 product_list     = ProductListView.as_view()
 product_category = ProductCategoryView.as_view()
 product_search   = ProductSearchView.as_view()
