@@ -75,9 +75,9 @@ class ProductSearchView(ListView):
         return object_list
 
 #--------------------------------------------------------------------------------------
-category_detail = CategoryDetailView.as_view()
-category_list   = CategoryListView.as_view()
-product_detail  = ProductDetailView.as_view()
-product_list    = ProductListView.as_view()
+category_detail  = CategoryDetailView.as_view()
+category_list    = CategoryListView.as_view()
+product_detail   = ProductDetailView.as_view()
+product_list     = ProductListView.as_view()
 product_category = ProductCategoryView.as_view()
-product_search = ProductSearchView.as_view()
+product_search   = ProductSearchView.as_view()

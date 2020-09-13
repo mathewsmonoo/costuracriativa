@@ -49,6 +49,7 @@ redis = "*"
 django-redis = "*"
 boto3 = "*"
 python-gettext = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"
