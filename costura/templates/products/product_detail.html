@@ -1,13 +1,13 @@
-{% extends "base.html" %} 
-{% block title %} 
-    {{ product.name }} | {{ block.super}} 
-{% endblock title%}
-
-{% block content %}
-<a class="btn btn-outline-secondary btn-sm" href="{% url 'products:list' %}" role="button">
-    Voltar
+{% extends "base.html" %} {% block title %} {{ product.name }} | {{block.super}}
+{% endblock title%} {% block content %}
+<a
+  class="btn btn-outline-secondary btn-sm"
+  href="{% url 'products:list' %}"
+  role="button"
+>
+  Voltar
 </a>
-<hr>
+<hr />
 <div class="row">
   <div class="col-sm-6">
     <a href="#" class="thumbnail">
@@ -17,36 +17,75 @@
   <div class="col-sm-6">
     <div class="product_detail__info">
       <h1>{{ product.name }}</h1>
-      <p>{% if product.category %}
-      <a
-        href="{% url 'products:product_by_category' product.category.slug %}"
-        title="{{ product.category }}"
-        >{{ product.category }}</a
-      >
-      {% endif %}
+      <p>
+        {% if product.category %}
+        <a
+          href="{% url 'products:product_by_category' product.category.slug %}"
+          title="{{ product.category }}"
+          >{{ product.category }}</a
+        >
+        {% endif %}
       </p>
-      <h5>
-        <del>R${{ product.price }}</del>
-      </h5>
-      <h3 class="product_detail__sale_price">
-        <big> R${{product.sale_price}}</big> - <small>{{ product.get_discount }}% Off!!</small>
-      </h3>
-      <p>{{ product.description }}</p>
+
+      <h3>Descrição:</h3>
+      <h5>{{ product.description }}</h5>
     </div>
-    <a
-      class="btn btn-success btn-sm col-sm-5 mr-1"
-      href="{% url 'checkout:create_cartitem' product.slug %}"
-      title="Adicionar ao Carrinho"
-      >Adicionar ao Carrinho <span class="jam jam-shopping-cart"></span
-    ></a>
+    <br />
+    <br />
+
+    {% if product.sale_price is not None %}
+    <h5>
+      <del>R${{ product.price }}</del>
+    </h5>
+    <h3 class="product_detail__sale_price">
+      <p>{{ product.get_discount }}% Off!!</p>
+      <p><big> R${{product.sale_price}}</big></p>
+    </h3>
+
+    {% else %}
+    <h5><big>R${{ product.price }}</big></h5>
+    {% endif %}
+
+    <div class="product-buttons">
+      {% if request.user.is_authenticated and request.user.is_staff %}
+        <a
+          class="btn btn-success btn-sm col-sm-5 mr-1"
+          href="{% url 'products:update' product.slug %}"
+          title="Editar Produto"
+          >Editar Produto <span class="jam jam-pencil"></span
+        ></a>
+        <a
+          class="btn btn-warning btn-sm col-sm-5 mr-1"
+          href=""
+          title="Desativar Produto"
+          >Desativar Produto <span class="jam jam-stop-sign"></span
+        ></a>
+        <a
+          class="btn btn-danger btn-sm col-sm-5 mr-1"
+          href="{% url 'products:delete' product.slug %}"
+          title="Excluir Produto"
+          >Excluir Produto <span class="jam jam-trash"></span
+        ></a>
+      {% else %}
+
+      {% if product.in_stock %}
+      <a
+        class="btn btn-success btn-sm col-sm-5 mr-1"
+        href="{% url 'checkout:create_cartitem' product.slug %}"
+        title="Adicionar ao Carrinho"
+        >Adicionar ao Carrinho <span class="jam jam-shopping-cart"></span
+      ></a>
+      {% else %}
+      <h4>Somente Sob Encomenda!</h4>
+      <a
+        class="btn btn-success btn-sm col-sm-5 mr-1"
+        href="{% url 'checkout:create_cartitem' product.slug %}"
+        title="Somente Sob Encomenda"
+        >Quero encomendar!<span class="jam jam-shopping-cart"></span
+      ></a>
+      {% endif %} {% endif %}
+    </div>
   </div>
 </div>
 
 {% endblock content %}
-<!--
-
-    description
-    weight
-    TODO:
-     custom css
--->

@@ -30,6 +30,7 @@ class AddressCreateView(LoginRequiredMixin, CreateView):
     model  = Address
     fields = address_fields
     success_url = reverse_lazy('addresses:list')
+    action = "Adicionar"
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
@@ -49,3 +50,5 @@ class AddressUpdateView(LoginRequiredMixin, UpdateView):
         form.instance.creator = self.request.user
         form.instance.owned_by = self.request.user
         return super(AddressUpdateView, self).form_valid(form)
+    
+    

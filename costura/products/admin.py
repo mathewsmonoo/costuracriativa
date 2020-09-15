@@ -15,8 +15,6 @@ class CategoryAdmin(admin.ModelAdmin):
     def products_count(self,product_instance):
         return product_instance.products_count
 
-
-
 class ProductImageInLine(admin.TabularInline):
     model = ProductImage
 

@@ -2,15 +2,15 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %} {{ view.action|default:"Add" }} Produto | {{ block.super }} {% endblock title %}
+{% block title %} {{ view.action|default:"Add" }} Categoria | {{ block.super }} {% endblock title %}
 
 {% block content %}
 
 {% with action=view.action|default:"Add" %}
 {% if action == "Atualizar" %}
-    <h1>{{ action }} [ {{product.name}} ]</h1>
+    <h1>{{ action }} [ {{category.name}} ]</h1>
 {% elif action == "Adicionar" %}
-    <h1>{{ action }} Produto</h1>
+    <h1>{{ action }} Categoria</h1>
 {% endif %}
     <form method="POST" action=".">
         {% csrf_token %}

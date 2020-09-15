@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+{% load pagination %}
+{% block title %} DELETAR | {{ block.super }} {% endblock title %} 
+{% block pageheader %}
+<div class="page-header text-center mb-4">
+  <h2>DELETAR</h2>
+</div>
+<hr>
+{% endblock pageheader %}
+{% block content %}
+<form method="post">{% csrf_token %}
+    <h2>Tem certeza que deseja deletar "{{ product.name }}"?</h2>
+    <input type="submit" value="DELETAR">
+</form>
+{% endblock content %}

@@ -24,31 +24,33 @@ class Category(TimeStampedModel):
 
 class Product(TimeStampedModel):
     name        = models.CharField      ("Nome do Produto", max_length=255)
+    slug        = AutoSlugField         ("Endereço digital", unique=True, populate_from="name")
     price       = models.DecimalField   ("Preço(R$)",max_digits=8, decimal_places=2,null=True, blank=True) #accepts anything up to R$999,999.99
-    sale_price  = models.DecimalField   ("Preço Promocional(R$)",max_digits=8, decimal_places=2, blank=True)
+    sale_price  = models.DecimalField   ("Preço Promocional(R$)",max_digits=8, decimal_places=2, blank=True, null=True)
     description = models.TextField      ("Descrição", default="", blank=True)
     weight      = models.DecimalField   ("Peso(kg)", max_digits=5, decimal_places=2, default=0.1,null=True, blank=True)
-    status      = models.BooleanField   ("Disponível?", default=True)
-    slug        = AutoSlugField         ("Endereço digital", unique=True, populate_from="name")
+    in_stock    = models.BooleanField   ("Disponível?", default=False)
+    stock       = models.IntegerField   ("Quantia em estoque", null=True, blank=True, default=0)
 
     # Relations:
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='products', null=True)
+    creator  = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     
-    # TODO: 
-    # Transform COLOR field into list ;
+    # TODO:
     # Add Discount;
     # Add final price (price - discount);
-    # Add creator field to check which user added product to database; creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
 
     def get_price(self):
-        if self.sale_price is not None:
-            return self.sale_price
-        else:
+        if self.sale_price is None:
             return self.price
+        else:
+            return self.sale_price
 
     def get_discount(self):
         percentage = ((self.price - self.sale_price)/ self.price) * 100
-        return round(percentage, 2)
+        holder = str(round(percentage, 2))
+        holder = holder.replace(',','.')
+        return holder
 
     class Meta:
         verbose_name="Produto"

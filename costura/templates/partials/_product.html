@@ -35,14 +35,15 @@
           <a
             href="{% url 'products:product_by_category' product.category.slug %}"
             title="{{ product.category }}"
-            >Categoria: {{ product.category }}</a
+            >{{ product.category }}</a
           >
         {% endif %}
        
         <div class="card-body">
           <span class="card-text text-right">
+
             <!-- Discount Verification -->
-            {% if product.sale_price > 0 %}
+            {% if product.sale_price is not None %}
               <p>
                 <del class="font-italic text-danger"
                   >R${{ product.price }}</del>
@@ -58,12 +59,21 @@
             {% endif %}
           </span>
           <!-- End of Discount Verification -->
+
+          
         </div>
         <row class="card-footer">
+          {% if request.user.is_authenticated and request.user.is_staff %}
           <div class="row text-center">
               <a class="btn btn-success btn-sm col-sm-5 mr-1" href="{% url 'products:detail' product.slug %}" title="Detalhes">Detalhes</a>
-              <a class="btn btn-success btn-sm col-sm-5 mr-1" href="{% url 'checkout:create_cartitem' product.slug %}" title="Adicionar ao Carrinho"><span class="jam jam-shopping-cart"></span></a>
+              <a class="btn btn-success btn-sm col-sm-5 mr-1" href="{% url 'products:update' product.slug %}" title="Editar Produto">Editar<span class="jam jam-pencil"></span></a>
           </div>
+          {% else %}
+          <div class="row text-center">
+            <a class="btn btn-success btn-sm col-sm-5 mr-1" href="{% url 'products:detail' product.slug %}" title="Detalhes">Detalhes</a>
+            <a class="btn btn-success btn-sm col-sm-5 mr-1" href="{% url 'checkout:create_cartitem' product.slug %}" title="Adicionar ao Carrinho"><span class="jam jam-shopping-cart"></span></a>
+          </div>
+          {% endif %}
         </row>
       </div>
     </div>
