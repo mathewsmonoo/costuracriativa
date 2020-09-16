@@ -10,7 +10,7 @@
     <div class="col-sm-12">
       <h2>
         Olá,
-        {% if object.name %}
+        {% if object.first_name %}
           {% if object.prefix %}  
             {{object.prefix}}  {{object.get_fullname}} 
           {% else %} 
@@ -30,13 +30,13 @@
             <tr>
               <th scope="row">Nome:</th>
               <td>
-                {% if object.name %} {{ object.name }} {% endif %}
+                {% if object.first_name %} {{ object.first_name }} {% endif %}
               </td>
             </tr>
             <tr>
               <th scope="row">Sobrenome:</th>
               <td>
-                {% if object.lname %} {{ object.lname }} {% endif %}
+                {% if object.last_name %} {{ object.last_name }} {% endif %}
               </td>
             </tr>
             <tr>

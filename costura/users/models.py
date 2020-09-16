@@ -12,19 +12,16 @@ class User(AbstractUser,PermissionsMixin): #This is the "Customer" user;
     is_superuser = models.BooleanField(default=False)
     is_admin     = models.BooleanField(default=False)
     is_staff     = models.BooleanField(default=False)
-    is_customer  = models.BooleanField(default=True) # Default set as 1 and will change whanever a custom user ("subclassed") is created.
+    is_customer  = models.BooleanField(default=False)
     is_active    = models.BooleanField(default=True)
     join_date    = models.DateField(auto_now_add=True)
-    email        = models.EmailField("E-mail", unique=True)
     prefix       = models.CharField(_("Prefixo / Apelido"), max_length=8, blank=True)
-    name         = models.CharField(_("Nome "),max_length=255)
-    lname        = models.CharField(_("Sobrenome"), max_length=255)
     cpf          = models.CharField(_("CPF"), max_length=14, validators=[validate_cpf])#,unique=True)
     dob          = models.DateField("Data de Nascimento", null=True)
 
     def get_absolute_url(self):
         return reverse(
-            "users:detail", kwargs={"username": self.name}
+            "users:detail", kwargs={"username": self.first_name}
         )
 
     class Meta:
@@ -32,14 +29,24 @@ class User(AbstractUser,PermissionsMixin): #This is the "Customer" user;
         verbose_name_plural = "Usuários"
 
     def __str__(self):
-        return self.name 
+        return self.first_name 
 
     def get_fullname(self):
-        return self.name + ' ' + self.lname
+        return self.first_name + ' ' + self.last_name
     
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email','name','lname','cpf','dob',]
+    REQUIRED_FIELDS = ['email','first_name','last_name','cpf','dob',]
     
+
+class Customer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    
+    class Meta:
+        verbose_name = "Cliente"
+        verbose_name_plural = "Clientes"
+        
+    def __str__(self):
+        return self.user.username
 
 class Staff(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
