@@ -15,14 +15,20 @@
           {%endif %} 
         {% endif %}
       </h2>
-
       <div class="table-responsive">
         <table class="table">
           <tbody>
             <tr>
-              <th scope="row">Nome Completo:</th>
+              <th scope="row">Nome:</th>
               <td>
                 {% if object.name %} {{ object.name }} {% endif %}
+                {% if object.lname %} {{ object.lname }} {% endif %}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">E-Mail Primário:</th>
+              <td>
+                {{ object.email }}
               </td>
             </tr>
             <tr>
@@ -30,16 +36,12 @@
               <td>{% if object.dob %} {{ object.dob }} {% endif %}</td>
             </tr>
             <tr>
-              <th scope="row">Telefone:</th>
-              <td>{% if object.phone %} {{ object.phone }} {% endif %}</td>
-            </tr>
-            <tr>
               <th scope="row">CPF:</th>
               <td>{% if object.cpf %} {{ object.cpf }} {% endif %}</td>
             </tr>
             <tr>
-              <th scope="row">RG:</th>
-              <td>{% if object.rg %} {{ object.rg }} {% endif %}</td>
+              <th scope="row">Data de Cadastro:</th>
+              <td>{{ object.join_date }}</td>
             </tr>
           </tbody>
         </table>
@@ -62,6 +64,12 @@
         href="{% url 'account_email' %}"
         role="button"
         >Contas de E-Mail</a
+      >
+      <a
+        class="btn btn-outline-info"
+        href="{% url 'account_change_password' %}"
+        role="button"
+        >Mudar Senha</a
       >
       {% if user.request.is_customer %}
       <a

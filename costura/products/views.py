@@ -4,11 +4,9 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, RedirectView, TemplateView, UpdateView
-
 from .models import Category, Product
 
-
-class StaffRequiredMixin(UserPassesTestMixin):
+class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
         if self.request.user.is_staff or self.request.user.is_admin:
             return True
@@ -20,7 +18,7 @@ class CategoryDetailView(DetailView):
     model = Category
     paginate_by = 8
 
-class CategoryCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
+class CategoryCreateView(StaffRequiredMixin, CreateView):
     model = Category
     fields = [
         'name','image'
@@ -40,7 +38,7 @@ class CategoryListView(ListView):
     model       = Category
     paginate_by = 8
 
-class CategoryUpdateView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
+class CategoryUpdateView(StaffRequiredMixin, UpdateView):
     model = Category
     fields = [
         'name','image'
@@ -63,7 +61,7 @@ class CategoryUpdateView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
 class ProductDetailView(DetailView):
     model = Product
     
-class ProductCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
+class ProductCreateView(StaffRequiredMixin, CreateView):
     model = Product
     fields = [
         'name','price','sale_price','description',
@@ -81,23 +79,22 @@ class ProductCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
         form.instance.creator = self.request.user
         return super().form_valid(form)
 
-
-class ProductDeleteView(LoginRequiredMixin, StaffRequiredMixin, DeleteView):
+class ProductDeleteView(StaffRequiredMixin, DeleteView):
     model = Product
-    
+
     def get_success_url(self):
         messages.add_message(
             self.request, messages.INFO, ("Produto Deletado com Sucesso.")
         )
         return reverse_lazy('products:list')
-
+    
 
 class ProductListView(ListView):
     model       = Product
     paginate_by = 8
 
     
-class ProductUpdateView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
+class ProductUpdateView(StaffRequiredMixin, UpdateView):
     model = Product
     fields = [
         'name','price','sale_price','description',
@@ -155,15 +152,16 @@ class ProductSearchView(ListView):
             object_list = self.model.objects.none()
         return object_list
 
+
 #--------------------------------------------------------------------------------------
-category_detail  = CategoryDetailView.as_view()
-category_add     = CategoryCreateView.as_view()
-category_list    = CategoryListView.as_view()
-category_update  = CategoryUpdateView.as_view()
-product_detail   = ProductDetailView.as_view()
-product_add      = ProductCreateView.as_view()
-product_list     = ProductListView.as_view()
-product_category = ProductCategoryView.as_view()
-product_search   = ProductSearchView.as_view()
-product_delete   = ProductDeleteView.as_view()
-product_update   = ProductUpdateView.as_view()
+category_detail     = CategoryDetailView.as_view()
+category_add        = CategoryCreateView.as_view()
+category_list       = CategoryListView.as_view()
+category_update     = CategoryUpdateView.as_view()
+product_add         = ProductCreateView.as_view()
+product_detail      = ProductDetailView.as_view()
+product_list        = ProductListView.as_view()
+product_update      = ProductUpdateView.as_view()
+product_category    = ProductCategoryView.as_view()
+product_search      = ProductSearchView.as_view()
+product_delete      = ProductDeleteView.as_view()

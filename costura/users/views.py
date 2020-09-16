@@ -1,3 +1,4 @@
+from allauth.account.views import PasswordChangeView as allauth_PasswordChangeView
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -9,17 +10,10 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DetailView, RedirectView, TemplateView, UpdateView
 
 from .decorators import admin_required, staff_required
-from .forms import StaffCreationForm, AdminCreationForm
+from .forms import AdminCreationForm, StaffCreationForm, UserChangeForm
 
 User = get_user_model()
 
-BASE_FIELDS = [
-    "email",
-    "name",
-    "lname",
-    "cpf",
-    "dob",
-]
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
@@ -27,10 +21,19 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     slug_field = "username"
     slug_url_kwarg = "username"
 
+class PasswordChangeView(LoginRequiredMixin, allauth_PasswordChangeView):
+    
+    def get_success_url(self):
+        return reverse(
+            "users:detail",
+            kwargs={'username': self.request.user.username},
+        )
+
+password_change_view = PasswordChangeView.as_view()
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
-    fields = BASE_FIELDS
+    form_class = UserChangeForm
 
     def get_success_url(self):
         return reverse(
@@ -51,7 +54,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         )
         return super().form_valid(form)
 
-
 class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
 
@@ -61,15 +63,13 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
             kwargs={"username": self.request.user.username},
         )
 
-
-user_detail_view = UserDetailView.as_view()
-user_update_view = UserUpdateView.as_view()
+user_detail_view   = UserDetailView.as_view()
+user_update_view   = UserUpdateView.as_view()
 user_redirect_view = UserRedirectView.as_view()
 
 class SuperUserRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_superuser
-
 
 class AdminCreateView(SuperUserRequiredMixin, CreateView):
     model = User
@@ -83,7 +83,6 @@ class AdminCreateView(SuperUserRequiredMixin, CreateView):
     def form_valid(self, form):
         user = form.save()
         return redirect('users:redirect')
-    
     
 admin_create_view = AdminCreateView.as_view()
 
@@ -105,4 +104,3 @@ class StaffCreateView(AdminRequiredMixin, CreateView):
         return redirect('users:redirect')
 
 staff_create_view = StaffCreateView.as_view()
-

@@ -30,6 +30,7 @@ class Product(TimeStampedModel):
     description = models.TextField      ("Descrição", default="", blank=True)
     weight      = models.DecimalField   ("Peso(kg)", max_digits=5, decimal_places=2, default=0.1,null=True, blank=True)
     in_stock    = models.BooleanField   ("Disponível?", default=False)
+    is_active   = models.BooleanField   ("Anúncio Ativo?", default=True)
     stock       = models.IntegerField   ("Quantia em estoque", null=True, blank=True, default=0)
 
     # Relations:

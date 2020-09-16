@@ -16,6 +16,7 @@ class User(AbstractUser,PermissionsMixin): #This is the "Customer" user;
     is_active = models.BooleanField(default=True)
     join_date = models.DateField(auto_now_add=True)
     email = models.EmailField("E-mail", unique=True)
+    prefix  = models.CharField(_("Prefixo"), max_length=8, blank=True)
     name = models.CharField(_("Name of User"), blank=True, max_length=255)
     lname = models.CharField(_("User Last Name"), blank=True, max_length=255)
     cpf = models.CharField(_("CPF"), max_length=14, validators=[validate_cpf])#,unique=True)
