@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DetailView, RedirectView, TemplateView, UpdateView
 
 from .decorators import admin_required, staff_required
-from .forms import StaffCreationForm
+from .forms import StaffCreationForm, AdminCreationForm
 
 User = get_user_model()
 
@@ -66,14 +66,35 @@ user_detail_view = UserDetailView.as_view()
 user_update_view = UserUpdateView.as_view()
 user_redirect_view = UserRedirectView.as_view()
 
-class AdminRequiredMixin(UserPassesTestMixin):
+class SuperUserRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_superuser
+
+
+class AdminCreateView(SuperUserRequiredMixin, CreateView):
+    model = User
+    form_class = AdminCreationForm
+    template_name = 'account/signup_admin.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'admin'
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        user = form.save()
+        return redirect('users:redirect')
+    
+    
+admin_create_view = AdminCreateView.as_view()
+
+class AdminRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_admin
-        
-class StaffCreateView(LoginRequiredMixin, AdminRequiredMixin, CreateView):
+
+class StaffCreateView(AdminRequiredMixin, CreateView):
     model = User
     form_class = StaffCreationForm
-    template_name = 'account/staffsignup.html'
+    template_name = 'account/signup_staff.html'
 
     def get_context_data(self, **kwargs):
         kwargs['user_type'] = 'staff'

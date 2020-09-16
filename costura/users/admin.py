@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
 from django.contrib.auth import get_user_model
 from costura.users.forms import UserChangeForm, UserCreationForm, StaffChangeForm, StaffCreationForm
-from .models import Staff
+from .models import Staff, Admin
 
 User = get_user_model()
 
@@ -16,3 +16,4 @@ class UserAdmin(auth_admin.UserAdmin):
     search_fields = ["name"]
 
 admin.site.register(Staff)
+admin.site.register(Admin)

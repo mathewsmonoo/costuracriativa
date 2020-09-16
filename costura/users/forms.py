@@ -1,7 +1,7 @@
 from django.contrib.auth import forms, get_user_model
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from .models import Staff
+from .models import Staff, Admin
 from django.db import transaction
 User = get_user_model()
 
@@ -60,4 +60,35 @@ class StaffCreationForm(forms.UserCreationForm):
         user.is_customer = False
         user.save()
         staff = Staff.objects.create(user=user)
+        return user
+    
+class StaffChangeForm(forms.UserChangeForm):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
+class AdminCreationForm(forms.UserCreationForm):
+    class Meta(forms.UserCreationForm.Meta):
+        model = User
+        fields = ('username','email','name','lname','cpf','dob')
+
+    def clean_username(self):
+        username = self.cleaned_data["username"]
+        try:
+            User.objects.get(username=username)
+        except User.DoesNotExist:
+            return username
+
+        raise ValidationError(
+            self.error_messages["duplicate_username"]
+        )
+
+    @transaction.atomic
+    def save(self):
+        user = super().save(commit=False)
+        user.is_admin = True
+        user.is_customer = False
+        user.save()
+        staff = Admin.objects.create(user=user)
         return user

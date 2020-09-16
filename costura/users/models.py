@@ -8,11 +8,11 @@ from django.utils.translation import gettext_lazy as _
 
 from .validators import username_validator, validate_cpf
 
-class User(AbstractUser,PermissionsMixin):
+class User(AbstractUser,PermissionsMixin): #This is the "Customer" user; 
     is_superuser = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    is_customer = models.BooleanField(default=True)
+    is_customer = models.BooleanField(default=True) # Default set as 1 and will change whanever a custom user ("subclassed") is created.
     is_active = models.BooleanField(default=True)
     join_date = models.DateField(auto_now_add=True)
     email = models.EmailField("E-mail", unique=True)
@@ -46,36 +46,12 @@ class Staff(models.Model):
     def __str__(self):
         return self.user.username
     
-
-    """ 
 class Admin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
-
-class Customer(models.Model):
-    user    = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    objects = UserManager()
-
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
-    
-     """
-    """
-    join_date   = models.DateField(auto_now_add=True)
-    username = models.CharField(
-        'Apelido / Usuário', max_length=30, unique=True, validators=[username_validator], help_text='Um nome curto que será usado para identificá-lo de forma única na plataforma'
-    )
-    name = models.CharField(("Nome do Usuário"), blank=True, max_length=255)
-    email = models.EmailField("E-mail", unique=True)
-    dob = models.DateField(_("Nascimento"), null=True, blank=True)
-    cpf = models.CharField(_("CPF"), max_length=14, validators=[validate_cpf], default="")
-    rg = models.CharField(_("RG"), max_length=9, default="")
-    phone = models.CharField(_("Numero de Telefone"), max_length=20, blank=True)
-    prefix = models.CharField(_("Prefixo"), max_length=8, blank=True)
-
-    USERNAME_FIELD = 'username'
-    EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['email']
-
-    objects = UserManager()
-    """
+    class Meta:
+        verbose_name = "Administrador"
+        verbose_name_plural = "Administradores"
+        
+    def __str__(self):
+        return self.user.username
