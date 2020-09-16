@@ -9,21 +9,39 @@
   <div class="row">
     <div class="col-sm-12">
       <h2>
-        {% if object.name %} 
-          {% if object.prefix %} Olá, {{object.prefix}} {{object.get_short_name}} 
-          {% else %} Olá, {{object.get_short_name}} 
-          {%endif %} 
+        Olá,
+        {% if object.name %}
+          {% if object.prefix %}  
+            {{object.prefix}}  {{object.get_fullname}} 
+          {% else %} 
+            {{object.get_fullname}}
+          {% endif %} 
         {% endif %}
       </h2>
       <div class="table-responsive">
         <table class="table">
           <tbody>
             <tr>
+              <th scope="row">Prefixo:</th>
+              <td>
+                {% if object.prefix %} {{ object.prefix }} {% endif %}
+              </td>
+            </tr>
+            <tr>
               <th scope="row">Nome:</th>
               <td>
                 {% if object.name %} {{ object.name }} {% endif %}
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Sobrenome:</th>
+              <td>
                 {% if object.lname %} {{ object.lname }} {% endif %}
               </td>
+            </tr>
+            <tr>
+              <th scope="row">CPF:</th>
+              <td>{% if object.cpf %} {{ object.cpf }} {% endif %}</td>
             </tr>
             <tr>
               <th scope="row">E-Mail Primário:</th>
@@ -35,10 +53,7 @@
               <th scope="row">Data de Nascimento:</th>
               <td>{% if object.dob %} {{ object.dob }} {% endif %}</td>
             </tr>
-            <tr>
-              <th scope="row">CPF:</th>
-              <td>{% if object.cpf %} {{ object.cpf }} {% endif %}</td>
-            </tr>
+
             <tr>
               <th scope="row">Data de Cadastro:</th>
               <td>{{ object.join_date }}</td>

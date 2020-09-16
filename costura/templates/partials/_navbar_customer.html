@@ -1,0 +1,22 @@
+{% load static %} 
+{% load static i18n compress %}
+
+<!-- #### Customer Navigation Bar Area Start #### -->
+<li class="nav-item">
+  <div class="dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+      ><span class="jam jam-id-card"></span> {% trans "Account" %} 
+    </a>
+    <ul class="dropdown-menu">
+      <a
+        class="nav-link"
+        href="{% url 'users:detail' request.user.username  %}"
+        ><span class="jam jam-user"></span> {% trans "My Profile" %}</a
+      >
+    </ul>
+  </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'checkout:cart_item' %}" title='{% trans "Cart" %}'><span class="jam jam-shopping-cart">{% trans "Cart" %}</span></a>
+</li>
+<!-- #### Customer Navigation Bar Area End #### -->

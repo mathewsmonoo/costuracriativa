@@ -34,8 +34,12 @@ class User(AbstractUser,PermissionsMixin): #This is the "Customer" user;
     def __str__(self):
         return self.name 
 
+    def get_fullname(self):
+        return self.name + ' ' + self.lname
+    
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email','name','lname','cpf','dob']
+    
 
 class Staff(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)

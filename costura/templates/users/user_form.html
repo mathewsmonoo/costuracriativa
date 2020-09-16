@@ -4,7 +4,7 @@
 {% block title %}{{ user.username }} | {{ block.super }}{% endblock %}
 
 {% block content %}
-  <h1>{{ user.name }}</h1>
+  <h1>Perfil de <em>{{ user.get_fullname }}</em></h1>
   <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
     {% csrf_token %}
     {{ form|crispy }}
@@ -14,4 +14,9 @@
       </div>
     </div>
   </form>
+  <br>
+  <h2>
+    Deseja modificar as informações desabilitadas?
+  </h2>
+  <a href="#TODO-CONTACTSUPPORT"><button type="submit" class="btn btn-secondary">Contactar Suporte Técnico</button></a>
 {% endblock %}

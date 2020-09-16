@@ -18,7 +18,8 @@
     </button>
     <div class="navbar-header">
       <a class="navbar-brand" href="{% url 'home' %}">
-        <img src='{% static "images/logo_peq.png" %}' alt="My image"></a>
+        <img src='{% static "images/logo_peq.png" %}' alt="My image"
+      /></a>
     </div>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
@@ -36,10 +37,7 @@
                 class="form-control border border-right-0"
               />
               <span class="input-group-append">
-                <button
-                  class="btn  border border-left-0"
-                  type="submit"
-                >
+                <button class="btn border border-left-0" type="submit">
                   <span class="jam jam-search"></span>
                 </button>
               </span>
@@ -47,135 +45,39 @@
           </form>
         </li>
         <li class="nav-item">
-            <div class="dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'products:list' %}"
-                ><span class="jam jam-shopping-bag"></span> {% trans "Our Products" %}
-              </a>
-              <ul class="dropdown-menu">
-                <a
-                  class="nav-link"
-                  href="{% url 'products:list'  %}"
-                  > {% trans "All Products" %}</a
-                >
-                <a class="nav-link" href="{% url 'products:category_list' %}"
-                  > {% trans "Categories" %}</a
-                  >
-                </ul>
-              </div>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            {% if request.user.is_authenticated and request.user.is_admin %}
-            <li class="nav-item">
-              <div class="dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-                  ><span class="jam jam-menu"></span> {% trans "Menu Administrador" %} 
-                </a>
-                <ul class="dropdown-menu">
-                  <a
-                    class="nav-link"
-                    href="{% url 'users:detail' request.user.username  %}"
-                    ><span class="jam jam-user"></span> {% trans "Meu Perfil" %}</a
-                  >
-                  <a
-                    class="nav-link"
-                    href="{% url 'products:add'%}"
-                    ><span class="jam jam-plus"></span> {% trans "Adicionar Produto" %}</a
-                  >
-                  <a
-                    class="nav-link"
-                    href="{% url 'products:category_add'%}"
-                    ><span class="jam jam-plus"></span> {% trans "Adicionar Categoria" %}</a
-                  >
-                  <a
-                    class="nav-link"
-                    href="{% url 'users:adminsignup'%}"
-                    ><span class="jam jam-plus"></span> {% trans "Adicionar Adminstrador" %}</a
-                  >
-                  <a
-                    class="nav-link"
-                    href="{% url 'users:staffsignup'%}"
-                    ><span class="jam jam-plus"></span> {% trans "Adicionar Colaborador" %}</a
-                  >
-                  <a
-                    class="nav-link"
-                    href="#TODO"
-                    ><span class="jam jam-document"></span> {% trans "Colaboradores" %}</a
-                  >
-                  <a
-                    class="nav-link"
-                    href="#TODO"
-                    ><span class="jam jam-document"></span> {% trans "Clientes" %}</a
-                  >
-                  <a
-                    class="nav-link"
-                    href="#TODO"
-                    ><span class="jam jam-document"></span> {% trans "Relatórios" %}</a
-                  >
-                  <a class="nav-link" href="{% url 'account_logout' %}"
-                    ><span class="jam jam-log-out"></span> {% trans "Sign Out" %}</a
-                  >
-                </ul>
-              </div>
-            </li>
-        {% endif %}
-        {% if request.user.is_authenticated and request.user.is_customer%}
-        <li class="nav-item">
           <div class="dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-              ><span class="jam jam-id-card"></span> {% trans "Account" %} 
+            <a
+              class="nav-link dropdown-toggle"
+              data-toggle="dropdown"
+              href="{% url 'products:list' %}"
+              ><span class="jam jam-shopping-bag"></span> {% trans "Our
+              Products" %}
             </a>
             <ul class="dropdown-menu">
-              <a
-                class="nav-link"
-                href="{% url 'users:detail' request.user.username  %}"
-                ><span class="jam jam-user"></span> {% trans "My Profile" %}</a
+              <a class="nav-link" href="{% url 'products:list'  %}">
+                {% trans "All Products" %}</a
               >
-              <a class="nav-link" href="{% url 'account_logout' %}"
-                ><span class="jam jam-log-out"></span> {% trans "Sign Out" %}</a
+              <a class="nav-link" href="{% url 'products:category_list' %}">
+                {% trans "Categories" %}</a
               >
             </ul>
           </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'checkout:cart_item' %}" title='{% trans "Cart" %}'><span class="jam jam-shopping-cart">{% trans "Cart" %}</span></a>
-        </li>
-        {% endif %}
-        {% if request.user.is_authenticated and request.user.is_staff %}
-        <li class="nav-item">
-          <div class="dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-              ><span class="jam jam-menu"></span> {% trans "Menu Colaborador" %} 
-            </a>
-            <ul class="dropdown-menu">
-              <a
-                class="nav-link"
-                href="{% url 'users:detail' request.user.username  %}"
-                ><span class="jam jam-user"></span> {% trans "Meu Perfil" %}</a
-              >
-              <a
-                class="nav-link"
-                href="{% url 'products:add'%}"
-                ><span class="jam jam-plus"></span> {% trans "Adicionar Produto" %}</a
-              >
-              <a
-                class="nav-link"
-                href="{% url 'products:category_add'%}"
-                ><span class="jam jam-plus"></span> {% trans "Adicionar Categoria" %}</a
-              >
-              <a
-                class="nav-link"
-                href="#TODO"
-                ><span class="jam jam-document"></span> {% trans "Pedidos" %}</a
-              >
-              <a class="nav-link" href="{% url 'account_logout' %}"
-                ><span class="jam jam-log-out"></span> {% trans "Sign Out" %}</a
-              >
-            </ul>
-          </div>
-        </li>
-        {% endif %}
-        {% if not request.user.is_authenticated %}
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+
+        {% if request.user.is_authenticated and request.user.is_admin %}
+          {%include './_navbar_admin.html' %} 
+        {% elif request.user.is_authenticated and request.user.is_customer%} 
+          {% include './_navbar_customer.html' %}
+        {% elif request.user.is_authenticated and request.user.is_staff %} 
+          {% include './_navbar_staff.html' %} 
+        {% endif %} 
+        {% if request.user.is_authenticated %}
+        <a class="nav-link" href="{% url 'account_logout' %}"
+        ><span class="jam jam-log-out"></span> {% trans "Sign Out" %}</a
+        >
+        {% else %} 
         <li class="nav-item">
           {# URL provided by django-allauth/account/urls.py #}
           <a

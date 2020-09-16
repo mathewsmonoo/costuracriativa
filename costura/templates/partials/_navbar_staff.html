@@ -1,0 +1,34 @@
+{% load static %} 
+{% load static i18n compress %}
+
+<!-- #### Staff Navigation Bar Area Start #### -->
+<li class="nav-item">
+  <div class="dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+      ><span class="jam jam-menu"></span> {% trans "Menu Colaborador" %} 
+    </a>
+    <ul class="dropdown-menu">
+      <a
+        class="nav-link"
+        href="{% url 'users:detail' request.user.username  %}"
+        ><span class="jam jam-user"></span> {% trans "Meu Perfil" %}</a
+      >
+      <a
+        class="nav-link"
+        href="{% url 'products:add'%}"
+        ><span class="jam jam-plus"></span> {% trans "Adicionar Produto" %}</a
+      >
+      <a
+        class="nav-link"
+        href="{% url 'products:category_add'%}"
+        ><span class="jam jam-plus"></span> {% trans "Adicionar Categoria" %}</a
+      >
+      <a
+        class="nav-link"
+        href="#TODO"
+        ><span class="jam jam-document"></span> {% trans "Pedidos" %}</a
+      >
+    </ul>
+  </div>
+</li>
+<!-- #### Staff Navigation Bar Area End #### -->
