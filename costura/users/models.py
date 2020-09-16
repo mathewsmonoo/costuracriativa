@@ -10,17 +10,17 @@ from .validators import username_validator, validate_cpf
 
 class User(AbstractUser,PermissionsMixin): #This is the "Customer" user; 
     is_superuser = models.BooleanField(default=False)
-    is_admin = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
-    is_customer = models.BooleanField(default=True) # Default set as 1 and will change whanever a custom user ("subclassed") is created.
-    is_active = models.BooleanField(default=True)
-    join_date = models.DateField(auto_now_add=True)
-    email = models.EmailField("E-mail", unique=True)
-    prefix  = models.CharField(_("Prefixo"), max_length=8, blank=True)
-    name = models.CharField(_("Name of User"), blank=True, max_length=255)
-    lname = models.CharField(_("User Last Name"), blank=True, max_length=255)
-    cpf = models.CharField(_("CPF"), max_length=14, validators=[validate_cpf])#,unique=True)
-    dob = models.DateField("Data de Nascimento", null=True , blank=True)
+    is_admin     = models.BooleanField(default=False)
+    is_staff     = models.BooleanField(default=False)
+    is_customer  = models.BooleanField(default=True) # Default set as 1 and will change whanever a custom user ("subclassed") is created.
+    is_active    = models.BooleanField(default=True)
+    join_date    = models.DateField(auto_now_add=True)
+    email        = models.EmailField("E-mail", unique=True)
+    prefix       = models.CharField(_("Prefixo / Apelido"), max_length=8, blank=True)
+    name         = models.CharField(_("Nome "),max_length=255)
+    lname        = models.CharField(_("Sobrenome"), max_length=255)
+    cpf          = models.CharField(_("CPF"), max_length=14, validators=[validate_cpf])#,unique=True)
+    dob          = models.DateField("Data de Nascimento", null=True)
 
     def get_absolute_url(self):
         return reverse(
@@ -38,7 +38,7 @@ class User(AbstractUser,PermissionsMixin): #This is the "Customer" user;
         return self.name + ' ' + self.lname
     
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email','name','lname','cpf','dob']
+    REQUIRED_FIELDS = ['email','name','lname','cpf','dob',]
     
 
 class Staff(models.Model):

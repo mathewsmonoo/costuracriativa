@@ -5,44 +5,21 @@
 <li class="nav-item">
   <div class="dropdown">
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-      ><span class="jam jam-menu"></span> {% trans "Menu Administrador" %} 
+      ><span class="jam jam-menu"></span> {% trans "Menu Administrativo" %} 
     </a>
     <ul class="dropdown-menu">
-      <a
-        class="nav-link"
-        href="{% url 'users:detail' request.user.username  %}"
-        ><span class="jam jam-user"></span> {% trans "Meu Perfil" %}</a
-      >
-      <a
-        class="nav-link"
-        href="{% url 'products:add'%}"
-        ><span class="jam jam-plus"></span> {% trans "Adicionar Produto" %}</a
-      >
-      <a
-        class="nav-link"
-        href="{% url 'products:category_add'%}"
-        ><span class="jam jam-plus"></span> {% trans "Adicionar Categoria" %}</a
-      >
-      <a
-        class="nav-link"
-        href="{% url 'users:adminsignup'%}"
-        ><span class="jam jam-plus"></span> {% trans "Adicionar Adminstrador" %}</a
-      >
-      <a
-        class="nav-link"
-        href="{% url 'users:staffsignup'%}"
-        ><span class="jam jam-plus"></span> {% trans "Adicionar Colaborador" %}</a
-      >
-      <a
-        class="nav-link"
-        href="#TODO"
-        ><span class="jam jam-document"></span> {% trans "Colaboradores" %}</a
-      >
       <a
         class="nav-link"
         href="#TODO"
         ><span class="jam jam-document"></span> {% trans "Clientes" %}</a
       >
+
+      <a
+        class="nav-link"
+        href="#TODO"
+        ><span class="jam jam-document"></span> {% trans "Pedidos" %}</a
+      >
+
       <a
         class="nav-link"
         href="#TODO"
@@ -52,4 +29,34 @@
     </ul>
   </div>
 </li>
+<li class="nav-item">
+  <div class="dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+      ><span class="jam jam-menu"></span> {% trans "Menu Colaboradores" %} 
+    </a>
+    <ul class="dropdown-menu">
+      <a
+      class="nav-link"
+      href="#TODO"
+      ><span class="jam jam-document"></span> {% trans "Administradores" %}</a
+      >
+      <a
+      class="nav-link"
+      href="#TODO"
+      ><span class="jam jam-document"></span> {% trans "Colaboradores" %}</a
+     >
+      <a
+        class="nav-link"
+        href="{% url 'users:adminsignup'%}"
+        ><span class="jam jam-plus"></span> {% trans "Adicionar Administrador" %}</a
+      >
+      <a
+        class="nav-link"
+        href="{% url 'users:staffsignup'%}"
+        ><span class="jam jam-plus"></span> {% trans "Adicionar Colaborador" %}</a
+      >
+    </ul>
+  </div>
+</li>
+{% include './_navbar_menu_products.html' %}
 <!-- #### Admin Navigation Bar Area End #### -->

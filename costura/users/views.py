@@ -9,12 +9,9 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DetailView, RedirectView, TemplateView, UpdateView
 
-from .decorators import admin_required, staff_required
 from .forms import AdminCreationForm, StaffCreationForm, UserChangeForm
 
 User = get_user_model()
-
-
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User

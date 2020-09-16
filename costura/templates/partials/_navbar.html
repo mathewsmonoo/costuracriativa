@@ -50,8 +50,7 @@
               class="nav-link dropdown-toggle"
               data-toggle="dropdown"
               href="{% url 'products:list' %}"
-              ><span class="jam jam-shopping-bag"></span> {% trans "Our
-              Products" %}
+              ><span class="jam jam-shopping-bag"></span> {% trans "Our Products" %}
             </a>
             <ul class="dropdown-menu">
               <a class="nav-link" href="{% url 'products:list'  %}">
@@ -74,6 +73,11 @@
           {% include './_navbar_staff.html' %} 
         {% endif %} 
         {% if request.user.is_authenticated %}
+        <a
+        class="nav-link"
+        href="{% url 'users:detail' request.user.username  %}"
+        ><span class="jam jam-user"></span> {% trans "Meu Perfil" %}</a
+       >
         <a class="nav-link" href="{% url 'account_logout' %}"
         ><span class="jam jam-log-out"></span> {% trans "Sign Out" %}</a
         >

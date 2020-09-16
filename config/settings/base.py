@@ -302,6 +302,9 @@ ACCOUNT_EMAIL_REQUIRED = True
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
+ACCOUNT_FORMS = {'signup': 'costura.users.forms.MyCustomSignupForm'}
+#ACCOUNT_FORMS = {'signup': 'users.forms.MyCustomSignupForm'}
+## https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_ADAPTER = "costura.users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 SOCIALACCOUNT_ADAPTER = (
