@@ -5,8 +5,8 @@
 {% block title %} Novo Produto | {{ block.super }} {% endblock title %}
 
 {% block content %}
-<h1>Novo Produto</h1>
-    <form method="POST" novalidate>
+<h1>Produto</h1>
+    <form enctype="multipart/form-data" method="POST">
     {% csrf_token %}
     {% crispy form %}
     </form>

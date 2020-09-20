@@ -6,6 +6,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, RedirectView, TemplateView, UpdateView, FormView
 from .models import Category, Product
 from .forms import ProductForm, CrispyProductForm
+from crispy_forms.helper import FormHelper 
+from crispy_forms.layout import Submit
 
 class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
@@ -65,12 +67,28 @@ class ProductDetailView(DetailView):
 class ProductCreateView(StaffRequiredMixin, CreateView):
     model = Product
     form_class = CrispyProductForm
-    template_name = 'products/product_form.html'
+    helper = None
+    action = "add"
+    
+    def __init__(self, *args, **kwargs):
+        super(ProductCreateView, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'blueForms'
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'url_action_call'
 
+    def get_context_data(self, **kwargs):
+        context = super(ProductCreateView, self).get_context_data(**kwargs)
+        context['helper'] = self.helper
+        return context
+    
     def form_valid(self, form):
+        messages.add_message(
+            self.request, messages.INFO, ("Produto Criado com Sucesso!")
+        )
         product = form.save()
         return super(ProductCreateView, self).form_valid(form)
-    
+
 class ProductDeleteView(StaffRequiredMixin, DeleteView):
     model = Product
 
@@ -80,19 +98,40 @@ class ProductDeleteView(StaffRequiredMixin, DeleteView):
         )
         return reverse_lazy('products:list')
     
-
 class ProductListView(ListView):
     model       = Product
     paginate_by = 9
 
-    
 class ProductUpdateView(StaffRequiredMixin, UpdateView):
     model = Product
-    fields = [
-        'name','price','sale_price','description',
-        'weight','in_stock','stock','category',
-    ]
-    action = "Atualizar"
+    form_class = CrispyProductForm
+    helper = None
+    action = "update"
+    
+    def __init__(self, *args, **kwargs):
+        super(ProductUpdateView, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'blueForms'
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'url_action_call'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductUpdateView, self).get_context_data(**kwargs)
+        context['helper'] = self.helper
+        return context
+    
+    def form_valid(self, form):
+        messages.add_message(
+            self.request, messages.INFO, ("Produto Aualizado com Sucesso!")
+        )
+        product = form.save()
+        return super(ProductUpdateView, self).form_valid(form)
+
+"""
+class ProductUpdateView(StaffRequiredMixin, UpdateView):
+    model = Product
+    fields = '__all__'
+    action = "update"
     
     def get_success_url(self):
         return reverse('products:detail',kwargs={'slug':self.kwargs['slug']})
@@ -104,8 +143,7 @@ class ProductUpdateView(StaffRequiredMixin, UpdateView):
         form.instance.creator = self.request.user
         form.instance.owned_by = self.request.user
         return super(ProductUpdateView, self).form_valid(form)
-    
-    
+"""
 
 #---------------------Linking Views-------------------------------
 class ProductCategoryView(ListView):

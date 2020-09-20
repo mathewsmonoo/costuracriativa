@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.db.models import Count
 
-from .models import Category, Product, ProductImage
-
+from .models import Category, Product
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display =['name','products_count']
@@ -15,15 +14,9 @@ class CategoryAdmin(admin.ModelAdmin):
     def products_count(self,product_instance):
         return product_instance.products_count
 
-class ProductImageInLine(admin.TabularInline):
-    model = ProductImage
-
 class ProductAdmin(admin.ModelAdmin):
     list_display  = ['name', 'price', 'sale_price']
     search_fields = ['name','slug','category__name']
-    inlines = [
-        ProductImageInLine,
-    ]
 
 admin.site.register(Category,   CategoryAdmin)
 admin.site.register(Product,    ProductAdmin)

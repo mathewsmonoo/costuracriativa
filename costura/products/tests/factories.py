@@ -24,7 +24,6 @@ class ProductFactory(factory.django.DjangoModelFactory):
     price   = factory.fuzzy.FuzzyDecimal(0,99.9)
     inventory   =  factory.fuzzy.FuzzyInteger(0,100)
     description = factory.Faker('paragraph', nb_sentences=3, variable_nb_sentences=True)
-    weight  = factory.fuzzy.FuzzyDecimal(0,99.9)
     status  = factory.fuzzy.FuzzyInteger(0,1)
     slug    = factory.LazyAttribute(lambda obj: slugify(obj.name))
     category =  factory.SubFactory(CategoryFactory)

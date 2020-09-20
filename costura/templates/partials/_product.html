@@ -5,9 +5,9 @@
     <div class="col-sm-6 col-md-4">
       <div class="card h-100 w-100" style="padding: 5pt;">
         <p class="text-center">
-          <span class="label label-info">{{ product.category }}</span>
+          <a class="btn-link btn-sm " href="{% url 'products:product_by_category' product.category.slug %}">{{ product.category }}</a>
         </p>
-        {% if product.image.url %}
+        {% if product.image %}
         <img
           src="{{product.image.url}}"
           class="card-img-top"
@@ -31,6 +31,16 @@
           <p>Short Description</p>
         </div>
         <div class="row">
+          {% if request.user.is_authenticated and request.user.is_staff %}
+          <div class="col-md-12">
+            <a
+              class="btn btn-primary btn-success btn-block"
+              href="{% url 'products:detail' product.slug %}"
+              title="Detalhes"
+              >Detalhes</a
+            >
+          </div>
+          {% else %}
           <div class="col-md-6">
             <a
               class="btn btn-primary btn-success btn-block"
@@ -47,6 +57,7 @@
               ><span class="jam jam-shopping-cart"></span
             ></a>
           </div>
+          {% endif %}
         </div>
       </div>
     </div>

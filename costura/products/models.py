@@ -21,19 +21,17 @@ class Category(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('products:categories',kwargs={'slug':self.slug})
 
-
 class Product(TimeStampedModel):
     name        = models.CharField      ("Nome do Produto", max_length=255)
     slug        = AutoSlugField         ("Endereço digital", unique=True, populate_from="name")
     price       = models.DecimalField   ("Preço(R$)",max_digits=8, decimal_places=2,null=True, blank=True) #accepts anything up to R$999,999.99
     sale_price  = models.DecimalField   ("Preço Promocional(R$)",max_digits=8, decimal_places=2, blank=True, null=True)
     description = models.TextField      ("Descrição", default="", blank=True)
-    weight      = models.DecimalField   ("Peso(kg)", max_digits=5, decimal_places=2, default=0.1,null=True, blank=True)
-    in_stock    = models.BooleanField   ("Disponível?", default=False)
     is_active   = models.BooleanField   ("Anúncio Ativo?", default=True)
     stock       = models.IntegerField   ("Quantia em estoque", null=True, blank=True, default=0)
+    image       = models.ImageField     ("Imagem do Produto", upload_to='products/%Y/%m/%d', blank=True, null=True)
 
-    # Relations:
+    # Relationships:
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='products', null=True)
     creator  = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     
@@ -62,12 +60,3 @@ class Product(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('products:detail',kwargs={'slug':self.slug})
-
-
-class ProductImage(models.Model):
-    product = models.ForeignKey(Product, default=None, related_name='productimages', on_delete=models.CASCADE)
-    image   = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
-
-    class Meta:
-        verbose_name="Imagem do Produto"
-        verbose_name_plural = "Imagens do Produto"
