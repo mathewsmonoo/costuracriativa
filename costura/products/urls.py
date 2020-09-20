@@ -14,4 +14,5 @@ urlpatterns = [
     path(route='<slug:slug>/',                  view=views.product_detail,      name='detail'),
     path(route='<slug:slug>/delete/',           view=views.product_delete,      name='delete'),
     path(route='<slug:slug>/update/',           view=views.product_update,      name='update'),
+    path(route='<slug:slug>/deactivate/',       view=views.product_deactivate,  name='deactivate'),
 ]

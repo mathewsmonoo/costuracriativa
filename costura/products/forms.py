@@ -5,6 +5,16 @@ from crispy_forms.bootstrap import FormActions, PrependedText
 from django_extensions.db.fields import AutoSlugField
 from .models import Product, Category
 from django.db import transaction
+from django.utils.safestring import mark_safe
+from string import Template
+from django.conf import settings
+
+class PicturePreviewWidget(forms.widgets.FileInput):
+    def render(self, name, value, attrs=None, **kwargs):
+        input_html = super().render(name, value, attrs=None, **kwargs)
+        img_html = Template("""<img src="$media$link" style="height:200px;"/>""")
+        img_html = mark_safe(img_html.substitute(media=settings.MEDIA_URL, link=value))
+        return f'{input_html}{img_html}'
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -17,7 +27,8 @@ class ProductForm(forms.ModelForm):
     is_active   = forms.BooleanField(widget=forms.CheckboxInput(attrs={'label':'Anúncio Ativo'}))
     stock       = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder':'Quantia em Estoque'}))
     category    = forms.ModelChoiceField(queryset=Category.objects.all())
-    
+    image       = forms.ImageField(widget=PicturePreviewWidget,)
+
 class CrispyProductForm(ProductForm):
     def __init__(self, *args, **kwargs):
         super(CrispyProductForm,self).__init__(*args, **kwargs)
@@ -28,7 +39,8 @@ class CrispyProductForm(ProductForm):
         self.fields['is_active'].label = "Anúncio Ativo"
         self.fields['stock'].label = "Estoque Inicial"
         self.fields['category'].label = "Categoria do Produto"
-        
+        self.fields['image'].label = "Imagem do Produto"
+
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Row(
@@ -46,7 +58,11 @@ class CrispyProductForm(ProductForm):
                 Column('is_active', css_class='form-group col-md-12 mb-0'),
                 css_class='form-row'
             ),
-            'description',
+            Row(
+                Column('description', css_class='form-group col-md-7 mb-0'),
+                Column('image', css_class='form-group col-md-5 mb-0'),
+                css_class='form-row'
+            ),
             FormActions(
                 Submit('submit', 'Aceitar'),
             )

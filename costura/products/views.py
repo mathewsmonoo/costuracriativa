@@ -8,6 +8,7 @@ from .models import Category, Product
 from .forms import ProductForm, CrispyProductForm
 from crispy_forms.helper import FormHelper 
 from crispy_forms.layout import Submit
+from django.db import transaction
 
 class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
@@ -127,6 +128,18 @@ class ProductUpdateView(StaffRequiredMixin, UpdateView):
         product = form.save()
         return super(ProductUpdateView, self).form_valid(form)
 
+class ProductDeactivateView(StaffRequiredMixin,     UpdateView):
+    model  = Product
+    action = "update"
+    exclude = '__all__'
+        
+    @transaction.atomic
+    def save(self):
+        product = super().save(commit=False)
+        product.is_active = False
+        product.save()
+        return user, reverse_lazy('products:list')
+
 """
 class ProductUpdateView(StaffRequiredMixin, UpdateView):
     model = Product
@@ -192,6 +205,7 @@ product_add         = ProductCreateView.as_view()
 product_detail      = ProductDetailView.as_view()
 product_list        = ProductListView.as_view()
 product_update      = ProductUpdateView.as_view()
+product_deactivate  = ProductDeactivateView.as_view()
 product_category    = ProductCategoryView.as_view()
 product_search      = ProductSearchView.as_view()
 product_delete      = ProductDeleteView.as_view()

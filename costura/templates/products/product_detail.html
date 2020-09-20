@@ -1,5 +1,9 @@
-{% extends "base.html" %} {% block title %} {{ product.name }} | {{block.super}}
-{% endblock title%} {% block content %}
+{% extends "base.html" %} 
+{% block title %} 
+{{ product.name }} | {{block.super}}
+{% endblock title%} 
+{% block content %}
+
 <a
   class="btn btn-outline-secondary btn-sm"
   href="{% url 'products:list' %}"
@@ -7,61 +11,121 @@
 >
   Voltar
 </a>
-<hr />
-<div class="row">
-  <div class="col-sm-6">
-    <a href="#" class="thumbnail">
-      <img src="http://placehold.it/500x500" alt="" />
-    </a>
-  </div>
-  <div class="col-sm-6">
-    <div class="product_detail__info">
-      <h1>{{ product.name }}</h1>
-      <p>
-        {% if product.category %}
-        <a
-          href="{% url 'products:product_by_category' product.category.slug %}"
-          title="{{ product.category }}"
-          >{{ product.category }}</a
-        >
-        {% endif %}
-      </p>
-
-      <h3>Descrição:</h3>
-      <h5>{{ product.description }}</h5>
+<div class="container">
+    <div class="row">
+        <!-- Image -->
+        <div class="col-12 col-lg-6">
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    {% if product.image %}
+                        <img class="detail_img_fluid card-img" src="{{product.image.url}}"/> 
+                    {% else %}
+                        <img class="detail_img_fluid" src="https://dummyimage.com/500x520/55595c/fff" /> 
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- Add to cart -->
+        <div class="col-12 col-lg-6 product_detail_block">
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <h2 class="price_full">{{ product.name }}</h2>
+                    {% if product.sale_price %}
+                        <p class="price_full_stroked">{{ product.price }} R$</p>
+                        <p>{{ product.get_discount }}% Off!!</p>
+                        <p class="sale_price">{{product.sale_price}} R$</p>
+                    {% else %}
+                        <p class="price_full">{{ product.price }} R$</p>
+                    {% endif %}
+                    <div class="shipping_block">
+                        <a class="" data-target="#calcularFrete" href="#calcularFrete" aria-expanded="true"></a>
+                        <div class="" id="calcularFrete" style="font-size: medium;">
+                           <p>Calcule o frete e o prazo de entrega estimados para sua região.</p>
+                           <input class="col-8" id="cep" type="text" placeholder="CEP" maxlength="9"><input class="col-4 btn-black" id="btnFrete" type="submit" value="Calcular" data-produto="6987"><a href="http://www.buscacep.correios.com.br/sistemas/buscacep/buscaCepEndereco.cfm" title="" target="_blank" rel="noopener noreferrer">Não sei meu CEP</a>
+                        </div>
+                    </div>
+                    {% if request.user.is_authenticated and request.user.is_staff %}
+                    <a
+                      class="btn btn-secondary btn-lg btn-block text-uppercase"
+                      href="{% url 'products:update' product.slug %}"
+                      title="Editar Produto"
+                      >Editar Produto <span class="jam jam-pencil"></span
+                    ></a>
+                    <a
+                      class="btn btn-warning btn-lg btn-block text-uppercase"
+                      href="{% url 'products:deactivate' product.slug %}"
+                      title="Desativar Produto"
+                      >Desativar Produto <span class="jam jam-stop-sign"></span
+                    ></a>
+                    <a
+                      class="btn btn-danger btn-lg btn-block text-uppercase"
+                      href="{% url 'products:delete' product.slug %}"
+                      title="Excluir Produto"
+                      >Excluir Produto <span class="jam jam-trash"></span
+                    ></a>
+                    {% else %}
+                        <form method="get" action="cart.html">
+                            <a href="{% url 'checkout:create_cartitem' product.slug %}" class="btn btn-lg btn-success btn-lg btn-block text-uppercase">
+                                Adicionar ao Carrinho <i class="jam jam-shopping-cart"></i>
+                            </a>
+                        </form>
+                        <div class="icon_block">
+                            <ul class="list-inline">
+                                <li class="list-inline-item"><i class="jam jam-truck "></i><br/>Entrega Rápida</li>
+                                <li class="list-inline-item"><i class="jam jam-credit-card "></i><br/>Segurança</li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                    <div class=" p-3 mb-2 ">
+                        3 avaliações
+                        <i class="jam jam-star"></i>
+                        <i class="jam jam-star"></i>
+                        <i class="jam jam-star"></i>
+                        <i class="jam jam-star"></i>
+                        <i class="jam jam-star"></i>
+                        (5/5)
+                        <a class="pull-right" href="">Ver todas avaliações</a>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
     </div>
-    <br />
-    <br />
 
-    {% if product.sale_price is not None %}
-    <h5>
-      <del>R${{ product.price }}</del>
-    </h5>
-    <h3 class="product_detail__sale_price">
-      <p>{{ product.get_discount }}% Off!!</p>
-      <p><big> R${{product.sale_price}}</big></p>
-    </h3>
+    <div class="row">
+        <!-- Description -->
+        <div class="col-12">
+            <div class="card border-light mb-3">
+                <div class="card-header bg-primary text-white text-uppercase"><i class="jam jam-align-justify"></i> Descrição do Produto</div>
+                <div class="card-body">
+                    <p class="card-text">
+                        {{ product.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    {% else %}
-    <h5><big>R${{ product.price }}</big></h5>
-    {% endif %}
+{% endblock content %}
 
+<!-- 
     <div class="product-buttons">
       {% if request.user.is_authenticated and request.user.is_staff %}
         <a
-          class="btn btn-success btn-sm col-sm-5 mr-1"
+          class="btn btn-success btn-sm col-sm-4 mr-1"
           href="{% url 'products:update' product.slug %}"
           title="Editar Produto"
           >Editar Produto <span class="jam jam-pencil"></span
         ></a>
         <a
-          class="btn btn-warning btn-sm col-sm-5 mr-1"
+          class="btn btn-warning btn-sm col-sm-4 mr-1"
           href="#TODO"
           title="Desativar Produto"
           >Desativar Produto <span class="jam jam-stop-sign"></span
         ></a>
         <a
-          class="btn btn-danger btn-sm col-sm-5 mr-1"
+          class="btn btn-danger btn-sm col-sm-4 mr-1"
           href="{% url 'products:delete' product.slug %}"
           title="Excluir Produto"
           >Excluir Produto <span class="jam jam-trash"></span
@@ -86,6 +150,4 @@
       {% endif %} {% endif %}
     </div>
   </div>
-</div>
-
-{% endblock content %}
+-->

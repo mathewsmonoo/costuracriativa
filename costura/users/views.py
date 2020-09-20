@@ -7,11 +7,38 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import CreateView, DetailView, RedirectView, TemplateView, UpdateView
-
+from django.views.generic import CreateView, DetailView, RedirectView, TemplateView, UpdateView, ListView
+from .models import Customer, Staff
 from .forms import AdminCreationForm, StaffCreationForm, UserChangeForm
 
 User = get_user_model()
+
+class SuperUserRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_superuser
+    
+class AdminRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_admin
+
+class UserListView(ListView):
+    model = User
+    
+class CustomerListView(AdminRequiredMixin, ListView):
+    model = User
+    template_name = 'users/user_list.html'
+    def get_queryset(self):
+        return User.objects.filter(is_customer=True)
+    
+customer_list_view = CustomerListView.as_view()
+
+class StaffListView(AdminRequiredMixin, ListView):
+    model = User
+    template_name = 'users/user_list.html'
+    def get_queryset(self):
+        return User.objects.filter(is_staff=True)
+    
+staff_list_view = StaffListView.as_view()
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
@@ -64,10 +91,8 @@ user_detail_view   = UserDetailView.as_view()
 user_update_view   = UserUpdateView.as_view()
 user_redirect_view = UserRedirectView.as_view()
 
-class SuperUserRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
-    def test_func(self):
-        return self.request.user.is_superuser
 
+    
 class AdminCreateView(SuperUserRequiredMixin, CreateView):
     model = User
     form_class = AdminCreationForm
@@ -83,9 +108,6 @@ class AdminCreateView(SuperUserRequiredMixin, CreateView):
     
 admin_create_view = AdminCreateView.as_view()
 
-class AdminRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
-    def test_func(self):
-        return self.request.user.is_admin
 
 class StaffCreateView(AdminRequiredMixin, CreateView):
     model = User
@@ -101,3 +123,4 @@ class StaffCreateView(AdminRequiredMixin, CreateView):
         return redirect('users:redirect')
 
 staff_create_view = StaffCreateView.as_view()
+

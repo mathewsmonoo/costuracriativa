@@ -1,11 +1,10 @@
-{% extends "base.html" %} 
-{% block title %} Carrinho {% endblock title%} 
-
-{% block content %}
+{% extends "base.html" %} {% block title %} Carrinho | {{block.super}}
+{% endblock title%} 
 {% load static %}
 
 <h1>Seu carrinho:</h1>
 
+{% block content %}
 {% if not request.session.is_empty %}
     <div class="row mt-3">
         <div class="col">
@@ -20,5 +19,4 @@
         </div>
     </div>
 {% endif %}
-
 {% endblock content %}

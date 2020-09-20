@@ -15,14 +15,14 @@
       <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
       <!-- Jam icons relation -->
       <link rel="stylesheet" href="https://unpkg.com/jam-icons/css/jam.min.css">
-    {% endblock css %}
+      <!-- Own CSS relation -->
+      <link rel="stylesheet" href='{% static "styles.css" %}'>
+      {% endblock css %}
   </head>
 
   <body>
     {% include 'partials/_navbar.html' %}
-
     <div class="container">
-
       {% if messages %}
           {% for message in messages %}
               <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>

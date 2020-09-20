@@ -1,0 +1,35 @@
+{% extends "base.html" %} 
+{% load pagination %} 
+{% block title %} Gerenciar | {{block.super }}
+{% endblock title %} 
+{% block pageheader %}
+<div class="page-header text-center mb-4">
+  <h1>Listar Usuários</h1>
+</div>
+{% endblock pageheader %} 
+
+{% block content %}
+<div class="table-responsive">
+  <table class="table">
+      <tbody style="text-align: center;">
+          <tr>
+            <th> Username </th>
+            <th> Nome </th>
+            <th> E-Mail </th>
+            <th> Membro Desde </th>
+            <th> Pedidos </th>
+        </tr>
+        {% for user in user_list %}
+        <tr>
+            <td>{{user.username}}</td>
+            <td>{{user.first_name}} {{user.last_name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.join_date}}</td>
+            <td><a href="#TODO"><span class="jam jam-document"></span></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+</div>
+{% pagination request paginator page_obj %} 
+{% endblock content %}
