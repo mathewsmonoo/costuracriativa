@@ -7,7 +7,10 @@ def cart_item_middleware(get_response):
         response = get_response(request)
         if session_key != request.session.session_key: #In some way the session modified the session key
             CartItem.objects.filter(cart_key=session_key).update(
-                cart_key = request.session.session_key #Items will be kept after login
+                cart_key=request.session.session_key #Items will be kept after login
             )
         return response
     return middleware
+
+# coding=utf-8
+

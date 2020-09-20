@@ -12,7 +12,10 @@ class CartItemManager(models.Manager):
             cart_item.save()
         else:
             created     = True
-            cart_item   = CartItem.objects.create(cart_key=cart_key, product=product, price=product.price,sale_price = product.sale_price)
+            if product.sale_price:
+                cart_item   = CartItem.objects.create(cart_key=cart_key, product=product, price=product.sale_price)
+            else:
+                cart_item   = CartItem.objects.create(cart_key=cart_key, product=product, price=product.price)
         return cart_item, created
 
 class CartItem(models.Model):
@@ -21,7 +24,7 @@ class CartItem(models.Model):
     product     = models.ForeignKey(Product, verbose_name='Produto', on_delete=models.CASCADE)
     quantity    = models.PositiveIntegerField("Quantidade", default=1)
     price       = models.DecimalField("Preço(R$)",max_digits=8, decimal_places=2)
-    sale_price  = models.DecimalField("Preço Promocional(R$)",max_digits=8, decimal_places=2,blank=True)
+    sale_price  = models.DecimalField("Preço Promocional(R$)",max_digits=8, decimal_places=2,blank=True, null=True)
 
     objects = CartItemManager()
 
@@ -38,9 +41,12 @@ class OrderManager(models.Manager):
     def create_order(self,user,cart_items):
         order = self.create(user=user) #como  cart_items possui default, nao é necessária sua explicitação
         for cart_item in cart_items:
-            order_item = OrderItem.objects.create(
-                order = order, quantity = cart_item.quantity, product = cart_item.product,price = cart_item.price, sale_price = cart_item.sale_price
-            )
+            if cart_item.sale_price:
+                order_item = OrderItem.objects.create(
+                    order = order, quantity = cart_item.quantity, product = cart_item.product,price = cart_item.price, sale_price = cart_item.sale_price)
+            else:
+                order_item = OrderItem.objects.create(
+                    order = order, quantity = cart_item.quantity, product = cart_item.product,price = cart_item.price)
         return order
 
 class Order(models.Model):
@@ -81,7 +87,7 @@ class OrderItem(models.Model):
     quantity    = models.PositiveIntegerField("Quantidade", default=1)
     # mantem o preço do momento da compra
     price       = models.DecimalField("Preço(R$)",max_digits=8, decimal_places=2,blank=True)
-    sale_price  = models.DecimalField("Preço Promocional(R$)",max_digits=8, decimal_places=2,blank=True)
+    sale_price  = models.DecimalField("Preço Promocional(R$)",max_digits=8, decimal_places=2,blank=True, null=True)
 
     class Meta:
         verbose_name = "Item do pedido"

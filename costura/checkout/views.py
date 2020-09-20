@@ -27,9 +27,8 @@ class CreateCartItemView(RedirectView):
 
 
 class CartItemView(TemplateView):
-
     template_name = 'checkout/cart_detail.html'
-
+    
     def get_formset(self, clear=False):
         CartItemFormSet = modelformset_factory(
             CartItem, fields=('quantity',), can_delete=True, extra=0

@@ -39,7 +39,9 @@
                                 R$ {{ form.instance.price }}
                             </td>
                             <td>
+                                {% if form.instance.sale_price %}
                                 R$ {{ form.instance.sale_price }}
+                                {% endif %}
                             </td>
                             <td>
                                 {% render_field form.quantity class='form-control' %}
@@ -50,6 +52,11 @@
                             </td>
                         </tr>
                         {% endfor %}
+                        <tr>
+                            <td colspan="5">
+                                {{my_var}}
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

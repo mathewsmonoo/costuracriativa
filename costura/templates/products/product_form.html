@@ -2,22 +2,12 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %} {{ view.action|default:"Add" }} Produto | {{ block.super }} {% endblock title %}
+{% block title %} Novo Produto | {{ block.super }} {% endblock title %}
 
 {% block content %}
-
-{% with action=view.action|default:"Add" %}
-{% if action == "Atualizar" %}
-    <h1>{{ action }} [ {{product.name}} ]</h1>
-{% elif action == "Adicionar" %}
-<h1>{{ action }} Produto</h1>
-{% endif %}
-    <form method="POST" action=".">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">{{ action }}</button>
+<h1>Novo Produto</h1>
+    <form method="POST" novalidate>
+    {% csrf_token %}
+    {% crispy form %}
     </form>
-{% endwith %}
 {% endblock content %}
-
-<!-- Using action="." as above is a commonly-used trick to reuse a form template for both create and update views -->

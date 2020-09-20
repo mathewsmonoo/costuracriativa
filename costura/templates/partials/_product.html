@@ -1,80 +1,53 @@
 {% load static %}
-
 <div class="container">
   <div class="card-deck">
     {% for product in product_list %}
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <div class="card text-center h-100">
-        <div class="card-header">
-          <p>
-            <strong>
-              {{product.name}}
-              <a href="#TODO" title="Curtir"
-                ><span class="jam jam-heart"></span
-              ></a>
-            </strong>
-          </p>
-        </div>
-        <div
-          onclick="window.location='{% url 'products:detail' product.slug %}';"
-          style="cursor: pointer;"
-        >
+    <div class="col-sm-6 col-md-4">
+      <div class="card h-100 w-100" style="padding: 5pt;">
+        <p class="text-center">
+          <span class="label label-info">{{ product.category }}</span>
+        </p>
         {% if product.image.url %}
-          <img
-            src="{{product.image.url}}"
-            class="card-img-top"
-            height="220px"
-            width="220px"
-            title="{{product.name}}"
-          />
-          {% else %}
-          <img src="http://placehold.it/210x210" alt="" />
-          {% endif %}
-        </div>
-        {% if product.category %}
-          <a
-            href="{% url 'products:product_by_category' product.category.slug %}"
-            title="{{ product.category }}"
-            >{{ product.category }}</a
-          >
+        <img
+          src="{{product.image.url}}"
+          class="card-img-top"
+          height="220px"
+          width="220px"
+          title="{{product.name}}"
+        />
+        {% else %}
+        <img
+          src="http://placehold.it/650x450text=Imagem"
+          class="card-img img-responsive"
+        />
         {% endif %}
-       
         <div class="card-body">
-          <span class="card-text text-right">
-
-            <!-- Discount Verification -->
-            {% if product.sale_price is not None %}
-              <p>
-                <del class="font-italic text-danger"
-                  >R${{ product.price }}</del>
-                <br />
-                {{ product.get_discount }}% OFF!
-                <br />
-                <h3 class="text-center font-weight-bold">R$ {{product.sale_price}}</h3>
-              </p>
-            {% else %}
-              <p>
-                <h3 class="text-center font-weight-bold">R$ {{product.price}}</h3>
-              </p>
-            {% endif %}
-          </span>
-          <!-- End of Discount Verification -->
-
-          
+          <div class="row">
+            <div class="col-md-9 col-xs-3">
+              <h4><strong>{{ product.name }}</strong></h4>
+            </div>
+            <div class="col-md-3 col-xs-3"><h5>{{ product.price }}</h5></div>
+          </div>
+          <p>Short Description</p>
         </div>
-        <row class="card-footer">
-          {% if request.user.is_authenticated and request.user.is_staff %}
-          <div class="row text-center">
-              <a class="btn btn-success btn-sm col-sm-5 mr-1" href="{% url 'products:detail' product.slug %}" title="Detalhes">Detalhes</a>
-              <a class="btn btn-success btn-sm col-sm-5 mr-1" href="{% url 'products:update' product.slug %}" title="Editar Produto">Editar<span class="jam jam-pencil"></span></a>
+        <div class="row">
+          <div class="col-md-6">
+            <a
+              class="btn btn-primary btn-success btn-block"
+              href="{% url 'products:detail' product.slug %}"
+              title="Detalhes"
+              >Detalhes</a
+            >
           </div>
-          {% else %}
-          <div class="row text-center">
-            <a class="btn btn-success btn-sm col-sm-5 mr-1" href="{% url 'products:detail' product.slug %}" title="Detalhes">Detalhes</a>
-            <a class="btn btn-success btn-sm col-sm-5 mr-1" href="{% url 'checkout:create_cartitem' product.slug %}" title="Adicionar ao Carrinho"><span class="jam jam-shopping-cart"></span></a>
+          <div class="col-md-6">
+            <a
+              class="btn btn-secibdary btn-success btn-block"
+              href="{% url 'checkout:create_cartitem' product.slug %}"
+              title="Adicionar ao Carrinho"
+              ><span class="jam jam-shopping-cart"></span
+            ></a>
           </div>
-          {% endif %}
-        </row>
+        </div>
       </div>
     </div>
     {% endfor %}

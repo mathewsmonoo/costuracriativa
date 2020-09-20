@@ -5,18 +5,12 @@
 <li class="nav-item">
   <div class="dropdown">
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-      ><span class="jam jam-id-card"></span> {% trans "Account" %} 
+      ><span class="jam jam-menu"></span> {% trans "Minha Conta" %} 
     </a>
     <ul class="dropdown-menu">
-      <a
-        class="nav-link"
-        href="{% url 'users:detail' request.user.username  %}"
-        ><span class="jam jam-user"></span> {% trans "My Profile" %}</a
-      >
+      <a class="nav-link" href="{% url 'checkout:cart_item' %}" title='{% trans "Cart" %}'><span class="jam jam-shopping-cart">{% trans "Carrinho" %}</span></a>
+      <a class="nav-link" href="#TODO" title='{% trans "Meus Pedidos" %}'><span class="jam jam-ordered-list">{% trans "Meus Pedidos" %}</span></a>
     </ul>
   </div>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="{% url 'checkout:cart_item' %}" title='{% trans "Cart" %}'><span class="jam jam-shopping-cart">{% trans "Cart" %}</span></a>
 </li>
 <!-- #### Customer Navigation Bar Area End #### -->

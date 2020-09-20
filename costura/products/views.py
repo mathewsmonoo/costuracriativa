@@ -3,8 +3,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, RedirectView, TemplateView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, RedirectView, TemplateView, UpdateView, FormView
 from .models import Category, Product
+from .forms import ProductForm, CrispyProductForm
 
 class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
@@ -60,25 +61,16 @@ class CategoryUpdateView(StaffRequiredMixin, UpdateView):
 #---------------------Product Views-------------------------------
 class ProductDetailView(DetailView):
     model = Product
-    
+
 class ProductCreateView(StaffRequiredMixin, CreateView):
     model = Product
-    fields = [
-        'name','price','sale_price','description',
-        'weight','in_stock','stock','category',
-    ]
-    action = "Adicionar"
-    
+    form_class = CrispyProductForm
+    template_name = 'products/product_form.html'
 
-    success_url = reverse_lazy('products:list')
-    
     def form_valid(self, form):
-        messages.add_message(
-            self.request, messages.INFO, ("Produto Adicionado com Sucesso!")
-        )
-        form.instance.creator = self.request.user
-        return super().form_valid(form)
-
+        product = form.save()
+        return super(ProductCreateView, self).form_valid(form)
+    
 class ProductDeleteView(StaffRequiredMixin, DeleteView):
     model = Product
 
@@ -91,7 +83,7 @@ class ProductDeleteView(StaffRequiredMixin, DeleteView):
 
 class ProductListView(ListView):
     model       = Product
-    paginate_by = 8
+    paginate_by = 9
 
     
 class ProductUpdateView(StaffRequiredMixin, UpdateView):
