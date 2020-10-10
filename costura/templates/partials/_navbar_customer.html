@@ -1,15 +1,34 @@
-{% load static %} 
-{% load static i18n compress %}
-
+{% load static %} {% load static i18n compress %}
 <!-- #### Customer Navigation Bar Area Start #### -->
+<li class="nav-item">
+  <a
+    tabindex="0"
+    id="cart-popover"
+    type="button"
+    role="button"
+    class="btn"
+    data-trigger="focus"
+    data-container="body"
+    data-toggle="popover"
+    data-placement="bottom"
+    data-html="true"
+    data-content=""
+  >
+    <span class="jam jam-shopping-cart"><span id="cart"> (0)</span></span>
+  </a>
+</li>
 <li class="nav-item">
   <div class="dropdown">
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-      ><span class="jam jam-menu"></span> {% trans "Minha Conta" %} 
+      ><span class="jam jam-menu"></span> {% trans "Minha Conta" %}
     </a>
     <ul class="dropdown-menu">
-      <a class="nav-link" href="{% url 'checkout:cart_item' %}" title='{% trans "Cart" %}'><span class="jam jam-shopping-cart">{% trans "Carrinho" %}</span></a>
-      <a class="nav-link" href="#TODO" title='{% trans "Meus Pedidos" %}'><span class="jam jam-ordered-list">{% trans "Meus Pedidos" %}</span></a>
+      <a
+        class="nav-link"
+        href="#ordersbyuser"
+        title='{% trans "Meus Pedidos" %}'
+        ><span class="jam jam-ordered-list">{% trans "Meus Pedidos" %}</span></a
+      >
     </ul>
   </div>
 </li>

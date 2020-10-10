@@ -7,13 +7,13 @@
 {% block content %}
 {% if not request.session.is_empty %}
     <div class="row mt-3">
-        <div class="col">
-            {% include 'partials/_cart.html' %}
+        <div class="col-md-12">
+            {% include './_cart.html' %}
         </div>
     </div>
 {% else %}
     <div class="row mt-3">
-        <div class="col">
+        <div class="col=md-12">
             <h3>Carrinho vazio</h3>
             <p class="lead">Não há produtos no seu carrinho.</p>
         </div>

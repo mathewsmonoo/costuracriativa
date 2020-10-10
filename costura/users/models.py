@@ -36,7 +36,7 @@ class User(AbstractUser,PermissionsMixin): #This is the "Customer" user;
     
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email','first_name','last_name','cpf','dob',]
-    
+
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)

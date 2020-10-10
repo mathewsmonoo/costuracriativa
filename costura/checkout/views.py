@@ -3,7 +3,21 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import modelformset_factory
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
-from django.views.generic import RedirectView, TemplateView
+from django.views.generic import RedirectView, TemplateView, ListView
+
+from costura.products.models import Product
+
+def checkout(request):
+    return render(request,'checkout/cart_detail.html')
+
+
+"""
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import modelformset_factory
+from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse
+from django.views.generic import RedirectView, TemplateView, ListView
 
 from costura.checkout.models import CartItem, Order
 from costura.products.models import Product
@@ -83,3 +97,15 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
 create_cartitem = CreateCartItemView.as_view()
 cart_item       = CartItemView.as_view()
 checkout        = CheckoutView.as_view()
+
+class OrdersByUserView(LoginRequiredMixin, ListView):
+    model = Order
+    template_name = 'checkout/orders.html'
+    
+    def get_queryset(self):
+        user_name = self.request.user.username
+        order_list = Order.objects.filter(username=user_name)
+        return order_list
+    
+orders_by_user = OrdersByUserView.as_view()
+"""

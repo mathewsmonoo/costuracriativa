@@ -140,24 +140,6 @@ class ProductDeactivateView(StaffRequiredMixin,     UpdateView):
         product.save()
         return user, reverse_lazy('products:list')
 
-"""
-class ProductUpdateView(StaffRequiredMixin, UpdateView):
-    model = Product
-    fields = '__all__'
-    action = "update"
-    
-    def get_success_url(self):
-        return reverse('products:detail',kwargs={'slug':self.kwargs['slug']})
-    
-    def form_valid(self, form):
-        messages.add_message(
-            self.request, messages.INFO, ("Produto Aualizado com Sucesso!")
-        )
-        form.instance.creator = self.request.user
-        form.instance.owned_by = self.request.user
-        return super(ProductUpdateView, self).form_valid(form)
-"""
-
 #---------------------Linking Views-------------------------------
 class ProductCategoryView(ListView):
 

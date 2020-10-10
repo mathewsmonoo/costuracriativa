@@ -5,11 +5,122 @@
 
 {% block pageheader %}
 <div class="page-header text-center mb-4">
-  <h1>Produtos</h1>
+  <h1>Nossos Produtos</h1>
 </div>
 {% endblock pageheader %}
 
 {% block content %}
-{% include "partials/_product.html" %}
-{% pagination request paginator page_obj %}
+<div class="container">
+  <div class="card-deck">
+    {% for product in product_list %}
+    <div class="col-sm-6 col-md-4">
+      <div class="card h-100 w-100" style="padding: 5pt;">
+        <p class="text-center">
+          <a class="btn-link btn-sm " href="{% url 'products:product_by_category' product.category.slug %}">{{ product.category }}</a>
+        </p>
+        {% if product.image %}
+        <img
+          src="{{product.image.url}}"
+          class="card-img-top img-responsive"
+          height="220px"
+          width="220px"
+          title="{{product.name}}"
+        />
+        {% else %}
+        <img
+          src="http://placehold.it/650x450text=Imagem"
+          class="card-img img-responsive"
+        />
+        {% endif %}
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-9 col-xs-3"><h4><strong id="nm{{product.id}}">{{ product.name }}</strong></h4></div>
+            <div class="col-md-3 col-xs-3"><h5>{{ product.price }}</h5></div></div>
+          <p>Short Description</p>
+        </div>
+        <div class="row">
+          {% if request.user.is_authenticated and request.user.is_staff %}
+          <div class="col-md-12">
+            <a
+              class="btn btn-primary btn-success btn-block"
+              href="{% url 'products:detail' product.slug %}"
+              title="Detalhes"
+              >Detalhes</a
+            >
+          </div>
+          {% else %}
+          <div class="col-md-6">
+            <a
+              class="btn btn-primary btn-success btn-block"
+              href="{% url 'products:detail' product.slug %}"
+              title="Detalhes"
+              >Detalhes</a
+            >
+          </div>
+          <div class="col-md-6">
+            <button 
+              id = {{product.id}}
+              class="btn atc btn-secondary btn-success btn-block"
+              href="#TODO"
+              title="Adicionar ao Carrinho"
+              ><span class="jam jam-shopping-cart"></span
+            ></button>
+          </div>
+          {% endif %} 
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
 {% endblock content %}
+{% pagination request paginator page_obj %}
+
+<!-- Local PrductList JS -->
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript">
+    if(localStorage.getItem('cart')==null){
+      var cart = {};
+    }
+    else {
+      cart = JSON.parse(localStorage.getItem('cart'));
+    }
+    $(document).on('click','.atc',function(){
+      var item_id = this.id.toString();
+      console.log(item_id);
+      if(cart[item_id]!=undefined) {
+        quantity = cart[item_id][0] + 1;
+        cart[item_id][0] = quantity;
+      }
+      else {
+        quantity = 1;
+        name = document.getElementById("nm"+item_id).innerHTML;
+        // if we want to access quantity : cart[1][0]; if we want to access name : cart[1][1]
+        cart[item_id] = [quantity,name];
+      }
+      localStorage.setItem('cart',JSON.stringify(cart));
+      document.getElementById("cart").innerHTML = Object.keys(cart).length;
+    });
+    document.getElementById("cart").innerHTML = Object.keys(cart).length;
+    DisplayCart(cart);
+    function DisplayCart(cart) {
+      // loop through cart and get it's items.
+      var cartString = "";
+      var cartIndex  = 0;
+      cartString += "<h5 class='text-center'>Seu Carrinho</h5>";
+      for(var x in cart){
+        cartIndex  += 1;
+        cartString += "#" + cartIndex + " "
+        cartString += "<a href='#todo'>" + document.getElementById("nm" + x).innerHTML + "</a>";
+        cartString += "Qtd:" + cart[x][0] + "<br/>"
+      }
+      cartString += "<a href='{% url 'checkout:cartcheckout' %}'><span class='btn btn-success' id='checkout'>Checkout</span></a>";
+      cartString += "  <a href='#todoCleanCart'><span class='btn btn-warning' id='checkout'>Limpar</span></a>";
+      document.getElementById("cart-popover").setAttribute('data-content',cartString);
+      $('[data-toggle="popover"]').popover();
+    }
+</script>
+<!-- Local JS End-->
+{% endblock javascript %}

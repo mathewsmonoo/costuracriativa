@@ -36,12 +36,11 @@
                                 <a href="{% url 'products:detail' form.instance.product.slug %}">{{ form.instance.product }}</a>
                             </td>
                             <td>
-                                R$ {{ form.instance.price }}
-                            </td>
-                            <td>
                                 {% if form.instance.sale_price %}
-                                R$ {{ form.instance.sale_price }}
-                                {% endif %}
+                                    R$ {{ form.instance.sale_price }}
+                                {% else %}
+                                    R$ {{ form.instance.price }}
+                                    {% endif %}
                             </td>
                             <td>
                                 {% render_field form.quantity class='form-control' %}
@@ -63,7 +62,7 @@
             <p class="text-right">
                 <a href="{% url 'products:list' %}" class="pull-left btn btn-default">Continuar Compras</a>
                 <button type="submit" class="btn btn-primary" name="button">Atualizar Carrinho</button></li>
-                <a href="{% url 'checkout:checkout' %}"  class="btn btn-success">Finalizar Compra</a>
+                <a href="#TODOFinalizarCompra"  class="btn btn-success">Finalizar Compra</a>
             </p>
         </form>
     </div>
