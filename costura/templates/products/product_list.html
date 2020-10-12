@@ -1,7 +1,7 @@
 {% extends "base.html" %} 
 {% load pagination %}
 
-{% block title %}Produtos | {{ block.super }} {% endblock title %} 
+{% block title %}Produtos | {{block.super}} {% endblock title %} 
 
 {% block pageheader %}
 <div class="page-header text-center mb-4">
@@ -16,12 +16,10 @@
     <div class="col-sm-6 col-md-4">
       <div class="card h-100 w-100" style="padding: 5pt;">
         <p class="text-center">
-          <a class="btn-link btn-sm " href="{% url 'products:product_by_category' product.category.slug %}">{{ product.category }}</a>
+          <a class="btn-link btn-sm " href="{% url 'products:product_by_category' product.category.slug %}">{{product.category}}</a>
         </p>
         {% if product.image %}
-        <img
-          src="{{product.image.url}}"
-          class="card-img-top img-responsive"
+        <img src="{{product.image.url}}" class="card-img-top img-responsive"
           height="220px"
           width="220px"
           title="{{product.name}}"
@@ -34,9 +32,13 @@
         {% endif %}
         <div class="card-body">
           <div class="row">
-            <div class="col-md-9 col-xs-3"><h4><strong id="nm{{product.id}}">{{ product.name }}</strong></h4></div>
-            <div class="col-md-3 col-xs-3"><h5>{{ product.price }}</h5></div></div>
-          <p>Short Description</p>
+            <div class="col-md-9 col-xs-3"><h4><strong id="nm{{product.id}}">{{product.name}}</strong></h4></div>
+            {% if product.has_sale_price %}
+            <div class="col-md-3 col-xs-3"><h4 id="price" style="color: red;">{{product.sale_price}}</h4><del>{{product.price}}</del></div></div>
+            {% else %}
+            <div class="col-md-3 col-xs-3"><h5 id="price">{{product.price}}</h5></div></div>
+            {% endif %}
+          <p>{{product.get_short_description}}</p>
         </div>
         <div class="row">
           {% if request.user.is_authenticated and request.user.is_staff %}
@@ -59,7 +61,7 @@
           </div>
           <div class="col-md-6">
             <button 
-              id = {{product.id}}
+              id ={{product.id}}
               class="btn atc btn-secondary btn-success btn-block"
               href="#TODO"
               title="Adicionar ao Carrinho"
@@ -79,7 +81,61 @@
 
 <!-- Local PrductList JS -->
 {% block javascript %}
-{{ block.super }}
+
+<script type="text/javascript">
+  console.log('This is working');
+  
+  if(localStorage.getItem('cart')==null){
+      var cart = {};
+  }
+  else{
+      cart = JSON.parse(localStorage.getItem('cart'));
+  }
+  
+  $(document).on('click','.atc',function(){
+      console.log("The add to cart button is clicked");
+      var item_id = this.id.toString();
+      console.log(item_id);
+  
+      if(cart[item_id]!=undefined){
+          quantity = cart[item_id][0] + 1;
+          cart[item_id][0] = quantity;
+          cart[item_id][2] = cart[item_id][2] + parseFloat(document.getElementById("price"+item_id).innerHTML);
+      }
+      else{
+          quantity = 1;
+          price = parseFloat(document.getElementById("price"+item_id).innerHTML);
+          name = document.getElementById("nm"+item_id).innerHTML;
+          cart[item_id]=[quantity,name,price];
+
+      }
+      console.log(cart);
+      localStorage.setItem('cart',JSON.stringify(cart));
+      document.getElementById("cart").innerHTML = "Cart("+ Object.keys(cart).length +")";
+     
+  });
+  
+  DisplayCart(cart);
+  function DisplayCart(cart){
+      var cartString ="";
+      cartString += "<h5>This is your cart</h5>";
+      var cartIndex = 1;
+      for(var x in cart){
+          cartString += cartIndex;
+          cartString += document.getElementById("nm"+x).innerHTML + "Qty:" + cart[x][0] + "</br>";
+          cartIndex+=1;
+      }
+  
+      cartString += "<a href='/checkout'><button class='btn btn-warning' id='checkout'>Checkout</button></a>";
+      document.getElementById("cart").setAttribute('data-content',cartString);
+      $('[data-toggle="popover"]').popover();
+  }
+  
+  
+</script>
+
+<!--
+{{block.super}}
 <script type="text/javascript">
     if(localStorage.getItem('cart')==null){
       var cart = {};
@@ -101,9 +157,10 @@
         cart[item_id] = [quantity,name];
       }
       localStorage.setItem('cart',JSON.stringify(cart));
-      document.getElementById("cart").innerHTML = Object.keys(cart).length;
+      document.getElementById('cart').innerHTML = Object.keys(cart).length;
+      console.log(cart);
     });
-    document.getElementById("cart").innerHTML = Object.keys(cart).length;
+    document.getElementById('cart').innerHTML = Object.keys(cart).length;
     DisplayCart(cart);
     function DisplayCart(cart) {
       // loop through cart and get it's items.
@@ -117,10 +174,10 @@
         cartString += "Qtd:" + cart[x][0] + "<br/>"
       }
       cartString += "<a href='{% url 'checkout:cartcheckout' %}'><span class='btn btn-success' id='checkout'>Checkout</span></a>";
-      cartString += "  <a href='#todoCleanCart'><span class='btn btn-warning' id='checkout'>Limpar</span></a>";
       document.getElementById("cart-popover").setAttribute('data-content',cartString);
       $('[data-toggle="popover"]').popover();
     }
-</script>
+</script> 
+-->
 <!-- Local JS End-->
 {% endblock javascript %}

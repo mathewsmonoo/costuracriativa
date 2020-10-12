@@ -9,7 +9,7 @@ from model_utils.models import TimeStampedModel
 class Category(TimeStampedModel):
     name    = models.CharField("Nome da Categoria", max_length=255, unique=True)
     slug    = AutoSlugField("Category Address", unique=True, populate_from="name")
-    image   = models.ImageField(upload_to='categories/', blank=True)
+    image   = models.ImageField("Imagem da Categoria", upload_to='categories/', blank=True, null=True)
 
     class Meta:
         verbose_name="Categoria"
@@ -36,8 +36,12 @@ class Product(TimeStampedModel):
     creator  = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     
     # TODO:
-    # Add Discount;
     # Add final price (price - discount);
+    
+    def has_sale_price(self):
+        if self.sale_price == 0 or self.sale_price is None:
+            return False
+        return True
 
     def get_price(self):
         if self.sale_price is None:
@@ -45,11 +49,17 @@ class Product(TimeStampedModel):
         else:
             return self.sale_price
 
+    def get_short_description(self):
+        if self.description is None:
+            return f'Descrição do Produto'
+        return self.description[:100]+'...'
+
     def get_discount(self):
         percentage = ((self.price - self.sale_price)/ self.price) * 100
         holder = str(round(percentage, 2))
         holder = holder.replace(',','.')
         return holder
+
 
     class Meta:
         verbose_name="Produto"

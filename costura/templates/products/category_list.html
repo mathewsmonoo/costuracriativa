@@ -26,22 +26,16 @@
           onclick="window.location='{% url 'products:product_by_category' category.slug %}';"
           style="cursor: pointer;"
         >
-        {% if category.image_url %}
-          <img 
-              class="card-img-top"
-              src="{{category.image.url}}"
-              height="150px"
-              width="150px"
-              title="{{category.name}}"
+        {% if category.image %}
+          <img
+            src="{{category.image.url}}"
+            class="card-img-top"
+            height="220px"
+            width="220px"
+            title="{{category.name}}"
           />
         {% else %}
-          <img 
-              class="card-img-top"
-              src=""
-              height="150px"
-              width="150px"
-              title="{{category.name}}"
-            />
+          <img src="http://placehold.it/210x210" alt="" />
         {% endif %}
         </div>
       </div>
