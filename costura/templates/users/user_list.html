@@ -1,5 +1,4 @@
 {% extends "base.html" %} 
-{% load pagination %} 
 {% block title %} Gerenciar | {{block.super }}
 {% endblock title %} 
 {% block pageheader %}
@@ -31,5 +30,4 @@
       </tbody>
   </table>
 </div>
-{% pagination request paginator page_obj %} 
 {% endblock content %}

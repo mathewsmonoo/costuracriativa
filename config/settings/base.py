@@ -98,7 +98,6 @@ LOCAL_APPS = [
     "costura.users.apps.UsersConfig",
     "costura.products.apps.ProductsConfig",
     "costura.addresses.apps.AddressesConfig",
-    "costura.core.apps.CoreConfig",
     "costura.checkout.apps.CheckoutConfig",
     # Your stuff: custom apps go here
 ]
@@ -123,6 +122,7 @@ AUTHENTICATION_BACKENDS = [
 AUTH_USER_MODEL = "users.User"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 LOGIN_REDIRECT_URL = "users:redirect"
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
 LOGIN_URL = "account_login"
 
@@ -166,8 +166,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.common.BrokenLinkEmailsMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-
-    "checkout.middleware.cart_item_middleware",
 ]
 
 # STATIC

@@ -42,14 +42,14 @@
           <span class="card-text text-right">
 
             <!-- Discount Verification -->
-            {% if product.sale_price is not None %}
+            {% if product.discount_price is not None %}
               <p>
                 <del class="font-italic text-danger"
                   >R${{ product.price }}</del>
                 <br />
                 {{ product.get_discount }}% OFF!
                 <br />
-                <h3 class="text-center font-weight-bold">R$ {{product.sale_price}}</h3>
+                <h3 class="text-center font-weight-bold">R$ {{product.discount_price}}</h3>
               </p>
             {% else %}
               <p>

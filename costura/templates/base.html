@@ -21,7 +21,15 @@
   </head>
 
   <body>
-    {% include 'partials/_navbar.html' %}
+    {% block navbar %}
+      {% if request.user.is_authenticated and request.user.is_admin %}
+        {%include './partials/_navbar_admin.html' %} 
+      {% elif request.user.is_authenticated and request.user.is_staff %} 
+        {% include './partials/_navbar_staff.html' %} 
+      {% elif request.user.is_customer or request.user.is_authenticated == False %}
+        {% include './partials/_navbar_customer.html' %} 
+      {% endif %}
+    {% endblock navbar %}
     <div class="container">
       {% if messages %}
           {% for message in messages %}

@@ -1,22 +1,157 @@
-{% extends "base.html" %} {% block title %} Carrinho | {{block.super}}
-{% endblock title%} 
-{% load static %}
+{% extends "base.html" %}
+{% block title %} Carrinho | {{block.super}} {% endblock title %} 
+{% load static %} 
+{% load widget_tweaks %}
 
 <h1>Seu carrinho:</h1>
-
 {% block content %}
-{% if not request.session.is_empty %}
-    <div class="row mt-3">
-        <div class="col-md-12">
-            {% include './_cart.html' %}
-        </div>
+<div class="container">
+  <div class="row m-5">
+    <div class="col-md-12">
+      <h1 style="text-align: center">Seu Carrinho</h1>
+      <hr />
     </div>
-{% else %}
-    <div class="row mt-3">
-        <div class="col=md-12">
-            <h3>Carrinho vazio</h3>
-            <p class="lead">Não há produtos no seu carrinho.</p>
-        </div>
+  </div>
+  <div class="row m-6">
+    <div class="col-md-12">
+      <ul class="list-group">
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center list-group-item-primary"
+        >
+          <h3>Produtos Escolhidos</h3>
+        </li>
+      </ul>
+      <ul class="list-group" id="item_list"></ul>
     </div>
-{% endif %}
-{% endblock content %}
+  </div>
+
+  <div class="row m-5"></div>
+  <div class="row m-6">
+    <div class="col-md-12">
+      <h1 style="text-align: center">Detalhes de Envio</h1>
+      <h3 style="text-align: center"><a href="#" class="btn btn-outline-info">Usar endereço já cadastrado</a></h3>
+      <hr />
+    </div>
+  </div>
+  <div class="row m-6">
+    <div class="col-md-12">
+      <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" id="items" name="items" />
+        <input type="hidden" id="user" name="user" />
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputName">Nome</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              class="form-control"
+              id="inputName"
+              placeholder="Quem recebe"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputObs">Observação</label>
+            <input
+              id="email"
+              name="email"
+              type="text"
+              class="form-control"
+              id="inputObs"
+              placeholder="Entrega somente após 12h00"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputAddress">Endereço</label>
+          <input
+            id="address"
+            name="address"
+            type="text"
+            class="form-control"
+            id="inputAddress"
+            placeholder="Rua das Maçãs, Número 123, Bairro dos Cedros"
+            />
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputCity">Cidade</label>
+                <input
+                id="city"
+                name="city"
+                type="text"
+                class="form-control"
+                id="inputCity"
+                placeholder="Lisboa"
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">Estado</label>
+            <input
+              id="state"
+              name="state"
+              type="text"
+              class="form-control"
+              id="inputState"
+            />
+          </div>
+          <div class="form-group col-md-2">
+            <label for="inputCEP">CEP</label>
+            <input
+              id="zipcode"
+              name="zipcode"
+              type="text"
+              class="form-control"
+              id="inputCEP"
+            />
+          </div>
+          <div class="form-group col-md-12">
+            <label for="total">Total</label>
+            <input
+              readonly=""
+              type="text"
+              class="form-control"
+              id="total"
+              name="total"
+            />
+          </div>
+        </div>
+        <a href="{% url 'checkout:complete'%}">
+            <button type="submit" class="btn btn-lg btn-success">
+                Finalizar Compra!
+            </button>
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %} 
+{% block javascript %} 
+{{block.super}}
+<script type="text/javascript">
+  if (localStorage.getItem("cart") == null) {
+    var cart = {};
+  } else {
+    cart = JSON.parse(localStorage.getItem("cart"));
+  }
+  var total = 0;
+  for (item in cart) {
+    let name = cart[item][1];
+    let quantity = cart[item][0];
+    let price = cart[item][2];
+    total = total + cart[item][2];
+
+    itemString = `  <li class="list-group-item d-flex justify-content-between align-items-center">${quantity}x  ${name}     <span class="badge badge-warning badge-pill">R$ ${price}</span></li>`;
+
+    $("#item_list").append(itemString);
+  }
+  totalPrice = ` <li class ="list-group-item d-flex justify-content-between align-items-center"><b>Sub-Total:</b>
+  R$ ${total}</li> `;
+  $("#total").val(total);
+  $("#item_list").append(totalPrice);
+  $("#items").val(JSON.stringify(cart));
+  $("#user").val((request.user));
+</script>
+{% endblock javascript %}

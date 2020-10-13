@@ -78,9 +78,8 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         )
         return super().form_valid(form)
 
-class UserRedirectView(LoginRequiredMixin, RedirectView):
+class UserRedirectView(RedirectView):
     permanent = False
-
     def get_redirect_url(self):
         return reverse(
             "users:detail",

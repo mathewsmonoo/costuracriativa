@@ -1,3 +1,4 @@
+"""
 #The idea is to create a code that will be executed in every view.
 from costura.checkout.models import CartItem
 
@@ -14,3 +15,4 @@ def cart_item_middleware(get_response):
 
 # coding=utf-8
 
+"""

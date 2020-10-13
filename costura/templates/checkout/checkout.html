@@ -6,22 +6,34 @@ Finalização da Compra
 
 {% block content %}
 {% load static %}
-<ol class="breadcrumb">
-  <li><a href="{% url 'products:list' %}">Início</a></li>
-  <li><a href="{% url 'checkout:cart_item' %}">Carrinho de Compras</a></li>
-  <li class="active">Finalização da Compra</li>
-</ol>
+
 <div class="page-header">
     <h1>Finalização da Compra</h1>
 </div>
 <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-12">
         <div class="alert alert-success">
-            Seu pedido foi realizado com sucesso, para realizar o pagamento faça o depósito na seguinte conta:
+            <h3 style="text-align: center;">O Pedido # {{order.id}} foi realizado com Sucesso!</h3>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            {{order_object.id}}
+            {{order_object.total}}
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h5>Para realizar o pagamento efetue o depósito na seguinte conta:</h5>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
     </div>
 </div>
 {% endblock %}
+{% block javascript %}
+
+{% endblock javascript %}

@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load pagination %}
 {% block title %} Busca | {{ block.super }} {% endblock title %} 
 
 {% block pageheader %}
@@ -11,5 +10,4 @@
 
 {% block content %}
   {% include "partials/_product.html" %}
-  {% pagination request paginator page_obj %}
 {% endblock content %}

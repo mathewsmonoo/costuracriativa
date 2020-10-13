@@ -1,15 +1,31 @@
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import modelformset_factory
-from django.shortcuts import get_object_or_404, render, redirect
-from django.urls import reverse
-from django.views.generic import RedirectView, TemplateView, ListView
+from django.http import request
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse, reverse_lazy
+from django.views.generic import DetailView
 
 from costura.products.models import Product
 
-def checkout(request):
-    return render(request,'checkout/cart_detail.html')
+from .models import Order
 
+def checkout(request):
+    order = None
+    if request.method == "POST":
+        items = request.POST.get('items','')
+        address = request.POST.get('address',"")
+        total = request.POST.get('total',"")
+        obs = request.POST.get('obs',"")
+        user = request.user
+        order = Order(items=items,address=address,user=user,total=total,obs=obs)
+        order.save()
+        order = order
+    return render(request,'checkout/cart_detail.html',{'order':order})
+
+def complete(request):
+    return render(request,'checkout/checkout.html')
 
 """
 from django.contrib import messages

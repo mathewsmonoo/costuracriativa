@@ -36,8 +36,8 @@
                                 <a href="{% url 'products:detail' form.instance.product.slug %}">{{ form.instance.product }}</a>
                             </td>
                             <td>
-                                {% if form.instance.sale_price %}
-                                    R$ {{ form.instance.sale_price }}
+                                {% if form.instance.discount_price %}
+                                    R$ {{ form.instance.discount_price }}
                                 {% else %}
                                     R$ {{ form.instance.price }}
                                     {% endif %}

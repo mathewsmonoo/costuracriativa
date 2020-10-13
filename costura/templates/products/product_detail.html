@@ -30,10 +30,10 @@
             <div class="card bg-light mb-3">
                 <div class="card-body">
                     <h2 class="price_full">{{ product.name }}</h2>
-                    {% if product.sale_price %}
+                    {% if product.discount_price %}
                         <p class="price_full_stroked">{{ product.price }} R$</p>
                         <p>{{ product.get_discount }}% Off!!</p>
-                        <p class="sale_price">{{product.sale_price}} R$</p>
+                        <p class="discount_price">{{product.discount_price}} R$</p>
                     {% else %}
                         <p class="price_full">{{ product.price }} R$</p>
                     {% endif %}

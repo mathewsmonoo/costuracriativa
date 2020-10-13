@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load pagination %}
 {% block title %} Categorias | {{ block.super }} {% endblock title %}
 
 {% block pageheader %}
@@ -43,5 +42,4 @@
     {% endfor %}
   </div>
 </div>
-{% pagination request paginator page_obj %}
 {% endblock content %}

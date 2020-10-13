@@ -22,7 +22,7 @@ class ProductForm(forms.ModelForm):
         exclude = ('creator',)
     name        = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Nome do Produto'}))
     price       = forms.DecimalField(widget=forms.NumberInput(attrs={'placeholder':'Preço'}))
-    sale_price  = forms.DecimalField(widget=forms.NumberInput(attrs={'placeholder':'Preço Promocional'}))
+    discount_price  = forms.DecimalField(widget=forms.NumberInput(attrs={'placeholder':'Preço Promocional'}),required=False)
     description = forms.CharField(widget=forms.Textarea(attrs={'placeholder':'Descrição do Produto'}))
     is_active   = forms.BooleanField(widget=forms.CheckboxInput(attrs={'label':'Anúncio Ativo'}))
     stock       = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder':'Quantia em Estoque'}))
@@ -34,7 +34,7 @@ class CrispyProductForm(ProductForm):
         super(CrispyProductForm,self).__init__(*args, **kwargs)
         self.fields['name'].label = "Nome do Produto"
         self.fields['price'].label = "Preço"
-        self.fields['sale_price'].label = "Preço Promocional"
+        self.fields['discount_price'].label = "Preço Promocional"
         self.fields['description'].label = "Descrição"
         self.fields['is_active'].label = "Anúncio Ativo"
         self.fields['stock'].label = "Estoque Inicial"
@@ -50,7 +50,7 @@ class CrispyProductForm(ProductForm):
             ),
             Row(
                 Column(PrependedText('price', 'R$'),css_class='form-group col-md-4 mb-0'),
-                Column(PrependedText('sale_price','R$'),css_class='form-group col-md-4 mb-0'),
+                Column(PrependedText('discount_price','R$'),css_class='form-group col-md-4 mb-0'),
                 Column('stock', css_class='form-group col-md-4 mb-0'),
                 css_class='form-row'
             ),
