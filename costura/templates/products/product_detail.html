@@ -1,6 +1,5 @@
 {% extends "base.html" %} 
-{% block title %} 
-{{ product.name }} | {{block.super}}
+{% block title %} {{ product.name }} | {{block.super}}
 {% endblock title%} 
 {% block content %}
 
@@ -29,13 +28,13 @@
         <div class="col-12 col-lg-6 product_detail_block">
             <div class="card bg-light mb-3">
                 <div class="card-body">
-                    <h2 class="price_full">{{ product.name }}</h2>
-                    {% if product.discount_price %}
-                        <p class="price_full_stroked">{{ product.price }} R$</p>
+                    <h2 class="price_full" id="nm{{product.id}}">{{ product.name }}</h2>
+                    {% if product.has_discount_price %}
+                        <p class="price_full_stroked">{{ product.price }}R$</p>
                         <p>{{ product.get_discount }}% Off!!</p>
-                        <p class="discount_price">{{product.discount_price}} R$</p>
+                        <p class="discount_price" id="price{{product.id}}">{{product.discount_price}} R$</p>
                     {% else %}
-                        <p class="price_full">{{ product.price }} R$</p>
+                        <p class="price_full" id="price{{product.id}}">{{ product.price }}</p>
                     {% endif %}
                     <div class="shipping_block">
                         <a class="" data-target="#calcularFrete" href="#calcularFrete" aria-expanded="true"></a>
@@ -64,14 +63,14 @@
                       >Excluir Produto <span class="jam jam-trash"></span
                     ></a>
                     {% else %}
-                        <form method="get" action="cart.html">
-                            <a href="#createcartitem" class="btn btn-lg btn-success btn-lg btn-block text-uppercase">
-                                Adicionar ao Carrinho <i class="jam jam-shopping-cart"></i>
-                            </a>
-                        </form>
+                        <div>
+                            <button href="#" class="btn atc btn-lg btn-success btn-block text-uppercase" id={{product.id}}>
+                                Adicionar ao Carrinho <span class="jam jam-shopping-cart"></span>
+                            </button>
+                        </div>
                         <div class="icon_block">
                             <ul class="list-inline">
-                                <li class="list-inline-item"><i class="jam jam-truck "></i><br/>Entrega Rápida</li>
+                                <li class="list-inline-item"><i class="jam jam-rocket"></i><br/>Entrega Rápida</li>
                                 <li class="list-inline-item"><i class="jam jam-credit-card "></i><br/>Segurança</li>
                             </ul>
                         </div>
@@ -80,7 +79,7 @@
                         3 avaliações
                         <i class="jam jam-star"></i>
                         <i class="jam jam-star"></i>
-                        <i class="jam jam-star"></i>
+                        <i class="jam jam-star"></i> 
                         <i class="jam jam-star"></i>
                         <i class="jam jam-star"></i>
                         (5/5)
@@ -151,3 +150,60 @@
     </div>
   </div>
 -->
+
+{% block javascript %}
+{{block.super}}
+<script type="text/javascript"> 
+  if(localStorage.getItem('cart')==null){
+      var cart = {};
+  }
+  else{
+    cart = JSON.parse(localStorage.getItem('cart'));
+  }
+
+  $(document).on('click','.gca',function(){
+    DisplayCart(cart);
+  });
+
+  $(document).on('click','.atc',function(){
+      console.log("The add to cart button was clicked");
+      var item_id = this.id.toString();
+      console.log(item_id);
+      if(cart[item_id]!=undefined){
+        var preco = document.getElementById("price"+item_id).innerHTML;
+        var meuPreco = preco.toString().replace(",", ".");
+        console.log("preco " + parseFloat(meuPreco));
+                quantity = cart[item_id][0] + 1;
+                cart[item_id][0] = quantity;
+                cart[item_id][2] = cart[item_id][2] + parseFloat(document.getElementById("price"+item_id).innerHTML);
+                console.log(cart[item_id]);
+            }
+            else{
+                quantity = 1;
+                name = document.getElementById("nm"+item_id).innerHTML;
+                price = parseFloat(document.getElementById("price"+item_id).innerHTML);
+                // price = parseFloat(document.getElementById("price"+item_id).innerHTML);
+                cart[item_id]=[quantity,name,price];
+                console.log(cart[item_id]);
+            }
+            console.log(cart);
+            localStorage.setItem('cart',JSON.stringify(cart));
+            document.getElementById('cart').innerHTML = "Carrinho("+Object.keys(cart).length+")";
+  });
+  DisplayCart(cart);
+    function DisplayCart(cart){
+        var cartString = "";
+        cartString += "<h4>Seu Carrinho</h4>";
+        var cartIndex = 0;
+        for(var x in cart){
+            cartString += cartIndex;
+            cartString += document.getElementById("nm"+x).innerHTML + "Qtd:" + cart[x][0] + "</br>";
+            cartIndex  += 1;
+        }
+        cartString += "</br>";
+        cartString += "<a href='{% url 'checkout:checkout' %}' class='btn btn-outline-success' id='checkout'>Finalizar Compra</a>";
+        document.getElementById("cart").setAttribute('data-content',cartString);
+        $('[data-toggle="popover"]').popover();
+    }
+</script>
+{% endblock javascript %}

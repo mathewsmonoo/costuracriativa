@@ -59,7 +59,7 @@
             <button 
             id ={{product.id}}
             class="btn atc btn-secondary btn-success btn-block"
-              href="#TODO"
+              href="#"
               title="Adicionar ao Carrinho"
               ><span class="jam jam-shopping-cart"></span
             ></button>
@@ -91,6 +91,9 @@
       var item_id = this.id.toString();
       console.log(item_id);
       if(cart[item_id]!=undefined){
+        var preco = document.getElementById("price"+item_id).innerHTML;
+        var meuPreco = preco.toString().replace(",", ".");
+        console.log("preco " + parseFloat(meuPreco));
                 quantity = cart[item_id][0] + 1;
                 cart[item_id][0] = quantity;
                 cart[item_id][2] = cart[item_id][2] + parseFloat(document.getElementById("price"+item_id).innerHTML);
@@ -100,6 +103,7 @@
                 quantity = 1;
                 name = document.getElementById("nm"+item_id).innerHTML;
                 price = parseFloat(document.getElementById("price"+item_id).innerHTML);
+                // price = parseFloat(document.getElementById("price"+item_id).innerHTML);
                 cart[item_id]=[quantity,name,price];
                 console.log(cart[item_id]);
             }

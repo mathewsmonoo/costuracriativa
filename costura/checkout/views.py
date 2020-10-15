@@ -5,94 +5,54 @@ from django.forms import modelformset_factory
 from django.http import request
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import DetailView
+from django.views.generic import DetailView, TemplateView, ListView
 
 from costura.products.models import Product
 
 from .models import Order
 
+class CheckoutView(LoginRequiredMixin, TemplateView):
+    template_name = 'checkout/checkout.html'
+    def post(self,request, *args, **kwargs):
+        items   = request.POST.get('items','')
+        address = request.POST.get('address',"")
+        total   = request.POST.get('total',"")
+        obs     = request.POST.get('obs',"")
+        order = Order.objects.create_order(items=items, user=request.user, address=address,total=total,obs=obs)
+        order.save()
+        response = super(CheckoutView, self).get(request, *args, **kwargs)
+        response.context_data['order'] = order
+        return response
+    
+checkout_view = CheckoutView.as_view()
+
 def checkout(request):
     order = None
     if request.method == "POST":
-        items = request.POST.get('items','')
+        items   = request.POST.get('items','')
         address = request.POST.get('address',"")
-        total = request.POST.get('total',"")
-        obs = request.POST.get('obs',"")
-        user = request.user
-        order = Order(items=items,address=address,user=user,total=total,obs=obs)
+        total   = request.POST.get('total',"")
+        obs     = request.POST.get('obs',"")
+        user    = request.user
+        order   = Order(items=items,address=address,user=user,total=total,obs=obs)
         order.save()
-        order = order
+        order   = order
+        return render(request,'checkout/checkout.html',{'order':order})
     return render(request,'checkout/cart_detail.html',{'order':order})
 
 def complete(request):
     return render(request,'checkout/checkout.html')
 
-"""
-from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import modelformset_factory
-from django.shortcuts import get_object_or_404, render, redirect
-from django.urls import reverse
-from django.views.generic import RedirectView, TemplateView, ListView
-
-from costura.checkout.models import CartItem, Order
-from costura.products.models import Product
-
-#Adicionar via get; Adicionar produto no carrinho de compras e redireciona para pag do carrinho
-
-class CreateCartItemView(RedirectView):
-
-    def get_redirect_url(self, *args, **kwargs):
-        product = get_object_or_404(Product, slug=self.kwargs['slug'])
-        if self.request.session.session_key is None:
-            self.request.session.save()
-        cart_item, created = CartItem.objects.add_item(
-            self.request.session.session_key, product
-        )
-        if created:
-            messages.success(self.request, 'Produto adicionado com Sucesso!')
-        else:
-            messages.success(self.request, 'Produto atualizado com Sucesso!')
-        return reverse('checkout:cart_item')
-
-
-class CartItemView(TemplateView):
-    template_name = 'checkout/cart_detail.html'
+class OrdersByUserView(LoginRequiredMixin, ListView):
+    model = Order
+    template_name = 'checkout/orders.html'
+    def get_queryset(self):
+        order_list = Order.objects.filter(user=self.request.user)
+        return order_list
     
-    def get_formset(self, clear=False):
-        CartItemFormSet = modelformset_factory(
-            CartItem, fields=('quantity',), can_delete=True, extra=0
-        )
-        session_key = self.request.session.session_key
-        if session_key:
-            if clear:
-                formset = CartItemFormSet(
-                    queryset=CartItem.objects.filter(cart_key=session_key)
-                )
-            else:
-                formset = CartItemFormSet(
-                    queryset=CartItem.objects.filter(cart_key=session_key),
-                    data=self.request.POST or None
-                )
-        else:
-            formset = CartItemFormSet(queryset=CartItem.objects.none())
-        return formset
+orders_by_user = OrdersByUserView.as_view()
 
-    def get_context_data(self, **kwargs):
-        context = super(CartItemView, self).get_context_data(**kwargs)
-        context['formset'] = self.get_formset()
-        return context
-
-    def post(self, request, *args, **kwargs):
-        formset = self.get_formset()
-        context = self.get_context_data(**kwargs)
-        if formset.is_valid():
-            formset.save()
-            messages.success(request, 'Carrinho atualizado com sucesso')
-            context['formset'] = self.get_formset(clear=True)
-        return self.render_to_response(context)
-
-
+"""
 class CheckoutView(LoginRequiredMixin, TemplateView):
     template_name = 'checkout/checkout.html'
 
@@ -110,8 +70,6 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
         response.context_data['order'] = order
         return response
 
-create_cartitem = CreateCartItemView.as_view()
-cart_item       = CartItemView.as_view()
 checkout        = CheckoutView.as_view()
 
 class OrdersByUserView(LoginRequiredMixin, ListView):

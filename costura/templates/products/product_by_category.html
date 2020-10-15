@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load pagination %}
 {% block title %} {{ current_category }} | {{ block.super }}{% endblock title %} 
 {% block pageheader %}
 <a class="btn btn-outline-secondary btn-sm" href="{% url 'products:list' %}" role="button">
@@ -13,5 +12,4 @@
 
 {% block content %}
   {% include "partials/_product.html" %}
-  {% pagination request paginator page_obj %}
 {% endblock content %}

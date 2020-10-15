@@ -80,23 +80,16 @@
         role="button"
         >Contas de E-Mail</a
       >
-      <a
-        class="btn btn-outline-info"
-        href="{% url 'account_change_password' %}"
-        role="button"
-        >Mudar Senha</a
-      >
-      {% if user.request.is_customer %}
+
       <a
         class="btn btn-outline-secondary"
         href="{% url 'addresses:list' %}"
         role="button"
         >Endereços</a
       >
-      <a class="btn btn-outline-success" href="#TODO" role="button"
+      <a class="btn btn-outline-success" href="{% url 'checkout:ordersbyuser' %}" role="button"
         >Meus Pedidos</a
       >
-      {% endif %}
     </div>
   </div>
   <!-- End Action buttons -->

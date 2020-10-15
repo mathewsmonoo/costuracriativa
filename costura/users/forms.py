@@ -61,13 +61,15 @@ class MyCustomSignupForm(UserCreationForm):
 class UserChangeForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserChangeForm, self).__init__(*args, **kwargs)
-        self.fields['first_name'].disabled = True
-        self.fields['last_name'].disabled = True
-        self.fields['email'].disabled = True
+        self.fields['first_name'].disabled  = False
+        self.fields['last_name'].disabled   = False
+        self.fields['dob'].disabled         = True
+        self.fields['email'].disabled       = True
+        self.fields['cpf'].disabled         = True
 
     class Meta:
         model = User
-        fields = ['prefix', 'first_name', 'last_name', 'email']
+        fields = ['prefix', 'first_name', 'last_name', 'email', 'cpf', 'dob']
         
 class StaffChangeForm(forms.UserChangeForm):
     class Meta:

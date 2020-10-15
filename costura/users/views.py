@@ -37,7 +37,7 @@ class StaffListView(AdminRequiredMixin, ListView):
     template_name = 'users/user_list.html'
     def get_queryset(self):
         return User.objects.filter(is_staff=True)
-    
+
 staff_list_view = StaffListView.as_view()
 
 class UserDetailView(LoginRequiredMixin, DetailView):
@@ -78,12 +78,19 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         )
         return super().form_valid(form)
 
-class UserRedirectView(RedirectView):
+class UserRedirectViews(RedirectView):
     permanent = False
     def get_redirect_url(self):
         return reverse(
             "users:detail",
             kwargs={"username": self.request.user.username},
+        )
+        
+class UserRedirectView(RedirectView):
+    permanent = False
+    def get_redirect_url(self):
+        return reverse(
+            "products:list",
         )
 
 user_detail_view   = UserDetailView.as_view()

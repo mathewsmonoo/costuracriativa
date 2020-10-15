@@ -24,6 +24,20 @@ class CategoryDetailView(DetailView):
 
 class CategoryCreateView(StaffRequiredMixin, CreateView):
     model = Category
+    fields = ['name' , 'image']
+    action = "Adicionar"
+    success_url = reverse_lazy('products:category_list')
+
+    def form_valid(self, form):
+        messages.add_message(
+            self.request, messages.INFO, ("Categoria Adicionada com Sucesso!")
+        )
+        form.instance.creator = self.request.user
+        return super().form_valid(form)
+    
+class CategoryCreateViews(StaffRequiredMixin, CreateView):
+    model = Category
+    helper = None
     fields = [
         'name','image'
     ]

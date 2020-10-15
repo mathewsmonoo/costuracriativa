@@ -26,15 +26,16 @@
           style="cursor: pointer;"
         >
         {% if category.image %}
-          <img
-            src="{{category.image.url}}"
-            class="card-img-top"
-            height="220px"
-            width="220px"
-            title="{{category.name}}"
-          />
+        <img src="{{category.image.url}}" class="card-img-top img-responsive"
+          height="220px"
+          width="220px"
+          title="{{category.name}}"
+        />
         {% else %}
-          <img src="http://placehold.it/210x210" alt="" />
+        <img
+          src="http://placehold.it/650x450text=Imagem"
+          class="card-img img-responsive"
+        />
         {% endif %}
         </div>
       </div>

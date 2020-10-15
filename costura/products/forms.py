@@ -25,7 +25,7 @@ class ProductForm(forms.ModelForm):
     discount_price  = forms.DecimalField(widget=forms.NumberInput(attrs={'placeholder':'Preço Promocional'}),required=False)
     description = forms.CharField(widget=forms.Textarea(attrs={'placeholder':'Descrição do Produto'}))
     is_active   = forms.BooleanField(widget=forms.CheckboxInput(attrs={'label':'Anúncio Ativo'}))
-    stock       = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder':'Quantia em Estoque'}))
+    stock       = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder':'Quantidade em Estoque'}))
     category    = forms.ModelChoiceField(queryset=Category.objects.all())
     image       = forms.ImageField(widget=PicturePreviewWidget,)
 

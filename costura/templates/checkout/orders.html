@@ -1,0 +1,18 @@
+{% extends "base.html" %} 
+{% block title %} Pedidos | {{block.super}}{% endblock title %} 
+{% block content %}
+<h1 style="text-align: center;">Seus Pedidos:</h1>
+{% for order in order_list %}
+<div class="row">
+    <div class="col">
+    <div class="card">
+        <h3 class="card-header text-center">{{order}}</h3>
+        <p>Produtos : {{order.items}}</p>
+        <p>Método de Pagamento : {{order.payment_option}}</p>
+        <p><strong>Total do Pedido : R$ {{order.total}}</strong></p> 
+        <p class="card-footer text-center">Data: {{order.created}}</p> 
+    </div>
+    </div>
+</div>
+{% endfor%}
+{% endblock content %}

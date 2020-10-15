@@ -7,8 +7,8 @@ from ..models import Category, Product
 
 
 class CategoryFactory(factory.django.DjangoModelFactory):
-    name    = factory.fuzzy.FuzzyText()
-    slug    = factory.LazyAttribute(lambda obj: slugify(obj.name))
+    name = factory.fuzzy.FuzzyText()
+    slug = factory.LazyAttribute(lambda obj: slugify(obj.name))
 
     class Meta:
         model = Category
@@ -18,16 +18,13 @@ def category():
     return CategoryFactory()
 
 class ProductFactory(factory.django.DjangoModelFactory):
-    name    = factory.fuzzy.FuzzyText()
-    color   = factory.fuzzy.FuzzyText()
-    cost    = factory.fuzzy.FuzzyDecimal(0.1,99.9)
-    price   = factory.fuzzy.FuzzyDecimal(0,99.9)
-    inventory   =  factory.fuzzy.FuzzyInteger(0,100)
+    name = factory.fuzzy.FuzzyText()
+    slug = factory.LazyAttribute(lambda obj: slugify(obj.name))
+    price = factory.fuzzy.FuzzyDecimal(0, 99.9)
+    discount_price = factory.fuzzy.FuzzyDecimal(0, 99.9)
     description = factory.Faker('paragraph', nb_sentences=3, variable_nb_sentences=True)
-    status  = factory.fuzzy.FuzzyInteger(0,1)
-    slug    = factory.LazyAttribute(lambda obj: slugify(obj.name))
-    category =  factory.SubFactory(CategoryFactory)
-
+    stock = factory.fuzzy.FuzzyInteger(0, 100)
+    category = factory.SubFactory(CategoryFactory)
 
     class Meta:
         model = Product

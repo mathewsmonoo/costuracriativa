@@ -9,7 +9,7 @@ from model_utils.models import TimeStampedModel
 class Category(TimeStampedModel):
     name    = models.CharField("Nome da Categoria", max_length=255, unique=True)
     slug    = AutoSlugField("Category Address", unique=True, populate_from="name")
-    image   = models.ImageField("Imagem da Categoria", upload_to='categories/', blank=True, null=True)
+    image   = models.ImageField("Imagem da Categoria", upload_to='products/categories/', blank=True, null=True)
 
     class Meta:
         verbose_name="Categoria"

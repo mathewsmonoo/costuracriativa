@@ -19,21 +19,45 @@ Finalização da Compra
 </div>
 <div class="row">
     <div class="col-md-12">
-        <p>
-            {{order_object.id}}
-            {{order_object.total}}
-        </p>
+        <div class="row m-6">
+          </div>
+          <ul class="list-group" id="item_list"></ul>
+          <ul class="list-group">
+              <li>{{order}}</li>
+              <li>Total R${{order.total}}</li>
+              <li>Produtos {{order.items}}</li>
+          </ul>
     </div>
 </div>
+<hr>
 <div class="row">
     <div class="col-md-12">
-        <h5>Para realizar o pagamento efetue o depósito na seguinte conta:</h5>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
+        <div class="jumbotron">
+            <div class="container">
+                <h5>Para realizar o pagamento efetue o depósito na seguinte conta:</h5>
+                <ul>
+                    <li>Agência: 6616</li>
+                    <li>Conta : 045847-1</li>
+                    <li>Conta Corrente</li>
+                    <li>Proprietário: Dono Da Empresa</li>
+                </ul>
+                <br>
+                <br>
+                <br>
+                    <div class="alert alert-info">
+                        <h3 style="text-align: center;">Agradecemos a Confiança!</h3>
+                    </div>
+          </div>
     </div>
 </div>
 {% endblock %}
+
 {% block javascript %}
+{{block.super}}
+<script type="text/javascript">
+  let mycart = localStorage.getItem('cart');
+  $("#item_list").val(mycart);
+  localStorage.clear();
+</script>
 
 {% endblock javascript %}

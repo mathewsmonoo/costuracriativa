@@ -1,11 +1,9 @@
 {% extends "base.html" %}
-
 {% load crispy_forms_tags %}
 
 {% block title %} {{ view.action|default:"Add" }} Address | {{ block.super }} {% endblock title %}
 
 {% block content %}
-
 {% with action=view.action|default:"Add" %}
     <h1>{{ action }} Address</h1>
     <form method="POST" action=".">

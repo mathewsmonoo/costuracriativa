@@ -4,3 +4,4 @@ web: gunicorn config.asgi:application -k uvicorn.workers.UvicornWorker
 {%- else  %}
 web: gunicorn config.wsgi:application
 {%- endif %}
+
