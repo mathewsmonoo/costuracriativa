@@ -1,0 +1,33 @@
+******************************** Front-End: *********************************
+- Várias Fotos Por Produto
+ > On hover : "Zoom" na imagem
+ > Modais
+
+- Remodelagem da Interface de Usuário
+ > AliExpress; MercadoLivre; Amazon.
+ > Bootstrap + jQuery ?
+
+---------------------------------------------------------------------------------
+Anotações sobre UI de AliExpress, MercadoLivre e Amazon:
+
+Ideias Para:
+Homepage : 
+    - Navbar:
+    Navbar "Dupla":
+     Top   : Barra de busca (Centralizada / levemente à esquerda)
+     Bottom: Categorias   (hover abre) 
+             Minha Conta  (hover abre) (Meus Dados / Compras / Perguntas?)
+             Carrinho     (hover abre) 
+             Favoritos / Lista de Desejos
+
+    - Barra Lateral C/ Categorias e Acesso à páginas
+
+    - Body :
+     Carrossel(automatico) de imagens (com botões < > ) = Imagens representam : Categorias(Mín 8); Novidades; Promoções;
+     Cards de Produtos / Categorias:
+      Hover: + Opacidade no fundo
+
+
+.________________________________________________________________________________.
+| (16/Nov/2020)(16/Nov/2020)(16/Nov/2020)(16/Nov/2020)(16/Nov/2020)(16/Nov/2020) |
+.________________________________________________________________________________.
