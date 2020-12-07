@@ -53,11 +53,16 @@
               <th scope="row">Data de Nascimento:</th>
               <td>{% if object.dob %} {{ object.dob }} {% endif %}</td>
             </tr>
-
             <tr>
               <th scope="row">Data de Cadastro:</th>
               <td>{{ object.join_date }}</td>
             </tr>
+            {% if object.phone %}
+            <tr>
+              <th scope="row">Telefone para contato:</th>
+              <td> {{ object.phone }} </td>
+            </tr>
+            {% endif %}
           </tbody>
         </table>
       </div>

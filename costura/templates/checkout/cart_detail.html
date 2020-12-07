@@ -26,6 +26,9 @@
   </div>
 
   <div class="row m-5"></div>
+
+  {% if request.user.is_authenticated %}
+  
   <div class="row m-6">
     <div class="col-md-12">
       <h1 style="text-align: center">Detalhes de Envio</h1>
@@ -126,9 +129,19 @@
       </form>
     </div>
   </div>
+  {% else %}
+  <div class="row m-6">
+    <div class="col-md-12">
+      <h2 style="text-align: center;">Parece que você não está logado. Deseja <a href="#" title="Entrar">entrar</a>?</h2>
+      <h2 style="text-align: center;">Ah! Se quiser fazer uma compra sem se cadastrar, é só clicar <a href="{% url 'checkout:userless'%}">aqui!</a> :)</h2>
+    </div>
+  </div>
+  {% endif %}
 </div>
 {% endblock content %} 
 {% block javascript %} 
+
+
 {{block.super}}
 <script type="text/javascript">
   if (localStorage.getItem("cart") == null) {

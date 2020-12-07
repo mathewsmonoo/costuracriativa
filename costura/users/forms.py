@@ -35,7 +35,7 @@ class MyCustomSignupForm(UserCreationForm):
 
     class Meta(forms.UserCreationForm.Meta):
         model = User
-        fields = ('username','prefix','email','first_name','last_name','cpf','dob')
+        fields = ('username','prefix','email','first_name','last_name','cpf','dob','phone')
 
     def clean_username(self):
         username = self.cleaned_data["username"]
@@ -66,10 +66,11 @@ class UserChangeForm(ModelForm):
         self.fields['dob'].disabled         = True
         self.fields['email'].disabled       = True
         self.fields['cpf'].disabled         = True
+        self.fields['phone'].disabled         = False
 
     class Meta:
         model = User
-        fields = ['prefix', 'first_name', 'last_name', 'email', 'cpf', 'dob']
+        fields = ['prefix', 'first_name', 'last_name', 'email', 'cpf', 'dob','phone']
         
 class StaffChangeForm(forms.UserChangeForm):
     class Meta:
@@ -79,7 +80,7 @@ class StaffChangeForm(forms.UserChangeForm):
 class StaffCreationForm(forms.UserCreationForm):
     class Meta(forms.UserCreationForm.Meta):
         model = User
-        fields = ('username','email','first_name','last_name','cpf','dob')
+        fields = ('username','email','first_name','last_name','cpf','dob','phone')
     
     dob = djforms.DateField(widget=djforms.DateTimeInput(attrs={'class': 'form-control datetimepicker-input'}))
     
@@ -112,7 +113,7 @@ class AdminCreationForm(forms.UserCreationForm):
     class Meta(forms.UserCreationForm.Meta):
         model = User
 
-        fields = ('username','email','first_name','last_name','cpf','dob')
+        fields = ('username','email','first_name','last_name','cpf','dob','phone')
 
     def clean_username(self):
         username = self.cleaned_data["username"]

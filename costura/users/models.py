@@ -18,6 +18,7 @@ class User(AbstractUser,PermissionsMixin): #This is the "Customer" user;
     prefix       = models.CharField(_("Prefixo / Apelido"), max_length=8, blank=True)
     cpf          = models.CharField(_("CPF"), max_length=14, validators=[validate_cpf])#,unique=True)
     dob          = models.DateField("Data de Nascimento", null=True)
+    phone        = models.CharField(_("Telefone"), max_length=13, null=True)#,unique=True)
 
     def get_absolute_url(self):
         return reverse(
@@ -35,7 +36,7 @@ class User(AbstractUser,PermissionsMixin): #This is the "Customer" user;
         return self.first_name + ' ' + self.last_name
     
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email','first_name','last_name','cpf','dob',]
+    REQUIRED_FIELDS = ['email','first_name','last_name','cpf','dob','phone']
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
