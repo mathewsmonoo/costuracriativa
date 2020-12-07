@@ -21,17 +21,15 @@
   </head>
 
   <body>
+
     {% block navbar %}
-      {% if request.user.is_authenticated == False %}
-        {% include './partials/_navbar_guest.html' %}
-      {% elif request.user.is_authenticated and request.user.is_admin %}
-        {%include './partials/_navbar_admin.html' %} 
-      {% elif request.user.is_authenticated and request.user.is_staff %} 
-        {% include './partials/_navbar_staff.html' %} 
-      {% elif request.user.is_authenticated and request.user.is_customer %}
-        {% include './partials/_navbar_customer.html' %} 
-      {% endif %}
+    {% if request.user.is_authenticated == False or request.user.is_customer %}
+      {% include './partials/_navbar_clients.html' %}
+    {% elif request.user.is_admin or request.user.is_staff %}
+      {% include './partials/_navbar_staff.html' %}
+    {% endif %}
     {% endblock navbar %}
+
     <div class="container">
       {% if messages %}
           {% for message in messages %}
@@ -46,7 +44,8 @@
         <h2>eCommerce for costura</h2>
       {% endblock content %}
 
-    </div> <!-- /container -->
+    </div> 
+    <!-- /container -->
 
     {% block modal %}
     {% endblock modal %}

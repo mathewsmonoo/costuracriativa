@@ -1,6 +1,6 @@
 {% load static %} 
 {% load static i18n compress %}
-<!-- #### Customer Navigation Bar Area Start #### -->
+<!-- #### Base Navigation Bar Area Start #### -->
 <div class="row">
   <div class="col-md-12">
       <div class="mb-1">
@@ -20,7 +20,7 @@
             <a class="navbar-brand" href="{% url 'home' %}">
               <img 
                 style="height: 40px; width: 65px;"
-                src='{% static "images/logo_peq.png" %}' alt="My image"
+                src='{% static "images/logo_peq.png" %}' alt="Costura Criativa"
             /></a>
           </div>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -65,12 +65,16 @@
                 </div>
               </li>
             </ul>
+
+            <!-- ADMIN NAVBAR HERE -->
             <ul class="nav navbar-nav">
+              {% if request.user.is_authenticated and request.user.is_admin %}
               <li class="nav-item">
                 <div class="dropdown">
                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
                     ><span class="jam jam-menu"></span> {% trans "Menu Administrativo" %} 
                   </a>
+
                   <ul class="dropdown-menu">
                     <a
                       class="nav-link"
@@ -109,6 +113,9 @@
                   </ul>
                 </div>
               </li>
+              {% elif request.user.is_authenticated and request.user.is_staff %}
+
+              {% endif %}
               <li class="nav-item">
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
@@ -135,6 +142,9 @@
                 >
               </li>
             </ul>
+
+            <!--END ADMIN NAVBAR HERE -->
+
           </div>
         </nav>
       </div>

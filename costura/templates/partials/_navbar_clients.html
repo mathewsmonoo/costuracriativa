@@ -65,33 +65,35 @@
         </div>
       </li>
       <li class="nav-item">
-        <div class="dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-            ><span class="jam jam-menu"></span> {% trans "Minha Conta" %}
-          </a>
-          <ul class="dropdown-menu">
-            <a
-            class="nav-link"
-            href="{% url 'users:detail' request.user.username %}"
-            ><span class="jam jam-user"></span> {% trans "Meu Perfil" %}</a
-          >
-            <a
-              class="nav-link"
-              href="{% url 'checkout:ordersbyuser' %}"
-              title='{% trans "Meus Pedidos" %}'
-              ><span class="jam jam-ordered-list">{% trans "Meus Pedidos" %}</span></a
-            >
-          </ul>
-        </div>
-      </li>
-      <li class="nav-item">
         <button id="cart" data-html="true" type="button" class="btn gca btn-secondary" data-container="body" data-toggle="popover" data-placement="bottom" data-content="">
           Carrinho
         </button>
       </li>
-      <a class="nav-link" href="{% url 'account_logout' %}"
-      ><span class="jam jam-log-out"></span> {% trans "Sair" %}</a
-      >
+      {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <div class="dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+              ><span class="jam jam-menu"></span> {% trans "Minha Conta" %}
+            </a>
+            <ul class="dropdown-menu">
+              <a
+              class="nav-link"
+              href="{% url 'users:detail' request.user.username %}"
+              ><span class="jam jam-user"></span> {% trans "Meu Perfil" %}</a
+            >
+              <a
+                class="nav-link"
+                href="{% url 'checkout:ordersbyuser' %}"
+                title='{% trans "Meus Pedidos" %}'
+                ><span class="jam jam-ordered-list">{% trans "Meus Pedidos" %}</span></a
+              >
+            </ul>
+          </div>
+        </li>
+        <a class="nav-link" href="{% url 'account_logout' %}"
+        ><span class="jam jam-log-out"></span> {% trans "Sair" %}</a
+        >
+      {% else %}
       <li class="nav-item">
         <a
           id="sign-up-link"
@@ -105,6 +107,7 @@
           ><span class="jam jam-log-in"></span> {% trans "Entrar" %}</a
         >
       </li>
+      {% endif %}
     </ul>
   </div>
 </nav>

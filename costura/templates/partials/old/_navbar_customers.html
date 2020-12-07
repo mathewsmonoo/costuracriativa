@@ -1,0 +1,113 @@
+{% load static %} 
+{% load static i18n compress %}
+<nav class="navbar navbar-expand-md sticky-top flex-nowrap navbar-light bg-white">
+  <div class="navbar-header">
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <img 
+        style="height: 40px; width: 65px;"
+        src='{% static "images/logo_peq.png" %}' alt="My image"
+    /></a>
+  </div>
+    <div class="navbar-toggler-right">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar"
+      aria-controls="navbarTogglerDemo02"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+  <div class="collapse navbar-collapse flex-column" id="navbar">
+    <ul class="navbar-nav w-100 justify-content-center px-2">
+      <li class="nav-item">
+        <form
+          action="{% url 'products:search_results' %}"
+          method="get"
+          class="mr-2 my-auto w-100 d-inline-block order-1"
+        >
+          <div class="input-group">
+            <input
+              type="search"
+              name="q"
+              placeholder="Buscar..."
+              class="form-control border border-right-0"
+            />
+            <span class="input-group-append">
+              <button class="btn border border-left-0" type="submit">
+                <span class="jam jam-search"></span>
+              </button>
+            </span>
+          </div>
+        </form>
+      </li> 
+    </ul>
+    <ul class="navbar-nav justify-content-center w-100 bg-light px-3">
+      <li class="nav-item">
+        <div class="dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            data-toggle="dropdown"
+            href="#"
+            ><span class="jam jam-shopping-bag"></span> {% trans "Nossos Produtos" %}
+          </a>
+          <ul class="dropdown-menu">
+            <a class="nav-link" href="{% url 'products:list'  %}">
+              {% trans "Produtos" %}</a
+            >
+            <a class="nav-link" href="{% url 'products:category_list' %}">
+              {% trans "Categorias" %}</a
+            >
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item">
+        <button id="cart" data-html="true" type="button" class="btn gca btn-secondary" data-container="body" data-toggle="popover" data-placement="bottom" data-content="">
+          Carrinho
+        </button>
+      </li>
+      {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <div class="dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+              ><span class="jam jam-menu"></span> {% trans "Minha Conta" %}
+            </a>
+            <ul class="dropdown-menu">
+              <a
+              class="nav-link"
+              href="{% url 'users:detail' request.user.username %}"
+              ><span class="jam jam-user"></span> {% trans "Meu Perfil" %}</a
+            >
+              <a
+                class="nav-link"
+                href="{% url 'checkout:ordersbyuser' %}"
+                title='{% trans "Meus Pedidos" %}'
+                ><span class="jam jam-ordered-list">{% trans "Meus Pedidos" %}</span></a
+              >
+            </ul>
+          </div>
+        </li>
+        <a class="nav-link" href="{% url 'account_logout' %}"
+        ><span class="jam jam-log-out"></span> {% trans "Sair" %}</a
+        >
+      {% else %}
+      <li class="nav-item">
+        <a
+          id="sign-up-link"
+          class="nav-link"
+          href="{% url 'account_signup' %}"
+          ><span class="jam jam-user-plus"></span> {% trans "Cadastrar-se" %}</a
+        >
+      </li>
+      <li class="nav-item">
+        <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}"
+          ><span class="jam jam-log-in"></span> {% trans "Entrar" %}</a
+        >
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
