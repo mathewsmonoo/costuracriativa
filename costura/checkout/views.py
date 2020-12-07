@@ -9,7 +9,7 @@ from django.views.generic import DetailView, TemplateView, ListView
 
 from costura.products.models import Product
 
-from .models import Order
+from .models import Order, UserlessOrder
 
 class CheckoutView(LoginRequiredMixin, TemplateView):
     template_name = 'checkout/checkout.html'
@@ -23,8 +23,28 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
         response = super(CheckoutView, self).get(request, *args, **kwargs)
         response.context_data['order'] = order
         return response
-    
+
 complete_view = CheckoutView.as_view()
+
+
+class UserlessCheckoutView(TemplateView):
+    template_name = 'checkout/checkout.html'
+    def post(self,request, *args, **kwargs):
+        items   = request.POST.get('items','')
+        address = request.POST.get('address',"")
+        total   = request.POST.get('total',"")
+        final   = request.POST.get('final',"")
+        ship   = request.POST.get('ship',"")
+        cpf   = request.POST.get('cpf',"")
+        obs     = request.POST.get('obs',"")
+        phone   = request.POST.get('phone',"")
+        order = UserlessOrder.objects.create_order(tems=items,address=address,total=total,final=final,ship=ship,cpf=cpf,obs=obs,phone=phone,user=None)
+        order.save()
+        response = super(UserlessCheckoutView, self).get(request, *args, **kwargs)
+        response.context_data['order'] = order
+        return response
+
+userless_complete_view = UserlessCheckoutView.as_view()
 
 def checkout(request):
     order = None
@@ -43,6 +63,24 @@ def checkout(request):
 def complete(request):
     return render(request,'checkout/checkout.html')
 
+def userless_checkout(request):
+    order = None
+    if request.method == "POST":
+        items   = request.POST.get('items','')
+        address = request.POST.get('address',"")
+        total   = request.POST.get('total',"")
+        final   = request.POST.get('final',"")
+        ship    = request.POST.get('ship',"")
+        obs     = request.POST.get('obs',"")
+        cpf     = request.POST.get('cpf',"")
+        phone   = request.POST.get('phone',"")
+        order   = UserlessOrder(items=items,address=address,total=total,final=final,ship=ship,cpf=cpf,obs=obs,phone=phone,user=None)
+        order.save()
+        order   = order
+        return render(request,'checkout/userless_checkout.html',{'order':order})
+    return render(request,'checkout/cart_detail.html',{'order':order})
+
+
 class UserlessView(TemplateView):
     template_name = 'checkout/userless_checkout.html'
     def post(self,request, *args, **kwargs):
@@ -55,21 +93,8 @@ class UserlessView(TemplateView):
         response = super(UserlessView, self).get(request, *args, **kwargs)
         response.context_data['order'] = order
         return response
-    
-class UserlessViewA(TemplateView):
-    template_name = 'checkout/userless_checkout.html'
-    def post(self,request, *args, **kwargs):
-        items   = request.POST.get('items','')
-        address = request.POST.get('address',"")
-        total   = request.POST.get('total',"")
-        obs     = request.POST.get('obs',"")
-        order = Order.objects.create_order(items=items, user='None', address=address,total=total,obs=obs)
-        order.save()
-        response = super(UserlessView, self).get(request, *args, **kwargs)
-        response.context_data['order'] = order
-        return response
-            
-userless = UserlessView.as_view()
+               
+#userless = UserlessView.as_view()
 
 class OrdersByUserView(LoginRequiredMixin, ListView):
     model = Order

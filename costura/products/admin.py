@@ -15,7 +15,7 @@ class CategoryAdmin(admin.ModelAdmin):
         return product_instance.products_count
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display  = ['name', 'price', 'discount_price']
+    list_display  = ['name','is_active', 'price', 'discount_price','cost','time']
     search_fields = ['name','slug','category__name']
 
 admin.site.register(Category,   CategoryAdmin)

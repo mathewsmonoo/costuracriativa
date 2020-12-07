@@ -142,7 +142,7 @@ class ProductUpdateView(StaffRequiredMixin, UpdateView):
         product = form.save()
         return super(ProductUpdateView, self).form_valid(form)
 
-class ProductDeactivateView(StaffRequiredMixin,     UpdateView):
+class ProductDeactivateView(StaffRequiredMixin, UpdateView):
     model  = Product
     action = "update"
     exclude = '__all__'

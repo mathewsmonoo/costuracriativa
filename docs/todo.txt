@@ -1,46 +1,46 @@
 ******************************** Back-End **********************************
 _____PRODUTOS______._____._____.._____.._____.._____.._____.._____.._____.
-- Várias Fotos por Produto
-- Tempo de produção em dias úteis
+X Várias Fotos por Produto
+X Tempo de produção em dias úteis
     Prazo para entrega : Produção (2+n dias uteis) + Prazo Entrega(via API)
     Preço de entrega   : Preço base (modificável)  + Preço Entrega(via API)
-- ..Produto preço de custo
+X ..Produto preço de custo
 
 _____COMPRAS______._____._____.._____.._____.._____.._____.._____.._____.
-- Compra sem cadastro
+X Compra sem cadastro
     Necessita CPF, Número de Celular, e-mail, endereço para entrega, forma de pgto.
         Termo de uso de 'conta temporária'
 
-- Dados temporários (90d/60d/30d)
+X Dados temporários (90d/60d/30d)
 
 _____USUÁRIO_____._____.._____.._____.._____.._____.._____.._____..______.
-- Perfil de Usuário: Adição do número de telefone celular (WhatsApp)
+X Perfil de Usuário: Adição do número de telefone celular (WhatsApp)
 
 _____USO INTERNO______._____._____.._____.._____.._____.._____.._____..__.
-- Cadastro de despesas variadas
+X Cadastro de despesas variadas
 
 _____VARIADOS______._____._____.._____.._____.._____.._____.._____.._____.
-- Envio de e-mail com Confirmação de Compra
+X Envio de e-mail com Confirmação de Compra
     Criação Template Base do E-mail
 
 _____RELATÓRIOS_____._____.._____.._____.._____.._____.._____.._____.____.
-- Produto(s) +/- vendido(s)
-- Produto(s) +/- rentável(is)
+X Produto(s) +/- vendido(s)
+X Produto(s) +/- rentável(is)
     Valor Agregado
     Produto preço de custo
-- Fluxo de Caixa
-- Fechamento ~ Período (Ano / n Meses / n Semanas / Quinzena / 10 Dias / Semana / n Dias / Dia / PERIODO PERSONALIZADO)
+X Fluxo de Caixa
+X Fechamento ~ Período (Ano / n Meses / n Semanas / Quinzena / 10 Dias / Semana / n Dias / Dia / PERIODO PERSONALIZADO)
 
 ************************** Back-End( Integrações ): *************************
-- CEPFácil
-- PagSeguro
+X CEPFácil
+X PagSeguro
 
 ******************************** Front-End: *********************************
-- Várias Fotos Por Produto
+X Várias Fotos Por Produto
  > On hover : "Zoom" na imagem
  > Modais
 
-- Remodelagem da Interface de Usuário
+X Remodelagem da Interface de Usuário
  > AliExpress; MercadoLivre; Amazon.
  > Bootstrap + jQuery ?
 

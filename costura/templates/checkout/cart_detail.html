@@ -39,7 +39,6 @@
   <div class="row m-6">
     <div class="col-md-12">
       <form method="POST">
-        {% csrf_token %}
         <input type="hidden" id="items" name="items" />
         <input type="hidden" id="user" name="user" />
         <div class="form-row">
@@ -134,8 +133,162 @@
     <div class="col-md-12">
       <h2 style="text-align: center;">Parece que você não está logado. Deseja <a href="#" title="Entrar">entrar</a>?</h2>
       <h2 style="text-align: center;">Ah! Se quiser fazer uma compra sem se cadastrar, é só clicar <a href="{% url 'checkout:userless'%}">aqui!</a> :)</h2>
+      <!-- <h2 style="text-align: center;">Ah! Se quiser fazer uma compra sem se cadastrar, é só clicar <a href="{% url 'checkout:userless'%}">aqui!</a> :)</h2> -->
     </div>
   </div>
+  <br>
+  <div class="page-header">
+    <h1 style="text-align: center">Bem-Vindo à Compra sem Cadastro!</h1>
+</div>
+<br>
+<br>
+<div class="row m-6">
+  <div class="col-md-12">
+     <h2>Detalhes de Envio</h2>
+  </div>
+</div>
+<div class="col-md-12">
+<form method="POST">
+  <input type="hidden" id="items" name="items" />
+  <br>
+  <hr>
+  </hr>
+  <h2>Informações do Comprador</h2>
+  <div class="form-row">
+     <div class="form-group col-md-6">
+        <label for="inputCPF">CPF</label>
+        <input
+           id="name"
+           name="name"
+           type="text"
+           class="form-control"
+           id="inputCPF"
+           placeholder="000.000.000-01"
+           />
+     </div>
+     <div class="form-group col-md-6">
+        <label for="inputEmail">Email</label>
+        <input
+           id="name"
+           name="name"
+           type="text"
+           class="form-control"
+           id="inputEmail"
+           placeholder="email@mail.com.br"
+           />
+     </div>
+  </div>
+  <hr>
+  <h2>Informações para Entrega</h2>
+  <div class="form-row">
+     <div class="form-group col-md-6">
+        <label for="inputName">Nome</label>
+        <input
+           id="name"
+           name="name"
+           type="text"
+           class="form-control"
+           id="inputName"
+           placeholder="Quem recebe"
+           />
+     </div>
+     <div class="form-group col-md-6">
+        <label for="inputObs">Observação</label>
+        <input
+           id="email"
+           name="email"
+           type="text"
+           class="form-control"
+           id="inputObs"
+           placeholder="Entrega somente após 12h00"
+           />
+     </div>
+  </div>
+  <div class="form-row">
+     <div class="form-group col-md-2">
+        <label for="inputCEP">CEP</label>
+        <input
+           id="zipcode"
+           name="zipcode"
+           type="text"
+           class="form-control"
+           id="inputCEP"
+           placeholder="12460-000"
+           />
+     </div>
+     <div class="form-group col-md-2">
+       <label for="inputSHIP"></label>
+       <br>
+       <a href="#APICALL">
+         <button type="submit" class="btn btn-outline-info">
+           Calcular
+         </button>
+     </a>
+     </div>
+     <div class="form-group col-md-1">
+        <label for="inputState">Estado</label>
+        <input
+           id="state"
+           name="state"
+           type="text"
+           class="form-control"
+           id="inputState"
+           />
+     </div>
+     <div class="form-group col-md-6">
+        <label for="inputCity">Cidade</label>
+        <input
+           id="city"
+           name="city"
+           type="text"
+           class="form-control"
+           id="inputCity"
+           placeholder="Lisboa"
+           />
+     </div>
+  </div>
+   <div class="form-row">
+        <div class="form-group col-md-4">
+           <label for="total">Sub-Total</label>
+           <input
+              readonly=""
+              type="text"
+              class="form-control"
+              id="total"
+              name="total"
+              />
+        </div>
+        <div class="form-group col-md-3">
+           <label for="ship">Frete</label>
+           <input
+              readonly=""
+              type="text"
+              class="form-control"
+              id="ship"
+              name="ship"
+              />
+        </div>
+        <div class="form-group col-md-5">
+           <label for="final">Total</label>
+           <input
+              readonly=""
+              type="text"
+              class="form-control"
+              id="final"
+              name="final"
+              />
+        </div>
+        <div class="form-group col-md-2">
+           <a href="{% url 'checkout:userless'%}">
+           <button type="submit" class="btn btn-lg btn-success">
+           Finalizar Compra!
+           </button>
+           </a>
+        </div>
+     </div>
+</form>
+</div>
+
   {% endif %}
 </div>
 {% endblock content %} 
@@ -150,6 +303,8 @@
     cart = JSON.parse(localStorage.getItem("cart"));
   }
   var total = 0;
+  var final = 0;
+  var ship  = 10;
   for (item in cart) {
     let name = cart[item][1];
     let quantity = cart[item][0];
@@ -162,7 +317,13 @@
   }
   totalPrice = ` <li class ="list-group-item d-flex justify-content-between align-items-center"><b>Sub-Total:</b>
   R$ ${total}</li> `;
+
+  // Final Price goes here
+  final = total + ship;
+
   $("#total").val(total);
+  $("#final").val(final);
+  $("#ship").val(ship);
   $("#item_list").append(totalPrice);
   $("#items").val(JSON.stringify(cart));
   $("#user").val((request.user));

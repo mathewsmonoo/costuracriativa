@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from .validators import username_validator, validate_cpf
 
-class User(AbstractUser,PermissionsMixin): #This is the "Customer" user; 
+class User(AbstractUser,PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_admin     = models.BooleanField(default=False)
     is_staff     = models.BooleanField(default=False)

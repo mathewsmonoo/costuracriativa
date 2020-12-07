@@ -25,10 +25,12 @@ class Product(TimeStampedModel):
     name        = models.CharField      ("Nome do Produto", max_length=255)
     slug        = AutoSlugField         ("Endereço digital", unique=True, populate_from="name")
     price       = models.DecimalField   ("Preço(R$)", default=0, max_digits=8, decimal_places=2,blank=True) #accepts anything up to R$999,999.99
-    discount_price  = models.DecimalField   ("Preço Promocional(R$)",default=0, max_digits=8, decimal_places=2,blank=True)
+    discount_price  = models.DecimalField("Preço Promocional", max_digits=8, decimal_places=2,blank=True,null=True)
+    cost        = models.DecimalField   ("Preço de Custo", max_digits=8, decimal_places=2,blank=True,null=True)
     description = models.TextField      ("Descrição", default="", blank=True)
     is_active   = models.BooleanField   ("Anúncio Ativo?", default=True)
     stock       = models.IntegerField   ("Quantia em estoque", null=True, blank=True, default=0)
+    time       = models.IntegerField   ("Tempo para Produção", null=True, blank=True)
     image       = models.ImageField     ("Imagem do Produto", upload_to='products/%Y/%m/%d', blank=True, null=True)
 
     # Relationships:
@@ -60,6 +62,12 @@ class Product(TimeStampedModel):
         holder = holder.replace(',','.')
         return holder
 
+    def get_cost(self):
+        return self.cost
+    
+    def get_time(self):
+        return self.time
+    
     class Meta:
         verbose_name="Produto"
         verbose_name_plural = "Produtos"
@@ -69,3 +77,27 @@ class Product(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('products:detail',kwargs={'slug':self.slug})
+
+''' 
+    IMAGE ALBUMS
+
+def get_upload_path(instance, filename):
+    model = instance.album.model.__class__._meta
+    name = model.verbose_name_plural.replace(' ', '_')
+    return f'{name}/images/{filename}'
+class ImageAlbum(models.Model):
+    def default(self):
+        return self.images.filter(default=True).first()    
+    def thumbnails(self):
+        return self.images.filter(width__lt=100, length_lt=100)
+class Image(models.Model):
+    name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to=get_upload_path)
+    default = models.BooleanField(default=False)
+    width = models.FloatField(default=100)
+    length = models.FloatField(default=100)
+    album = models.ForeignKey(ImageAlbum, related_name='images', on_delete=models.CASCADE)
+class Product(models.Model):
+    name = models.CharField(max_length=255)
+    album = models.OneToOneField(ImageAlbum, related_name='model', on_delete=models.CASCADE)
+'''

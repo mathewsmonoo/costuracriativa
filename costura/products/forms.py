@@ -23,11 +23,13 @@ class ProductForm(forms.ModelForm):
     name        = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Nome do Produto'}))
     price       = forms.DecimalField(widget=forms.NumberInput(attrs={'placeholder':'Preço'}))
     discount_price  = forms.DecimalField(widget=forms.NumberInput(attrs={'placeholder':'Preço Promocional'}),required=False)
+    cost        = forms.DecimalField(widget=forms.NumberInput(attrs={'placeholder':'Preço de Custo'}),required=False)
     description = forms.CharField(widget=forms.Textarea(attrs={'placeholder':'Descrição do Produto'}))
-    is_active   = forms.BooleanField(widget=forms.CheckboxInput(attrs={'label':'Anúncio Ativo'}))
-    stock       = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder':'Quantidade em Estoque'}))
+    is_active   = forms.BooleanField(widget=forms.CheckboxInput(attrs={'label':'Anúncio Ativo'}),required=False)
+    stock       = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder':'Quantidade em Estoque'}),required=False)
+    time        = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder':'Tempo para Produção'}),required=False)
     category    = forms.ModelChoiceField(queryset=Category.objects.all())
-    image       = forms.ImageField(widget=PicturePreviewWidget,)
+    image       = forms.ImageField(widget=PicturePreviewWidget,required=False)
 
 class CrispyProductForm(ProductForm):
     def __init__(self, *args, **kwargs):
@@ -35,23 +37,27 @@ class CrispyProductForm(ProductForm):
         self.fields['name'].label = "Nome do Produto"
         self.fields['price'].label = "Preço"
         self.fields['discount_price'].label = "Preço Promocional"
+        self.fields['cost'].label = "Preço de Custo"
         self.fields['description'].label = "Descrição"
         self.fields['is_active'].label = "Anúncio Ativo"
         self.fields['stock'].label = "Estoque Inicial"
+        self.fields['time'].label = "Tempo para Produção"
         self.fields['category'].label = "Categoria do Produto"
         self.fields['image'].label = "Imagem do Produto"
 
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Row(
-                Column('name', css_class='form-group col-md-8 mb-0'),
-                Column('category', css_class='form-group col-md-4 mb-0'),
+                Column('name', css_class='form-group col-md-7 mb-0'),
+                Column('category', css_class='form-group col-md-3 mb-0'),
+                Column('time', css_class='form-group col-md-2 mb-0'),
                 css_class='form-row'
             ),
             Row(
-                Column(PrependedText('price', 'R$'),css_class='form-group col-md-4 mb-0'),
-                Column(PrependedText('discount_price','R$'),css_class='form-group col-md-4 mb-0'),
-                Column('stock', css_class='form-group col-md-4 mb-0'),
+                Column(PrependedText('price', 'R$'),css_class='form-group col-md-3 mb-0'),
+                Column(PrependedText('discount_price','R$'),css_class='form-group col-md-3 mb-0'),
+                Column(PrependedText('cost','R$'),css_class='form-group col-md-3 mb-0'),
+                Column('stock', css_class='form-group col-md-3 mb-0'),
                 css_class='form-row'
             ),
             Row(
